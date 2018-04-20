@@ -23,5 +23,6 @@ public class DriverClass {
 		member.get("AAA").addRelationship("colleagues", member.get("CCC"));
 		member.get("AAA").addRelationship("friends",member.get("CCC"));
 		member.get("AAA").displayProfile();
+		member.get("BBB").displayProfile();
 	}
 }

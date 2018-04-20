@@ -16,12 +16,39 @@ public class Adult extends Person{
 	@Override
 	public void addRelationship(String relationType, Person relation){
 		
-		if(relationType.equals("friends")){
+		switch (relationType) {
+		case "friends":
 			this.setRelationManipulator(new AdultFriend(this, relation));
-			
-		}else if(relationType.equals("colleagues")){
+//			this.relationManipulator.add();
+			break;
+		case "colleagues":
 			this.setRelationManipulator(new Colleague(this, relation));
-			
+//			this.relationManipulator.add();
+			break;
+		case "classmates":
+			this.setRelationManipulator(new Classmate(this, relation));
+//			this.relationManipulator.add();
+			break;
+		case "couple":
+			this.setRelationManipulator(new Couple(this, relation));
+//			this.relationManipulator.add();
+		default:
+			break;
 		}
+		
+//		if(relationType.equals("friends")){
+//			this.setRelationManipulator(new AdultFriend(this, relation));
+//			this.relationManipulator.add();
+//			
+//		}else if(relationType.equals("colleagues")){
+//			this.setRelationManipulator(new Colleague(this, relation));
+//			this.relationManipulator.add();
+//		}
+//		else if(relationType.equals("classmates"))
+//		{
+//			this.setRelationManipulator(new Classmate(this, relation));
+//			this.relationManipulator.add();
+//		}
+		
 	}
 }

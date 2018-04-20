@@ -8,6 +8,7 @@ import relations.RelationManipulator;
 public abstract class Person {
 
 	private String name;
+	private int age;
 	private HashMap<String, ArrayList<Person>> relationship;
 //	private ArrayList<RelationManipulator> relationManipulator; 
 	RelationManipulator relationManipulator;
@@ -32,6 +33,16 @@ public abstract class Person {
 	}
 
 
+	public int getAge() {
+		return age;
+	}
+
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+
 	public HashMap<String, ArrayList<Person>> getRelationship() {
 		return relationship;
 	}
@@ -40,17 +51,6 @@ public abstract class Person {
 	public void setRelationship(HashMap<String, ArrayList<Person>> relationship) {
 		this.relationship = relationship;
 	}
-
-
-//	public ArrayList<RelationManipulator> getRelationManipulator() {
-//		return relationManipulator;
-//	}
-//
-//
-//	public void setRelationManipulator(
-//			ArrayList<RelationManipulator> relationManipulator) {
-//		this.relationManipulator = relationManipulator;
-//	}
 
 
 	public void displayProfile(){

@@ -18,23 +18,26 @@ public class AdultFriend implements RelationManipulator{
 		{
 			selectPerson.getRelationship().put("friends", new ArrayList<Person>());
 		}
-		add();
-		
+
 	}
 	
 	@Override
 	public void add() {
 		// TODO Auto-generated method stub
 		selectPerson.getRelationship().get("friends").add(friend);
-		
-		
+		if(!friend.getRelationship().containsKey("friends"))
+		{
+			friend.getRelationship().put("friends", new ArrayList<Person>());
+		}
+		friend.getRelationship().get("friends").add(selectPerson);
 		//this.selectPerson.setRelationship(relationship)
 	}
 
 	@Override
 	public void remove() {
 		// TODO Auto-generated method stub
-		
+		selectPerson.getRelationship().get("friend").remove(friend);
+		friend.getRelationship().get("friend").remove(selectPerson);
 	}
 
 }
