@@ -30,6 +30,10 @@ public class Child extends Person{
 		{
 			this.setRelationManipulator(new Classmate(this, relation));
 		}
+		else if(relationType.equals("parent"))
+		{
+			
+		}
 		
 	}
 	
