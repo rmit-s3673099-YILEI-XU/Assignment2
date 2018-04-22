@@ -26,6 +26,7 @@ public class MiniNetInterface extends Application{
     	   window = primaryStage;
        window.setTitle("MiniNet");
        window.setScene(startScene());
+       window.setResizable(false);
        window.show();
     }  	
     	
@@ -106,7 +107,7 @@ public class MiniNetInterface extends Application{
         });
         pane.add(btCancel, 2, 5);
         
-        Scene scene = new Scene(pane);
+        Scene scene = new Scene(pane, 700, 500);
         return scene;      
     }
 
@@ -132,7 +133,7 @@ public class MiniNetInterface extends Application{
 			//get member object, call display profile
 		});
 		
-        Scene scene = new Scene(layout, 400, 550);
+        Scene scene = new Scene(layout, 700, 500);
         return scene;
 
     }
