@@ -16,20 +16,24 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.RadioButton;
 import javafx.collections.*;
 import javafx.*;
-public class MiniNetInterface extends Application{
+public class MiniNetInterface{
 	
 	 
      //fix the size of the window!!!!
 	
-	Stage window;
-	
-    public void start(Stage primaryStage) throws Exception{
-    	   window = primaryStage;
-       window.setTitle("MiniNet");
-       window.setScene(startScene());
-       window.setResizable(false);
-       window.show();
-    }  	
+	 Stage window;
+	 public MiniNetInterface(Stage window)
+	 {
+		 this.window = window;
+	 }
+//	
+//    public void start(Stage primaryStage) throws Exception{
+//    	   window = primaryStage;
+//       window.setTitle("MiniNet");
+//       window.setScene(startScene());
+//       window.setResizable(false);
+//       window.show();
+//    }  	
     	
     
     public Scene startScene() {
