@@ -6,9 +6,6 @@ public class MiniNet {
 	{
 		DriverClass dc = new DriverClass();
 		dc.initialData();
-		
-		
-		
 	  	Application.launch(args);
 	  	
 	}

@@ -1,5 +1,6 @@
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -114,26 +115,42 @@ public class MiniNetInterface extends Application{
     
     public Scene displayAllScene() {
         
-    		Stage displayStage = new Stage();
-    		displayStage.setTitle("Display all members");
-    		
+//    		Stage displayStage = new Stage();
+//    		displayStage.setTitle("Display all members");
+        GridPane pane = new GridPane();
+        pane.setAlignment(Pos.CENTER);
+        pane.setPadding(new Insets(5, 5, 5, 5));//这是啥有没有没区别
+        pane.setHgap(5.5);
+        pane.setVgap(5.5);
+        
+    		Label label = new Label("All members as below, please select one person");
     		Button submit = new Button("Submit");
+    		Button cancel = new Button("Cancel");
     		VBox layout = new VBox(10);
     		
     	    ListView<String> memberList = new ListView<>();
-        memberList.getItems().addAll("111", "222", "333");/*get the member list*/
+        memberList.getItems().addAll("111", "222", "333", "111", "222", "333","111", "222", "333","111", "222", "333","111", "222", "333","111", "222", "333","111", "222", "333","end");/*get the member list*/
         memberList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         
-        layout.setPadding(new Insets(20, 20, 20, 20));
+        layout.setPadding(new Insets(20, 20, 20, 20));//没区别啊
         layout.getChildren().addAll(memberList, submit);
         
+        pane.add(label, 0, 0);
+        pane.add(layout, 0, 1);
+        pane.add(submit, 0, 2);
+        pane.add(cancel, 1, 2);
+       
         submit.setOnAction(e -> {
 			String selectPerson = memberList.getSelectionModel().getSelectedItem();
 			System.out.print(selectPerson);
 			//get member object, call display profile
 		});
+        
+        cancel.setOnAction(e -> {
+        	window.setScene(startScene());
+        });
 		
-        Scene scene = new Scene(layout, 700, 500);
+        Scene scene = new Scene(pane, 700, 500);
         return scene;
 
     }
