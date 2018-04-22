@@ -1,3 +1,4 @@
+import javafx.application.Application;
 
 public class MiniNet {
 
@@ -5,5 +6,10 @@ public class MiniNet {
 	{
 		DriverClass dc = new DriverClass();
 		dc.initialData();
+		
+		
+		
+	  	Application.launch(args);
+	  	
 	}
 }

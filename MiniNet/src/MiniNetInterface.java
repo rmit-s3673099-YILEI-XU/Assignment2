@@ -16,57 +16,64 @@ import javafx.scene.control.RadioButton;
 import javafx.collections.*;
 import javafx.*;
 public class MiniNetInterface extends Application{
+	
+	 
+     //fix the size of the window!!!!
+	
+	Stage window;
+	
+    public void start(Stage primaryStage) throws Exception{
+    	   window = primaryStage;
+       window.setTitle("MiniNet");
+       window.setScene(startScene());
+       window.show();
+    }  	
+    	
+    
+    public Scene startScene() {
+    		
+    	  Label label1 = new Label("Welcome to Mininet, Please choose one from the menu");
+    	  
+    	  GridPane pane = new GridPane();
+      pane.setAlignment(Pos.CENTER);
+      pane.setPadding(new Insets(5, 5, 5, 5));
+      pane.setHgap(5.5);
+      pane.setVgap(5.5);
+      
+      pane.add(label1, 0, 0);
+      Button addPersonBt = new Button("Add person");
+      pane.add(addPersonBt, 0, 1);
+      Button selectPersonBt = new Button("Select Person");
+      pane.add(selectPersonBt, 0, 2);
+      Button displayAllBt = new Button("Display All members");
+      pane.add(displayAllBt, 0, 3);
+      Button defineReBt = new Button("others");
+      pane.add(defineReBt, 0, 4);
+      Button findOutReBt = new Button("others");
+      pane.add(findOutReBt, 0, 5);
+      Button exitBt = new Button("Exit");
+      pane.add(exitBt, 0, 6);
 
-    //fix the size of the window!!!!
+//create events
 
-    public void start(Stage primaryStage){
-// set up the layout
-        GridPane pane = new GridPane();
-        pane.setAlignment(Pos.CENTER);
-        pane.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
-        pane.setHgap(5.5);
-        pane.setVgap(5.5);
+      addPersonBt.setOnAction(event -> 
+    	  window.setScene(addPersonScene())
+      );
 
-        Button addPersonBt = new Button("Add person");
-        pane.add(addPersonBt, 0, 0);
-        Button selectPersonBt = new Button("Select Person");
-        pane.add(selectPersonBt, 0, 1);
-        Button displayAllBt = new Button("Display All members");
-        pane.add(displayAllBt, 0, 2);
-        Button defineReBt = new Button("others");
-        pane.add(defineReBt, 0, 3);
-        Button findOutReBt = new Button("others");
-        pane.add(findOutReBt, 0, 4);
-        Button exitBt = new Button("Exit");
-        pane.add(exitBt, 0, 5);
-
-// create events
-
-        addPersonBt.setOnAction(event -> {
-            MiniNetInterface.addPersonAction();
-            primaryStage.close();
-        });
-
-        displayAllBt.setOnAction(event ->{
-            MiniNetInterface.displayAllAction();
-            primaryStage.close();
-        });
-
-        Scene scene = new Scene(pane, 700, 500);
-        primaryStage.setTitle("MainPage");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
+      displayAllBt.setOnAction(event ->{
+      window.setScene(displayAllScene());
+      });
+      
+      Scene scene = new Scene(pane, 700, 500);
+      return scene;
+    	
     }
 
-
-
-    public static void addPersonAction() {
-        System.out.println("Add Person button clicked");
-        Stage stage = new Stage();
+    public Scene addPersonScene() {
+   
         GridPane pane = new GridPane();
         pane.setAlignment(Pos.CENTER);
-        pane.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
+        pane.setPadding(new Insets(5, 5, 5, 5));
         pane.setHgap(5.5);
         pane.setVgap(5.5);
 
@@ -86,7 +93,6 @@ public class MiniNetInterface extends Application{
         root.getChildren().add(female);
         root.getChildren().add(male);
         pane.add(root,1, 2);
-        //pane.add(new TextField(), 1, 2);
         pane.add(new Label("Status"), 0, 3);
         pane.add(new TextField(), 1, 3);
         pane.add(new Label("Photo"), 0, 4);
@@ -95,45 +101,41 @@ public class MiniNetInterface extends Application{
         Button btAdd = new Button("Add");
         pane.add(btAdd, 0, 5);
         Button btCancel = new Button("Cancel");
+        btCancel.setOnAction(e -> {
+        	window.setScene(startScene());
+        });
         pane.add(btCancel, 2, 5);
-
-        Scene scene = new Scene(pane);
-        stage.setTitle("AddPerson");
-        stage.setScene(scene);
-        stage.show();
         
+        Scene scene = new Scene(pane);
+        return scene;      
     }
 
-    public static void displayAllAction() {
+    
+    public Scene displayAllScene() {
         
     		Stage displayStage = new Stage();
     		displayStage.setTitle("Display all members");
     		
     		Button submit = new Button("Submit");
     		VBox layout = new VBox(10);
-    
     		
     	    ListView<String> memberList = new ListView<>();
-        memberList.getItems().addAll(getMember(), "222", "333");
+        memberList.getItems().addAll("111", "222", "333");/*get the member list*/
         memberList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         
         layout.setPadding(new Insets(20, 20, 20, 20));
         layout.getChildren().addAll(memberList, submit);
         
-        Scene displayAll = new Scene(layout, 400, 550);
-        displayStage.setScene(displayAll);
-        displayStage.show();
-        
+        submit.setOnAction(e -> {
+			String selectPerson = memberList.getSelectionModel().getSelectedItem();
+			System.out.print(selectPerson);
+			//get member object, call display profile
+		});
+		
+        Scene scene = new Scene(layout, 400, 550);
+        return scene;
 
     }
 
-
-
-
-    public static void main(String[] args){
-
-        Application.launch(args);
-
-    }
 
 }
