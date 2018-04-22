@@ -25,4 +25,9 @@ public class DriverClass {
 		member.get("AAA").displayProfile();
 		member.get("BBB").displayProfile();
 	}
+	
+	public Person getMember() {
+		
+		return member.get(getMember());
+	}
 }

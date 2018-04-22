@@ -109,15 +109,16 @@ public class MiniNetInterface extends Application{
     		Stage displayStage = new Stage();
     		displayStage.setTitle("Display all members");
     		
-    		Button next = new Button("Next");
+    		Button submit = new Button("Submit");
     		VBox layout = new VBox(10);
+    
     		
     	    ListView<String> memberList = new ListView<>();
-        memberList.getItems().addAll("111", "222", "333");
+        memberList.getItems().addAll(getMember(), "222", "333");
         memberList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         
         layout.setPadding(new Insets(20, 20, 20, 20));
-        layout.getChildren().addAll(memberList, next);
+        layout.getChildren().addAll(memberList, submit);
         
         Scene displayAll = new Scene(layout, 400, 550);
         displayStage.setScene(displayAll);
