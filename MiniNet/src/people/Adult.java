@@ -7,10 +7,16 @@ import relations.*;
 
 public class Adult extends Person{
 
-	public Adult(String name){
+	public Adult(String name, String photo, String status, String gender,int age, String state){
 		
 		this.setRelationship(new HashMap<String,ArrayList<Person>>());
 		this.setName(name);
+		this.setPhoto(photo);
+		this.setStatus(status);
+		this.setGender(gender);
+		this.setAge(age);
+		this.setState(state);
+		
 	}
 	
 	@Override
@@ -19,7 +25,12 @@ public class Adult extends Person{
 		switch (relationType) {
 		case "friends":
 			this.setRelationManipulator(new AdultFriend(this, relation));
-//			this.relationManipulator.add();
+			try {
+				this.relationManipulator.add();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 		case "colleagues":
 			this.setRelationManipulator(new Colleague(this, relation));
@@ -31,7 +42,12 @@ public class Adult extends Person{
 			break;
 		case "couple":
 			this.setRelationManipulator(new Couple(this, relation));
-//			this.relationManipulator.add();
+			try {
+				this.relationManipulator.add();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		default:
 			break;
 		}

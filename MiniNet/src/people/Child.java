@@ -7,10 +7,15 @@ import relations.*;
 
 public class Child extends Person{
 	
-	public Child(String name)
+	public Child(String name, String photo, String status, String gender,int age, String state)
 	{
 		this.setRelationship(new HashMap<String,ArrayList<Person>>());
 		this.setName(name);
+		this.setPhoto(photo);
+		this.setStatus(status);
+		this.setGender(gender);
+		this.setAge(age);
+		this.setState(state);
 	
 		
 	}
@@ -25,6 +30,7 @@ public class Child extends Person{
 		{
 			this.setRelationManipulator(new Classmate(this, relation));
 		}
+		
 	}
 	
 	private void addParent(Person parent1, Person parent2) {

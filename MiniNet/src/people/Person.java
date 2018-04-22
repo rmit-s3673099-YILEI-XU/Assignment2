@@ -2,19 +2,24 @@ package people;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import relations.RelationManipulator;
 
 public abstract class Person {
 
 	private String name;
+	private String photo;
+	private String status;
+	private String gender;	
 	private int age;
+	private String state;
+	
 	private HashMap<String, ArrayList<Person>> relationship;
 //	private ArrayList<RelationManipulator> relationManipulator; 
 	RelationManipulator relationManipulator;
 	
 	public void setRelationManipulator(RelationManipulator relationManipulator) {
 		this.relationManipulator = relationManipulator;
+	
 	}
 
 
@@ -43,6 +48,46 @@ public abstract class Person {
 	}
 
 
+	public String getPhoto() {
+		return photo;
+	}
+
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+
+	public String getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
+	public String getGender() {
+		return gender;
+	}
+
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+
+	public String getState() {
+		return state;
+	}
+
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+
 	public HashMap<String, ArrayList<Person>> getRelationship() {
 		return relationship;
 	}
@@ -54,7 +99,13 @@ public abstract class Person {
 
 
 	public void displayProfile(){
-	
+		
+		System.out.println("Name: "+ this.getName());
+		System.out.println("Photo: "+ this.getPhoto());
+		System.out.println("Status: "+ this.getStatus());
+		System.out.println("Gender: "+ this.getGender());
+		System.out.println("Age: "+ this.getAge());
+		System.out.println("State: "+ this.getState());
 
 		for(String key:relationship.keySet())
 		{
@@ -65,6 +116,8 @@ public abstract class Person {
 			}
 			System.out.println();
 		}
+		
+		System.out.println();
 		
 	}
 	
