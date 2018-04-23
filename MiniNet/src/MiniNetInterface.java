@@ -13,9 +13,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.RadioButton;
 import javafx.collections.*;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javafx.*;
@@ -63,7 +67,14 @@ public class MiniNetInterface{
 //create events
 
         addPersonBt.setOnAction(event ->
-                window.setScene(addPersonScene())
+                {
+					try {
+						window.setScene(addPersonScene());
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
         );
 
         selectPersonBt.setOnAction(event ->{
@@ -84,7 +95,7 @@ public class MiniNetInterface{
 
     }
 
-    public Scene addPersonScene() {
+    public Scene addPersonScene() throws FileNotFoundException {
 
         //set up layout
         GridPane pane = new GridPane();
@@ -111,9 +122,8 @@ public class MiniNetInterface{
         pane.add(root,1, 2);
         pane.add(new Label("Status"), 0, 3);
         pane.add(new TextField(), 1, 3);
-        pane.add(new Label("Photo"), 0, 4);
-        pane.add(new TextField(), 1, 4);
-        pane.add(new Label("State"), 0, 5);
+        
+        pane.add(new Label("State"), 0, 4);
         ComboBox comboBox = new ComboBox();
         comboBox.getItems().add("Select State");
         comboBox.getItems().add("ACT");
@@ -126,8 +136,13 @@ public class MiniNetInterface{
         comboBox.getItems().add("WA");
         comboBox.getSelectionModel().selectFirst();
 
-        pane.add(comboBox,1, 5);
-
+        pane.add(comboBox,1, 4);
+        
+        final ImageView imageView = new ImageView();
+        Image defaultImage = new Image (new FileInputStream("/Users/zhangmo/Documents/GitHub/Assignment2/MiniNet/image")); 
+        imageView.setImage(defaultImage);
+        
+        pane.add(imageView, 0, 5);
         Button btAdd = new Button("Add");
         pane.add(btAdd, 0, 6);
         Button btCancel = new Button("Cancel");
@@ -281,17 +296,39 @@ public class MiniNetInterface{
 
     public void displayProfileAction(String name) {
         String theName = name;
-    		/*Label name = new Label(getPersonByName(theName).getName());
-		 * Label age = new Label(getPersonByName(theName).getAge);
-		 *
-		 * GridPane pane = new GridPane();
-		 *
-		 * pane.add();
-		 *
-		 * Scene scene = new Scene(pane, 700, 500);
-		 * window.setScene(scene);
-		 * window.show();
-		 */
+        int age = dc.getMemberObj(theName).getAge();
+        String status = dc.getMemberObj(theName).getStatus();
+        String gender = dc.getMemberObj(theName).getGender();
+        String state = dc.getMemberObj(theName).getState();
+        String photo = dc.getMemberObj(theName).getPhoto();//need what
+       
+		
+		GridPane pane = new GridPane();
+		pane.setAlignment(Pos.CENTER);
+	    pane.setPadding(new Insets(5, 5, 5, 5));
+	    pane.setHgap(5.5);
+	    pane.setVgap(5.5);
+		
+		pane.add((new Label("Name: ")), 1, 2);
+		pane.add(new Label("Age: "), 1, 3);
+		pane.add(new Label("Status: "), 1, 4);
+		pane.add(new Label("Gender: "), 1, 5);
+		pane.add(new Label("State: "), 1, 6);
+		
+		
+		pane.add(new Label(photo), 2, 1);
+		pane.add((new Label(theName)), 4, 2);
+		pane.add(new Label(Integer.toString(age)), 4, 3);
+		pane.add(new Label(status), 4, 4);
+		pane.add(new Label(gender), 4, 5);
+		pane.add(new Label(state), 4, 6);
+		
+	
+	
+		Scene scene = new Scene(pane, 700, 500);
+		 window.setScene(scene);
+		 window.show();
+		
     }
 
     public Scene findOutScene() {
