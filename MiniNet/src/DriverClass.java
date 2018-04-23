@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import Exceptions.*;
 import people.*;
 
 
@@ -20,24 +21,14 @@ public class DriverClass {
 
 		member = new HashMap<String, Person>();
 
-//		member.put("AAA", new Adult("AAA"));
-//		member.put("BBB", new Adult("BBB"));
-//		member.put("CCC", new Adult("CCC"));
-		
-//		member.get("AAA").addRelationship("friends",member.get("BBB")); //friends from interface
-//		member.get("AAA").addRelationship("colleagues", member.get("CCC"));
-//		member.get("AAA").addRelationship("friends",member.get("CCC"));
-//		member.get("AAA").displayProfile();
-//		member.get("BBB").displayProfile();
 		
 		BufferedReader peopleFileReader = null;
 		BufferedReader relationsFileReader = null;
 		
 		String[] pTextData = null;
-		String[]rTextData = null;
+		String[] rTextData = null;
 		relationData = new ArrayList<String[]>();
 		Person currentPerson;
-//		String name, photo, status, gender, age,state; 
 		
 		try {
 			relationsFileReader = new BufferedReader(new FileReader("db/relations.txt"));
@@ -53,7 +44,6 @@ public class DriverClass {
 			e.printStackTrace();
 		}
 		
-		
 		try {
 			peopleFileReader = new BufferedReader(new FileReader("db/people.txt"));	
 			String currentLine;
@@ -61,16 +51,20 @@ public class DriverClass {
 			{
 				pTextData = currentLine.split(",");
 				int age = Integer.parseInt(pTextData[4].trim());
-				if(age<=16)
+				if(age<3)
 				{
-					currentPerson = new Child(pTextData[0].trim(),pTextData[1].trim(),pTextData[2].trim(),pTextData[3].trim(),age, pTextData[5].trim());
-					member.put(pTextData[0].trim(), currentPerson);
+					currentPerson = new YoungChild(pTextData[0].trim(),pTextData[1].trim(),pTextData[2].trim(),pTextData[3].trim(),age, pTextData[5].trim());
+				}
+				else if(age<=16)
+				{
+					currentPerson = new Child(pTextData[0].trim(),pTextData[1].trim(),pTextData[2].trim(),pTextData[3].trim(),age, pTextData[5].trim());//					member.put(pTextData[0].trim(), currentPerson);
 				}
 				else{
 					currentPerson = new Adult(pTextData[0].trim(),pTextData[1].trim(),pTextData[2].trim(),pTextData[3].trim(),age, pTextData[5].trim());
-					member.put(pTextData[0].trim(), currentPerson);
+
 				}
-//				System.out.println(age);
+				member.put(pTextData[0].trim(), currentPerson);
+
 			}
 			
 		} catch (FileNotFoundException e) {
@@ -78,7 +72,12 @@ public class DriverClass {
 			e.printStackTrace();
 		}
 		
-		addRelationData();
+		try {
+			addRelationData();
+		} catch (NoParentsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		for(String sr: member.keySet() )
 		{
 			member.get(sr).displayProfile();
@@ -88,18 +87,37 @@ public class DriverClass {
 	}
 	
 	//如果数据有错，找不到人应该有错误提示![稍后加]
-	private void addRelationData()
-	{
-		
-		
-		for(String name: member.keySet()) {
-			for(String[] st: relationData)
-			{
-				if(name.equals(st[0].trim()))
-				{
+	private void addRelationData() throws NoParentsException {
+
+		for (String[] st : relationData) {
+			
+			for (String name : member.keySet()) {
+
+				//for parent relation
+				if (name.equals(st[0].trim())) {
+					
+					if (st[2].trim().equals("parent") && (member.get(st[0].trim()) instanceof Adult)) {
+						String temp = st[0];
+						st[0] = st[1].trim();
+						st[1] = temp.trim();
+						name = st[0];
+
+					}
+					// System.out.println(st[0]+" 000 "+st[1]);
 					member.get(name).addRelationship(st[2].trim(), member.get(st[1].trim()));
 				}
 			}
+		}
+		
+		//warning message for the child doesn't have the parents relation 
+		for(Person pr: member.values())
+		{
+			if(!(pr instanceof Adult))
+				if(pr.getRelationship().get("parent").size()<2)
+				{
+					System.out.println(pr.getName()+" doesn't have parents\n");
+					throw new NoParentsException();
+				}
 		}
 	}
 	

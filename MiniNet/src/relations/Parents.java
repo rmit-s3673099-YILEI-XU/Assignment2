@@ -15,6 +15,7 @@ public class Parents implements RelationManipulator{
 		this.parent1 = parent1;
 		this.parent2 = parent2;
 		this.child = child;
+		add();
 	}
 
 	
@@ -22,6 +23,7 @@ public class Parents implements RelationManipulator{
 	@Override
 	public void add() {
 		// TODO Auto-generated method stub
+		
 		if(!parent1.getRelationship().containsKey("couple")) {
 			parent1.setRelationManipulator(new Couple(parent1, parent2));		
 		}
@@ -37,6 +39,8 @@ public class Parents implements RelationManipulator{
 		child.getRelationship().get("parent").add(parent2);
 		parent1.getRelationship().get("child").add(child);
 		parent2.getRelationship().get("child").add(child);
+		
+		
 	
 	}
 

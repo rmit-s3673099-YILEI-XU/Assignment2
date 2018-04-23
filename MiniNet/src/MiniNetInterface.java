@@ -15,13 +15,26 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.RadioButton;
 import javafx.collections.*;
+
+import java.io.IOException;
+
 import javafx.*;
 public class MiniNetInterface{
 
     Stage window;
-    public MiniNetInterface(Stage window)
+    DriverClass dc;
+    
+    public MiniNetInterface(Stage window) 
     {
         this.window = window;
+        dc = new DriverClass();
+        try {
+			dc.initialData();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       
     }
 
     public Scene startScene() {
@@ -150,7 +163,8 @@ public class MiniNetInterface{
         VBox layout = new VBox(10);
 
         ListView<String> memberList = new ListView<>();
-        memberList.getItems().addAll("111", "222", "333", "111", "222", "333","111", "222", "333","111", "222", "333","111", "222", "333","111", "222", "333","111", "222", "333","end");/*get the member list*/
+        memberList.getItems().addAll(dc.getMember().keySet());
+//        memberList.getItems().addAll("111", "222", "333", "111", "222", "333","111", "222", "333","111", "222", "333","111", "222", "333","111", "222", "333","111", "222", "333","end");/*get the member list*/
         memberList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         layout.setPadding(new Insets(20, 20, 20, 20));//没区别啊
