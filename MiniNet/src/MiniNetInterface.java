@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,10 +18,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.RadioButton;
 import javafx.collections.*;
+import javafx.embed.swing.SwingFXUtils;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
 
 import javafx.*;
 public class MiniNetInterface{
@@ -138,6 +146,10 @@ public class MiniNetInterface{
 
         pane.add(comboBox,1, 4);
         
+        pane.add(new Label("Photo"), 0, 5);
+        pane.add(new TextField(), 1, 5);
+        Button upload = new Button("upload");
+        pane.add(upload, 2, 5);
         
         
         
@@ -154,6 +166,11 @@ public class MiniNetInterface{
         btCancel.setOnAction(e -> {
             window.setScene(startScene());
         });
+        
+        upload.setOnAction(e ->{
+        	uploadPhoto(Person dc.);
+        }
+        );
 
         Scene scene = new Scene(pane, 700, 500);
         return scene;
@@ -177,7 +194,6 @@ public class MiniNetInterface{
 
         ListView<String> memberList = new ListView<>();
         memberList.getItems().addAll(dc.getMember().keySet());
-//        memberList.getItems().addAll("111", "222", "333", "111", "222", "333","111", "222", "333","111", "222", "333","111", "222", "333","111", "222", "333","111", "222", "333","end");/*get the member list*/
         memberList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         layout.setPadding(new Insets(20, 20, 20, 20));//没区别啊
@@ -194,7 +210,6 @@ public class MiniNetInterface{
             System.out.print(selectPerson);
             window.setScene(modifyPersonScene(selectPerson));
 
-            //get member object, call display profile
         });
 
         cancel.setOnAction(e -> {
@@ -428,6 +443,31 @@ public class MiniNetInterface{
         stage.show();
     }
 
+    public void uploadPhoto(Person person) {
+    		
+    		this.person = person;
+    		FileChooser fileChooser = new FileChooser();
+    		FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files","*.PNG");
+    		FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files","*.JPG");
+    		fileChooser.getExtensionFilters().addAll(extFilterPNG);
+    		
+    		File file = fileChooser.showOpenDialog(null);
+    		
+    		try {
+    			
+    			BufferedImage bufferedImage = ImageIO.read(file);
+    			Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+    			
+    			
+    		} catch (IOException ex) {
+    			//Logger.getLogger((MiniNetInterface.class.getName()).log(Level.SEVERE, null, ex);
+    		}
+   
+    	
+    		
+    	
+    	
+    }
 
 
 
