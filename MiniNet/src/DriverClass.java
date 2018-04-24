@@ -121,6 +121,22 @@ public class DriverClass {
 		}
 	}
 	
+	public void addPerson(String name, String photo, String status, String gender,int age, String state)
+	{
+		Person currentPerson;
+		if(age<3)
+		{
+			currentPerson = new YoungChild(name,photo,status,gender,age,state);
+		}
+		else if(age<=16)
+		{
+			currentPerson = new Child(name,photo,status,gender,age,state);
+		}
+		else{
+			currentPerson = new Adult(name,photo,status,gender,age,state);
+		}
+		member.put(name, currentPerson);
+	}
 	
 	public HashMap<String, Person> getMember() {
 		return member;

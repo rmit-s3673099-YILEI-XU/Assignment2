@@ -113,9 +113,11 @@ public class MiniNetInterface{
         pane.setVgap(5.5);
 
         pane.add(new Label("Name:"), 0, 0);
-        pane.add(new TextField(), 1, 0);
+        TextField personName=new TextField();
+        pane.add(personName, 1, 0);
         pane.add(new Label("Age"), 0, 1);
-        pane.add(new TextField(), 1, 1);
+        TextField personAge=new TextField();
+        pane.add(personAge, 1, 1);
         pane.add(new Label("Gender"), 0, 2);
 
         HBox root = new HBox();
@@ -123,13 +125,16 @@ public class MiniNetInterface{
         RadioButton female = new RadioButton("Female");
         female.setToggleGroup(group);
         female.setSelected(true);
+        female.setUserData("F");
         RadioButton male = new RadioButton("Male");
         male.setToggleGroup(group);
+        male.setUserData("M");
         root.getChildren().add(female);
         root.getChildren().add(male);
         pane.add(root,1, 2);
         pane.add(new Label("Status"), 0, 3);
-        pane.add(new TextField(), 1, 3);
+        TextField personStatus = new TextField();
+        pane.add(personStatus, 1, 3);
         
         pane.add(new Label("State"), 0, 4);
         ComboBox comboBox = new ComboBox();
@@ -147,7 +152,8 @@ public class MiniNetInterface{
         pane.add(comboBox,1, 4);
         
         pane.add(new Label("Photo"), 0, 5);
-        pane.add(new TextField(), 1, 5);
+        TextField personPhoto = new TextField();
+        pane.add(personPhoto, 1, 5);
         Button upload = new Button("upload");
         pane.add(upload, 2, 5);
         
@@ -161,6 +167,9 @@ public class MiniNetInterface{
         // create events
         btAdd.setOnAction(e -> {
         	/*add a person*/
+
+        	dc.addPerson(personName.getText().trim(), personPhoto.getText().trim(),
+        			personStatus.getText().trim(),(String)group.getSelectedToggle().getUserData(), Integer.parseInt(personAge.getText().trim()), ((String)comboBox.getValue()).trim() );
         });
 
         btCancel.setOnAction(e -> {
@@ -175,7 +184,10 @@ public class MiniNetInterface{
         Scene scene = new Scene(pane, 700, 500);
         return scene;
     }
-
+    
+    public void addPersonAction() {
+    
+    }
 
     public Scene selectPersonScene() {
 
