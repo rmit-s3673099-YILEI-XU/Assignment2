@@ -168,7 +168,7 @@ public class MiniNetInterface{
         });
         
         upload.setOnAction(e ->{
-        	uploadPhoto(Person dc.);
+       // 	uploadPhoto(Person dc.);
         }
         );
 
@@ -443,25 +443,25 @@ public class MiniNetInterface{
         stage.show();
     }
 
-    public void uploadPhoto(Person person) {
-    		
-    		this.person = person;
-    		FileChooser fileChooser = new FileChooser();
-    		FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files","*.PNG");
-    		FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files","*.JPG");
-    		fileChooser.getExtensionFilters().addAll(extFilterPNG);
-    		
-    		File file = fileChooser.showOpenDialog(null);
-    		
-    		try {
-    			
-    			BufferedImage bufferedImage = ImageIO.read(file);
-    			Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-    			
-    			
-    		} catch (IOException ex) {
-    			//Logger.getLogger((MiniNetInterface.class.getName()).log(Level.SEVERE, null, ex);
-    		}
+//    public void uploadPhoto(Person person) {
+//    		
+//    		this.person = person;
+//    		FileChooser fileChooser = new FileChooser();
+//    		FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files","*.PNG");
+//    		FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files","*.JPG");
+//    		fileChooser.getExtensionFilters().addAll(extFilterPNG);
+//    		
+//    		File file = fileChooser.showOpenDialog(null);
+//    		
+//    		try {
+//    			
+//    			BufferedImage bufferedImage = ImageIO.read(file);
+//    			Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+//    			
+//    			
+//    		} catch (IOException ex) {
+//    			//Logger.getLogger((MiniNetInterface.class.getName()).log(Level.SEVERE, null, ex);
+//    		}
    
     	
     		
@@ -471,4 +471,4 @@ public class MiniNetInterface{
 
 
 
-}
+
