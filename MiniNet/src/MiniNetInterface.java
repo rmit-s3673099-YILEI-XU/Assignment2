@@ -138,11 +138,9 @@ public class MiniNetInterface{
 
         pane.add(comboBox,1, 4);
         
-        final ImageView imageView = new ImageView();
-        Image defaultImage = new Image (new FileInputStream("/Users/zhangmo/Documents/GitHub/Assignment2/MiniNet/image")); 
-        imageView.setImage(defaultImage);
         
-        pane.add(imageView, 0, 5);
+        
+        
         Button btAdd = new Button("Add");
         pane.add(btAdd, 0, 6);
         Button btCancel = new Button("Cancel");
@@ -234,7 +232,12 @@ public class MiniNetInterface{
 
         btDisplayP.setOnAction(e ->
         {
-            displayProfileAction(theName);
+            try {
+				displayProfileAction(theName);
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
         });
 
@@ -294,13 +297,13 @@ public class MiniNetInterface{
 
     }
 
-    public void displayProfileAction(String name) {
+    public void displayProfileAction(String name) throws FileNotFoundException {
         String theName = name;
         int age = dc.getMemberObj(theName).getAge();
         String status = dc.getMemberObj(theName).getStatus();
         String gender = dc.getMemberObj(theName).getGender();
         String state = dc.getMemberObj(theName).getState();
-        String photo = dc.getMemberObj(theName).getPhoto();//need what
+        //String photo = dc.getMemberObj(theName).getPhoto();//need what
        
 		
 		GridPane pane = new GridPane();
@@ -309,19 +312,28 @@ public class MiniNetInterface{
 	    pane.setHgap(5.5);
 	    pane.setVgap(5.5);
 		
-		pane.add((new Label("Name: ")), 1, 2);
-		pane.add(new Label("Age: "), 1, 3);
-		pane.add(new Label("Status: "), 1, 4);
-		pane.add(new Label("Gender: "), 1, 5);
-		pane.add(new Label("State: "), 1, 6);
+		pane.add((new Label("Name: ")), 1, 3);
+		pane.add(new Label("Age: "), 1, 4);
+		pane.add(new Label("Status: "), 1, 5);
+		pane.add(new Label("Gender: "), 1, 6);
+		pane.add(new Label("State: "), 1, 7);
 		
 		
-		pane.add(new Label(photo), 2, 1);
-		pane.add((new Label(theName)), 4, 2);
-		pane.add(new Label(Integer.toString(age)), 4, 3);
-		pane.add(new Label(status), 4, 4);
-		pane.add(new Label(gender), 4, 5);
-		pane.add(new Label(state), 4, 6);
+		//pane.add(new Label(photo), 2, 1);
+		
+		final ImageView imageView = new ImageView();
+        Image defaultImage = new Image (new FileInputStream("image/default.png")); 
+        imageView.setImage(defaultImage);
+        
+        imageView.setFitHeight(100);
+        imageView.setFitWidth(100);
+        pane.add(imageView, 3, 0);
+        
+		pane.add((new Label(theName)), 4, 3);
+		pane.add(new Label(Integer.toString(age)), 4, 4);
+		pane.add(new Label(status), 4, 5);
+		pane.add(new Label(gender), 4, 6);
+		pane.add(new Label(state), 4, 7);
 		
 	
 	
