@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 public class MiniNet extends Application{
@@ -11,6 +12,7 @@ public class MiniNet extends Application{
        window.setScene(new MiniNetInterface(window).startScene());
        window.setResizable(false);
        window.show();
+       
     } 
 
 	public static void main(String[] args)
@@ -18,7 +20,7 @@ public class MiniNet extends Application{
 //		DriverClass dc = new DriverClass();
 //		dc.initialData();
 	  	Application.launch(args);
-	  	
+	
 	}
 
 	

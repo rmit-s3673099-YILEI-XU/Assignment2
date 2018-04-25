@@ -121,21 +121,31 @@ public class DriverClass {
 		}
 	}
 	
-	public void addPerson(String name, String photo, String status, String gender,int age, String state)
+	public Person addPerson(String name, String photo, String status, String gender,int age, String state)
 	{
 		Person currentPerson;
+		
+		for(String memberName:member.keySet())
+		{
+			if(name.equals(memberName))
+				return null;
+		}
+		
 		if(age<3)
 		{
 			currentPerson = new YoungChild(name,photo,status,gender,age,state);
+			return currentPerson;
 		}
 		else if(age<=16)
 		{
 			currentPerson = new Child(name,photo,status,gender,age,state);
+			return currentPerson;
 		}
 		else{
 			currentPerson = new Adult(name,photo,status,gender,age,state);
+			return currentPerson;
 		}
-		member.put(name, currentPerson);
+//		member.put(name, currentPerson);
 	}
 	
 	public HashMap<String, Person> getMember() {
