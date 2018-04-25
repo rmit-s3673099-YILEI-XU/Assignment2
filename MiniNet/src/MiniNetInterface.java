@@ -149,7 +149,7 @@ public class MiniNetInterface {
 		pane.add(new Label("Photo"), 0, 5);
 		TextField personPhoto = new TextField();
 		pane.add(personPhoto, 1, 5);
-		Button upload = new Button("upload");
+		Button upload = new Button("Upload");
 		pane.add(upload, 2, 5);
 		pane.add(new Label("(Optional)"), 3, 5);
 
