@@ -50,6 +50,11 @@ public class DriverClass {
 			while((currentLine=peopleFileReader.readLine())!=null)
 			{
 				pTextData = currentLine.split(",");
+			
+				for(int i =0;i<pTextData.length;i++)
+				{
+					pTextData[i]=pTextData[i].replace("\"", "");
+				}
 				int age = Integer.parseInt(pTextData[4].trim());
 				if(age<3)
 				{

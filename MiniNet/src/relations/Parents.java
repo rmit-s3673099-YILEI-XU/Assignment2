@@ -27,6 +27,7 @@ public class Parents implements RelationManipulator{
 		if(!parent1.getRelationship().containsKey("couple")) {
 			parent1.setRelationManipulator(new Couple(parent1, parent2));		
 		}
+		else 
 		if(!parent1.getRelationship().containsKey("child"))
 		{
 			parent1.getRelationship().put("child", new ArrayList<Person>());

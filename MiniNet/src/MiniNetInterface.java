@@ -376,7 +376,7 @@ public class MiniNetInterface {
 		String status = dc.getMemberObj(theName).getStatus();
 		String gender = dc.getMemberObj(theName).getGender();
 		String state = dc.getMemberObj(theName).getState();
-		// String photo = dc.getMemberObj(theName).getPhoto();//need what
+		String photo = dc.getMemberObj(theName).getPhoto();//need what
 
 		GridPane pane = new GridPane();
 		pane.setAlignment(Pos.CENTER);
@@ -393,7 +393,14 @@ public class MiniNetInterface {
 		// pane.add(new Label(photo), 2, 1);
 
 		final ImageView imageView = new ImageView();
-		Image defaultImage = new Image(new FileInputStream("image/default.png"));
+		Image defaultImage;
+		if(photo.equals("")) {
+			defaultImage= new Image(new FileInputStream("image/default.png"));
+		}
+		else
+		{
+			defaultImage= new Image(new FileInputStream("image/"+photo));
+		}
 		imageView.setImage(defaultImage);
 
 		imageView.setFitHeight(100);
