@@ -34,497 +34,525 @@ import javafx.*;
 
 public class MiniNetInterface {
 
-	Stage window;
-	DriverClass dc;
+    Stage window;
+    DriverClass dc;
 
-	public MiniNetInterface(Stage window) {
-		this.window = window;
-		dc = new DriverClass();
-		try {
-			dc.initialData();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    public MiniNetInterface(Stage window) {
+        this.window = window;
+        dc = new DriverClass();
+        try {
+            dc.initialData();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-	}
+    }
 
-	public Scene startScene() {
+    public Scene startScene() {
 
-		// set up layout
-		Label label1 = new Label("Welcome to Mininet, Please choose one from the menu");
+        // set up layout
+        Label label1 = new Label("Welcome to Mininet, Please choose one from the menu");
 
-		GridPane pane = new GridPane();
-		pane.setAlignment(Pos.CENTER);
-		pane.setPadding(new Insets(5, 5, 5, 5));
-		pane.setHgap(5.5);
-		pane.setVgap(5.5);
+        GridPane pane = new GridPane();
+        pane.setAlignment(Pos.CENTER);
+        pane.setPadding(new Insets(5, 5, 5, 5));
+        pane.setHgap(5.5);
+        pane.setVgap(5.5);
 
-		pane.add(label1, 0, 0);
-		Button addPersonBt = new Button("Add person");
-		pane.add(addPersonBt, 0, 1);
-		Button selectPersonBt = new Button("Select a Person");
-		pane.add(selectPersonBt, 0, 2);
-		Button findOutBt = new Button("Find out relationship");
-		pane.add(findOutBt, 0, 3);
-		Button defineReBt = new Button("Define relationship");
-		pane.add(defineReBt, 0, 4);
-		Button exitBt = new Button("Exit");
-		pane.add(exitBt, 0, 5);
+        pane.add(label1, 0, 0);
+        Button addPersonBt = new Button("Add person");
+        pane.add(addPersonBt, 0, 1);
+        Button selectPersonBt = new Button("Select a Person");
+        pane.add(selectPersonBt, 0, 2);
+        Button findOutBt = new Button("Find out relationship");
+        pane.add(findOutBt, 0, 3);
+        Button defineReBt = new Button("Define relationship");
+        pane.add(defineReBt, 0, 4);
+        Button exitBt = new Button("Exit");
+        pane.add(exitBt, 0, 5);
 
-		// create events
+        // create events
 
-		addPersonBt.setOnAction(event -> {
+        addPersonBt.setOnAction(event -> {
 
-			window.setScene(addPersonScene());
+            window.setScene(addPersonScene());
 
-		});
+        });
 
-		selectPersonBt.setOnAction(event -> {
-			window.setScene(selectPersonScene());
-		});
+        selectPersonBt.setOnAction(event -> {
+            window.setScene(selectPersonScene());
+        });
 
-		findOutBt.setOnAction(e -> {
-			window.setScene(findOutScene());
-		});
+        findOutBt.setOnAction(e -> {
+            window.setScene(findOutScene());
+        });
 
-		exitBt.setOnAction(event -> {
-			window.close();
-		});
+        exitBt.setOnAction(event -> {
+            window.close();
+        });
 
-		Scene scene = new Scene(pane, 700, 500);
-		return scene;
+        Scene scene = new Scene(pane, 700, 500);
+        return scene;
 
-	}
+    }
 
-	public Scene addPersonScene() {
+    public Scene addPersonScene() {
 
-		// set up layout
-		GridPane pane = new GridPane();
-		pane.setAlignment(Pos.CENTER);
-		pane.setPadding(new Insets(5, 5, 5, 5));
-		pane.setHgap(5.5);
-		pane.setVgap(5.5);
+        // set up layout
+        GridPane pane = new GridPane();
+        pane.setAlignment(Pos.CENTER);
+        pane.setPadding(new Insets(5, 5, 5, 5));
+        pane.setHgap(5.5);
+        pane.setVgap(5.5);
 
-		pane.add(new Label("Name:"), 0, 0);
-		TextField personName = new TextField();
-		pane.add(personName, 1, 0);
-		pane.add(new Label("Age"), 0, 1);
-		TextField personAge = new TextField();
-		pane.add(personAge, 1, 1);
-		pane.add(new Label("Gender"), 0, 2);
+        pane.add(new Label("Name:"), 0, 0);
+        TextField personName = new TextField();
+        pane.add(personName, 1, 0);
+        pane.add(new Label("Age"), 0, 1);
+        TextField personAge = new TextField();
+        pane.add(personAge, 1, 1);
+        pane.add(new Label("Gender"), 0, 2);
 
-		HBox root = new HBox();
-		ToggleGroup group = new ToggleGroup();
-		RadioButton female = new RadioButton("Female");
-		female.setToggleGroup(group);
-		female.setSelected(true);
-		female.setUserData("F");
-		RadioButton male = new RadioButton("Male");
-		male.setToggleGroup(group);
-		male.setUserData("M");
-		root.getChildren().add(female);
-		root.getChildren().add(male);
-		pane.add(root, 1, 2);
-		pane.add(new Label("Status"), 0, 3);
-		TextField personStatus = new TextField();
-		pane.add(personStatus, 1, 3);
-		pane.add(new Label("(Optional)"), 2, 3);
+        HBox root = new HBox();
+        ToggleGroup group = new ToggleGroup();
+        RadioButton female = new RadioButton("Female");
+        female.setToggleGroup(group);
+        female.setSelected(true);
+        female.setUserData("F");
+        RadioButton male = new RadioButton("Male");
+        male.setToggleGroup(group);
+        male.setUserData("M");
+        root.getChildren().add(female);
+        root.getChildren().add(male);
+        pane.add(root, 1, 2);
+        pane.add(new Label("Status"), 0, 3);
+        TextField personStatus = new TextField();
+        pane.add(personStatus, 1, 3);
+        pane.add(new Label("(Optional)"), 2, 3);
 
-		pane.add(new Label("State"), 0, 4);
-		ComboBox comboBox = new ComboBox();
-		comboBox.getItems().add("Select State");
-		comboBox.getItems().add("ACT");
-		comboBox.getItems().add("NSW");
-		comboBox.getItems().add("NT");
-		comboBox.getItems().add("QLD");
-		comboBox.getItems().add("SA");
-		comboBox.getItems().add("TAS");
-		comboBox.getItems().add("VIC");
-		comboBox.getItems().add("WA");
-		comboBox.getSelectionModel().selectFirst();
+        pane.add(new Label("State"), 0, 4);
+        ComboBox comboBox = new ComboBox();
+        comboBox.getItems().add("Select State");
+        comboBox.getItems().add("ACT");
+        comboBox.getItems().add("NSW");
+        comboBox.getItems().add("NT");
+        comboBox.getItems().add("QLD");
+        comboBox.getItems().add("SA");
+        comboBox.getItems().add("TAS");
+        comboBox.getItems().add("VIC");
+        comboBox.getItems().add("WA");
+        comboBox.getSelectionModel().selectFirst();
 
-		pane.add(comboBox, 1, 4);
+        pane.add(comboBox, 1, 4);
 
-		pane.add(new Label("Photo"), 0, 5);
-		TextField personPhoto = new TextField();
-		pane.add(personPhoto, 1, 5);
-		Button upload = new Button("Upload");
-		pane.add(upload, 2, 5);
-		pane.add(new Label("(Optional)"), 3, 5);
+        pane.add(new Label("Photo"), 0, 5);
+        //TextField personPhoto = new TextField();
+        //pane.add(personPhoto, 1, 5);
+        Button upload = new Button("Upload");
+        pane.add(upload, 2, 5);
+        pane.add(new Label("(Optional)"), 3, 5);
 
-		Button btAdd = new Button("Add");
-		pane.add(btAdd, 0, 6);
-		Button btCancel = new Button("Cancel");
-		pane.add(btCancel, 2, 6);
+        Button btAdd = new Button("Add");
+        pane.add(btAdd, 0, 6);
+        Button btCancel = new Button("Cancel");
+        pane.add(btCancel, 2, 6);
 
-		// create events
-		btAdd.setOnAction(e -> {
+        // create events
+        btAdd.setOnAction(e -> {
 			/* add a person */
 
-			String name = personName.getText().trim();
-			String photo = personPhoto.getText().trim();
-			String status = personStatus.getText().trim();
-			String gender = (String) group.getSelectedToggle().getUserData();
-			String ageText = personAge.getText().trim();
-			String state = (String) comboBox.getValue();
-			try {
-				addPersonAction(name, photo, status, gender, ageText, state);
-			} catch (NotFillAllNecessInfo exception) {
-				exception.lackNecessInforWarning();
-			} catch (NotNumberFormatException exception) {
-				exception.notNumberFormatWarning();
-			} catch (NoSuchAgeException exception) {
-				exception.noSuchAgeWarning();
-			} catch (AlreadyExistPersonException exception) {
-				exception.alreadyExistPersonWarning();
-			}
+            String name = personName.getText().trim();
+            String photo = "/Users/zhangmo/Documents/GitHub/Assignment2/MiniNet/" + name;
+            //String photo = personPhoto.getText().trim();
+            String status = personStatus.getText().trim();
+            String gender = (String) group.getSelectedToggle().getUserData();
+            String ageText = personAge.getText().trim();
+            String state = (String) comboBox.getValue();
+            try {
+                addPersonAction(name, photo, status, gender, ageText, state);
+            } catch (NotFillAllNecessInfo exception) {
+                exception.lackNecessInforWarning();
+            } catch (NotNumberFormatException exception) {
+                exception.notNumberFormatWarning();
+            } catch (NoSuchAgeException exception) {
+                exception.noSuchAgeWarning();
+            } catch (AlreadyExistPersonException exception) {
+                exception.alreadyExistPersonWarning();
+            }
 
-		});
+        });
 
-		// dc.addPerson(personName.getText().trim(), personPhoto.getText().trim(),
-		// personStatus.getText().trim(),(String)group.getSelectedToggle().getUserData(),
-		// Integer.parseInt(personAge.getText().trim()),
-		// ((String)comboBox.getValue()).trim() );
-		btCancel.setOnAction(e -> {
-			window.setScene(startScene());
-		});
+        // dc.addPerson(personName.getText().trim(), personPhoto.getText().trim(),
+        // personStatus.getText().trim(),(String)group.getSelectedToggle().getUserData(),
+        // Integer.parseInt(personAge.getText().trim()),
+        // ((String)comboBox.getValue()).trim() );
+        btCancel.setOnAction(e -> {
+            window.setScene(startScene());
+        });
 
-		upload.setOnAction(e -> {
-			// uploadPhoto(Person dc.);
-		});
+        upload.setOnAction(e -> {
+            uploadPhoto(personName.getText().trim());
 
-		Scene scene = new Scene(pane, 700, 500);
-		return scene;
-	}
+            //System.out.println(uploadPhoto(personName.getText().trim()));
+        });
 
-	public void addPersonAction(String name, String photo, String status, String gender, String ageText, String state)
-			throws NotFillAllNecessInfo, NotNumberFormatException, NoSuchAgeException, AlreadyExistPersonException {
-		Person currentPerson;
-		if (name.equals("") || ageText.equals("") || state.equals("Select State")) {
-			throw new NotFillAllNecessInfo();
-		} else if (!(ageText.matches("\\d*") || ageText.matches("-\\d*"))) {
-			throw new NotNumberFormatException();
-		} else {
-			int age = Integer.parseInt(ageText);
-			if (age < 0 || age > 150)
-				throw new NoSuchAgeException();
-			else {
-				currentPerson = dc.addPerson(name, photo, status, gender, age, state);
-				if (currentPerson == null)
-					throw new AlreadyExistPersonException();
-				else if (currentPerson instanceof Adult) {
-					dc.getMember().put(name, currentPerson);
-					showMessageForAddPerson(true);
+        Scene scene = new Scene(pane, 700, 500);
+        return scene;
+    }
+
+    public void addPersonAction(String name, String photo, String status, String gender, String ageText, String state)
+            throws NotFillAllNecessInfo, NotNumberFormatException, NoSuchAgeException, AlreadyExistPersonException {
+        Person currentPerson;
+        if (name.equals("") || ageText.equals("") || state.equals("Select State")) {
+            throw new NotFillAllNecessInfo();
+        } else if (!(ageText.matches("\\d*") || ageText.matches("-\\d*"))) {
+            throw new NotNumberFormatException();
+        } else {
+            int age = Integer.parseInt(ageText);
+            if (age < 0 || age > 150)
+                throw new NoSuchAgeException();
+            else {
+                currentPerson = dc.addPerson(name, photo, status, gender, age, state);
+                if (currentPerson == null)
+                    throw new AlreadyExistPersonException();
+                else if (currentPerson instanceof Adult) {
+                    dc.getMember().put(name, currentPerson);
+                    showMessageForAddPerson(true);
 					/* add relation window */
-				} else {
+                    //window.setScene(addRelationScene());
+                } else {
 					/* add parents window */
 					/* add relation window */
-				}
-				window.setScene(startScene());
-			}
-		}
+                }
+                window.setScene(startScene());
+            }
+        }
 
-	}
-	public void showMessageForAddPerson(boolean isSuccess)
-	{
-		Alert alert= new Alert(Alert.AlertType.WARNING);
-		if(isSuccess) {
-			alert.setTitle("MESSAGES");
-			alert.setHeaderText("SUCCESS!");
-			alert.setContentText("Congratulations! Add person successfully!");
-		}
-		else {
-			alert.setTitle("MESSAGES");
-			alert.setHeaderText("FAIL!");
-			alert.setContentText("Sorry, add person unsuccessfully!");
-		}
-		alert.showAndWait();
-	}
+    }
+    public void showMessageForAddPerson(boolean isSuccess)
+    {
+        Alert alert= new Alert(Alert.AlertType.WARNING);
+        if(isSuccess) {
+            alert.setTitle("MESSAGES");
+            alert.setHeaderText("SUCCESS!");
+            alert.setContentText("Congratulations! Add person successfully!");
+        }
+        else {
+            alert.setTitle("MESSAGES");
+            alert.setHeaderText("FAIL!");
+            alert.setContentText("Sorry, add person unsuccessfully!");
+        }
+        alert.showAndWait();
+    }
 
-	public Scene selectPersonScene() {
+    public Scene selectPersonScene() {
 
-		// set up layout
+        // set up layout
 
-		GridPane pane = new GridPane();
-		pane.setAlignment(Pos.CENTER);
-		pane.setPadding(new Insets(5, 5, 5, 5));// 这是啥有没有没区别
-		pane.setHgap(5.5);
-		pane.setVgap(5.5);
+        GridPane pane = new GridPane();
+        pane.setAlignment(Pos.CENTER);
+        pane.setPadding(new Insets(5, 5, 5, 5));// 这是啥有没有没区别
+        pane.setHgap(5.5);
+        pane.setVgap(5.5);
 
-		Label label = new Label("All members as below, please select one person");
-		Button submit = new Button("Submit");
-		Button cancel = new Button("Cancel");
-		VBox layout = new VBox(10);
+        Label label = new Label("All members as below, please select one person");
+        Button submit = new Button("Submit");
+        Button cancel = new Button("Cancel");
+        VBox layout = new VBox(10);
 
-		ListView<String> memberList = new ListView<>();
-		memberList.getItems().addAll(dc.getMember().keySet());
-		memberList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        ListView<String> memberList = new ListView<>();
+        memberList.getItems().addAll(dc.getMember().keySet());
+        memberList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-		layout.setPadding(new Insets(20, 20, 20, 20));// 没区别啊
-		layout.getChildren().addAll(memberList, submit);
+        layout.setPadding(new Insets(20, 20, 20, 20));// 没区别啊
+        layout.getChildren().addAll(memberList, submit);
 
-		pane.add(label, 0, 0);
-		pane.add(layout, 0, 1);
-		pane.add(submit, 0, 2);
-		pane.add(cancel, 1, 2);
-		// create events
+        pane.add(label, 0, 0);
+        pane.add(layout, 0, 1);
+        pane.add(submit, 0, 2);
+        pane.add(cancel, 1, 2);
+        // create events
 
-		submit.setOnAction(e -> {
-			String selectPerson = memberList.getSelectionModel().getSelectedItem();
-			System.out.print(selectPerson);
-			window.setScene(modifyPersonScene(selectPerson));
+        submit.setOnAction(e -> {
+            String selectPerson = memberList.getSelectionModel().getSelectedItem();
+            System.out.print(selectPerson);
+            window.setScene(modifyPersonScene(selectPerson));
 
-		});
+        });
 
-		cancel.setOnAction(e -> {
-			window.setScene(startScene());
-		});
+        cancel.setOnAction(e -> {
+            window.setScene(startScene());
+        });
 
-		Scene scene = new Scene(pane, 700, 500);
-		return scene;
+        Scene scene = new Scene(pane, 700, 500);
+        return scene;
 
-	}
+    }
 
-	public Scene modifyPersonScene(String name) {
-		String theName = name;
-		// set up layout
+    public Scene modifyPersonScene(String name) {
+        String theName = name;
+        // set up layout
 
-		GridPane pane = new GridPane();
-		pane.setAlignment(Pos.CENTER);
-		pane.setPadding(new Insets(5, 5, 5, 5));
-		pane.setHgap(5.5);
-		pane.setVgap(5.5);
+        GridPane pane = new GridPane();
+        pane.setAlignment(Pos.CENTER);
+        pane.setPadding(new Insets(5, 5, 5, 5));
+        pane.setHgap(5.5);
+        pane.setVgap(5.5);
 
-		Label label = new Label("Menu for modify the person, please select one");
-		Button btDisplayP = new Button("Display the profile");
-		Button btFindOutPC = new Button("Find out the parent or child of the person");
-		Button btDelete = new Button("Delete this person");
-		Button btBack = new Button("Go back to previous page");
+        Label label = new Label("Menu for modify the person, please select one");
+        Button btDisplayP = new Button("Display the profile");
+        Button btFindOutPC = new Button("Find out the parent or child of the person");
+        Button btDelete = new Button("Delete this person");
+        Button btBack = new Button("Back");
 
-		pane.add(label, 0, 0);
-		pane.add(btDisplayP, 0, 1);
-		pane.add(btFindOutPC, 0, 2);
-		pane.add(btDelete, 0, 3);
-		pane.add(btBack, 0, 4);
+        pane.add(label, 0, 0);
+        pane.add(btDisplayP, 0, 1);
+        pane.add(btFindOutPC, 0, 2);
+        pane.add(btDelete, 0, 3);
+        pane.add(btBack, 0, 4);
 
-		// create event
+        // create event
 
-		btDisplayP.setOnAction(e -> {
-			try {
-				displayProfileAction(theName);
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+        btDisplayP.setOnAction(e -> {
+            try {
+                displayProfileAction(theName);
+            } catch (FileNotFoundException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
 
-		});
+        });
 
-		btFindOutPC.setOnAction(e -> {
+        btFindOutPC.setOnAction(e -> {
 
-		});
+        });
 
-		btDelete.setOnAction(e -> {
-			deletePersonAction();
+        btDelete.setOnAction(e -> {
+            deletePersonAction();
 
-		});
+        });
 
-		btBack.setOnAction(e -> {
-			window.setScene(selectPersonScene());
-		});
+        btBack.setOnAction(e -> {
+            window.setScene(selectPersonScene());
+        });
 
-		Scene scene = new Scene(pane, 700, 500);
-		return scene;
+        Scene scene = new Scene(pane, 700, 500);
+        return scene;
 
-	}
+    }
 
-	public void deletePersonAction() {
+    public void deletePersonAction() {
 
-		// set up layout
-		Stage stage = new Stage();
-		GridPane pane = new GridPane();
-		pane.setAlignment(Pos.CENTER);
+        // set up layout
+        Stage stage = new Stage();
+        GridPane pane = new GridPane();
+        pane.setAlignment(Pos.CENTER);
 
-		Label label = new Label(
-				"Delete this person will also delete all the relationshio of the person, are you sure you want to delete this person?");
-		Button btConfirm = new Button("Yes");
-		Button btCancel = new Button("Cancel");
+        Label label = new Label(
+                "Delete this person will also delete all the relationshio of the person, are you sure you want to delete this person?");
+        Button btConfirm = new Button("Yes");
+        Button btCancel = new Button("Cancel");
 
-		pane.add(label, 0, 0);
-		pane.add(btConfirm, 0, 1);
-		pane.add(btCancel, 1, 1);
-		// create event
+        pane.add(label, 0, 0);
+        pane.add(btConfirm, 0, 1);
+        pane.add(btCancel, 1, 1);
+        // create event
 
-		btConfirm.setOnAction(e -> {
-			// deletePerson();
-			// window.setScene(value);
-		});
+        btConfirm.setOnAction(e -> {
+            // deletePerson();
+            // window.setScene(value);
+        });
 
-		btCancel.setOnAction(e -> {
-			stage.close();
-		});
+        btCancel.setOnAction(e -> {
+            stage.close();
+        });
 
-		Scene scene = new Scene(pane, 1000, 300);
-		stage.setScene(scene);
-		stage.show();
+        Scene scene = new Scene(pane, 1000, 300);
+        stage.setScene(scene);
+        stage.show();
 
-	}
+    }
 
-	public void displayProfileAction(String name) throws FileNotFoundException {
-		String theName = name;
-		int age = dc.getMemberObj(theName).getAge();
-		String status = dc.getMemberObj(theName).getStatus();
-		String gender = dc.getMemberObj(theName).getGender();
-		String state = dc.getMemberObj(theName).getState();
-		String photo = dc.getMemberObj(theName).getPhoto();//need what
+    public void displayProfileAction(String name) throws FileNotFoundException {
+        String theName = name;
+        int age = dc.getMemberObj(theName).getAge();
+        String status = dc.getMemberObj(theName).getStatus();
+        String gender = dc.getMemberObj(theName).getGender();
+        String state = dc.getMemberObj(theName).getState();
+        String photo = dc.getMemberObj(theName).getPhoto();
 
-		GridPane pane = new GridPane();
-		pane.setAlignment(Pos.CENTER);
-		pane.setPadding(new Insets(5, 5, 5, 5));
-		pane.setHgap(5.5);
-		pane.setVgap(5.5);
+        Button btBack = new Button("Back");
+        
+        GridPane pane = new GridPane();
+        pane.setAlignment(Pos.CENTER);
+        pane.setPadding(new Insets(5, 5, 5, 5));
+        pane.setHgap(5.5);
+        pane.setVgap(5.5);
 
-		pane.add((new Label("Name: ")), 1, 3);
-		pane.add(new Label("Age: "), 1, 4);
-		pane.add(new Label("Status: "), 1, 5);
-		pane.add(new Label("Gender: "), 1, 6);
-		pane.add(new Label("State: "), 1, 7);
+        pane.add((new Label("Name: ")), 1, 3);
+        pane.add(new Label("Age: "), 1, 4);
+        pane.add(new Label("Status: "), 1, 5);
+        pane.add(new Label("Gender: "), 1, 6);
+        pane.add(new Label("State: "), 1, 7);
+        pane.add(btBack, 7, 10);
+        // btBack action, put it in the right position after
+        btBack.setOnAction(e -> {
+        	window.setScene(modifyPersonScene(name));
+        });
 
-		// pane.add(new Label(photo), 2, 1);
+        // pane.add(new Label(photo), 2, 1);
 
-		final ImageView imageView = new ImageView();
-		Image defaultImage;
-		if(photo.equals("")) {
-			defaultImage= new Image(new FileInputStream("image/default.png"));
-		}
-		else
-		{
-			defaultImage= new Image(new FileInputStream("image/"+photo));
-		}
-		imageView.setImage(defaultImage);
+        ImageView imageView = new ImageView();
+        Image image = new Image(new FileInputStream("image/"+ photo));
+        if( image.equals(null)) {
+            Image defaultImage = new Image(new FileInputStream("image/default.png"));
+            imageView.setImage(defaultImage);
+        }else {
+            
+            imageView.setImage(image);
 
-		imageView.setFitHeight(100);
-		imageView.setFitWidth(100);
-		pane.add(imageView, 3, 0);
+        }
+        imageView.setFitHeight(100);
+        imageView.setFitWidth(100);
+        pane.add(imageView, 3, 0);
 
-		pane.add((new Label(theName)), 4, 3);
-		pane.add(new Label(Integer.toString(age)), 4, 4);
-		pane.add(new Label(status), 4, 5);
-		pane.add(new Label(gender), 4, 6);
-		pane.add(new Label(state), 4, 7);
+        pane.add((new Label(theName)), 4, 3);
+        pane.add(new Label(Integer.toString(age)), 4, 4);
+        pane.add(new Label(status), 4, 5);
+        pane.add(new Label(gender), 4, 6);
+        pane.add(new Label(state), 4, 7);
 
-		Scene scene = new Scene(pane, 700, 500);
-		window.setScene(scene);
-		window.show();
+        Scene scene = new Scene(pane, 700, 500);
+        window.setScene(scene);
+        window.show();
 
-	}
+    }
 
-	public Scene findOutScene() {
+    public Scene findOutScene() {
 
-		// set up layout
+        // set up layout
 
-		GridPane pane = new GridPane();
-		pane.setAlignment(Pos.CENTER);
-		pane.setPadding(new Insets(5, 5, 5, 5));
-		pane.setHgap(5.5);
-		pane.setVgap(5.5);
+        GridPane pane = new GridPane();
+        pane.setAlignment(Pos.CENTER);
+        pane.setPadding(new Insets(5, 5, 5, 5));
+        pane.setHgap(5.5);
+        pane.setVgap(5.5);
 
-		Label label = new Label("please select two different people");
-		Button submit = new Button("Submit");
-		Button cancel = new Button("Cancel");
-		ComboBox comboBox1 = new ComboBox();
-		ComboBox comboBox2 = new ComboBox();
+        Label label = new Label("please select two different people");
+        Button submit = new Button("Submit");
+        Button cancel = new Button("Cancel");
+        ComboBox comboBox1 = new ComboBox();
+        ComboBox comboBox2 = new ComboBox();
 
-		comboBox1.getItems().add("selectFirstPerson");
-		comboBox1.getItems().add("小明");
-		comboBox1.getItems().add("小红");
-		comboBox1.getItems().add("小刚");
-		comboBox1.getSelectionModel().selectFirst();
-		comboBox2.getItems().add("selectSecondPerson");
-		comboBox2.getItems().add("小明");
-		comboBox2.getItems().add("小红");
-		comboBox2.getItems().add("小刚");
-		comboBox2.getSelectionModel().selectFirst();
+        comboBox1.getItems().add("selectFirstPerson");
+        comboBox1.getItems().add("小明");
+        comboBox1.getItems().add("小红");
+        comboBox1.getItems().add("小刚");
+        comboBox1.getSelectionModel().selectFirst();
+        comboBox2.getItems().add("selectSecondPerson");
+        comboBox2.getItems().add("小明");
+        comboBox2.getItems().add("小红");
+        comboBox2.getItems().add("小刚");
+        comboBox2.getSelectionModel().selectFirst();
 
-		// save this check to get relationship method
-		// if(comboBox1.getValue().equals(comboBox2.getValue())) {
-		// Stage stage = new Stage();
-		// Scene warning = new Scene(new Label("Cannot select same person, please select
-		// again"), 100, 20);
-		// stage.setScene(warning);
-		// stage.show();
-		// stage.close();
-		// window.setScene(findOutScene());
-		// }
+        // save this check to get relationship method
+        // if(comboBox1.getValue().equals(comboBox2.getValue())) {
+        // Stage stage = new Stage();
+        // Scene warning = new Scene(new Label("Cannot select same person, please select
+        // again"), 100, 20);
+        // stage.setScene(warning);
+        // stage.show();
+        // stage.close();
+        // window.setScene(findOutScene());
+        // }
 
-		pane.add(label, 0, 0);
-		pane.add(comboBox1, 0, 1);
-		pane.add(comboBox2, 1, 1);
-		pane.add(submit, 0, 2);
-		pane.add(cancel, 1, 2);
+        pane.add(label, 0, 0);
+        pane.add(comboBox1, 0, 1);
+        pane.add(comboBox2, 1, 1);
+        pane.add(submit, 0, 2);
+        pane.add(cancel, 1, 2);
 
-		// create events
+        // create events
 
-		submit.setOnAction(e -> {
-			String selectPerson1 = (String) comboBox1.getValue();
-			String selectPerson2 = (String) comboBox2.getValue();
-			System.out.print(selectPerson1 + selectPerson2);
-			relationshipResult(selectPerson1, selectPerson2);
+        submit.setOnAction(e -> {
+            String selectPerson1 = (String) comboBox1.getValue();
+            String selectPerson2 = (String) comboBox2.getValue();
+            System.out.print(selectPerson1 + selectPerson2);
+            relationshipResult(selectPerson1, selectPerson2);
 
-			// get member object, call display profile
-		});
+            // get member object, call display profile
+        });
 
-		cancel.setOnAction(e -> {
-			window.setScene(startScene());
-		});
+        cancel.setOnAction(e -> {
+            window.setScene(startScene());
+        });
 
-		Scene scene = new Scene(pane, 700, 500);
-		return scene;
+        Scene scene = new Scene(pane, 700, 500);
+        return scene;
 
-	}
+    }
 
-	public void relationshipResult(String p1, String p2) {
-		String name1 = p1;
-		String name2 = p2;
+    public void relationshipResult(String p1, String p2) {
+        String name1 = p1;
+        String name2 = p2;
 
-		Stage stage = new Stage();
-		GridPane pane = new GridPane();
-		String result = "their relationship is "; // need check relationship method
-		Button btBack = new Button("Back");
+        Stage stage = new Stage();
+        GridPane pane = new GridPane();
+        String result = "their relationship is "; // need check relationship method
+        Button btBack = new Button("Back");
 
-		pane.add(new Label(result), 0, 0);
-		pane.add(btBack, 0, 7);
+        pane.add(new Label(result), 0, 0);
+        pane.add(btBack, 0, 7);
 
-		btBack.setOnAction(e -> {
-			stage.close();
-		});
+        btBack.setOnAction(e -> {
+            stage.close();
+        });
 
-		Scene scene = new Scene(pane, 300, 200);
-		stage.setScene(scene);
-		stage.show();
-	}
+        Scene scene = new Scene(pane, 300, 200);
+        stage.setScene(scene);
+        stage.show();
+    }
 
-	// public void uploadPhoto(Person person) {
-	//
-	// this.person = person;
-	// FileChooser fileChooser = new FileChooser();
-	// FileChooser.ExtensionFilter extFilterPNG = new
-	// FileChooser.ExtensionFilter("PNG files","*.PNG");
-	// FileChooser.ExtensionFilter extFilterJPG = new
-	// FileChooser.ExtensionFilter("JPG files","*.JPG");
-	// fileChooser.getExtensionFilters().addAll(extFilterPNG);
-	//
-	// File file = fileChooser.showOpenDialog(null);
-	//
-	// try {
-	//
-	// BufferedImage bufferedImage = ImageIO.read(file);
-	// Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-	//
-	//
-	// } catch (IOException ex) {
-	// //Logger.getLogger((MiniNetInterface.class.getName()).log(Level.SEVERE, null,
-	// ex);
-	// }
+    @SuppressWarnings("deprecation")
+    public String uploadPhoto(String name) {
+
+        Image image = null;
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files","*.PNG");
+//      FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files","*.JPG");
+        fileChooser.getExtensionFilters().addAll(extFilterPNG);
+
+        File file = fileChooser.showOpenDialog(null);
+
+        try {
+
+            BufferedImage bufferedImage = ImageIO.read(file);
+            image = SwingFXUtils.toFXImage(bufferedImage, null);
+
+//        //save to Github file
+//        		String newName = name;
+////            File outputFile = new File("/Users/zhangmo/Documents/GitHub/Assignment2/MiniNet" + newName);
+//        		 File outputFile = new File("image/" + newName);
+//
+//
+//              ImageIO.write(bufferedImage, "png", outputFile);
+//              ImageIO.write(bufferedImage, "jpg", outputFile);
+
+
+        } catch (IOException ex) {
+            //Logger.getLogger((MiniNetInterface.class.getName()).log(Level.SEVERE, null,ex);
+        }
+        return image.toString();
+
+        //return image.impl_getUrl();
+
+
+    }
+    
+//    public Scene addRelationScene() {
+//    	
+//    	
+//    }
 
 }
