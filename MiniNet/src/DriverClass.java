@@ -38,6 +38,7 @@ public class DriverClass {
 				rTextData = currentLine.split(",");
 				relationData.add(rTextData);
 			}
+			relationsFileReader.close();
 			
 		}catch(FileNotFoundException e)
 		{
@@ -71,6 +72,7 @@ public class DriverClass {
 				member.put(pTextData[0].trim(), currentPerson);
 
 			}
+			peopleFileReader.close();
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -151,6 +153,22 @@ public class DriverClass {
 			return currentPerson;
 		}
 //		member.put(name, currentPerson);
+	}
+	
+	public void deletePerson(Person currentPerson)
+	{
+		for(String relationType: currentPerson.getRelationship().keySet())
+		{
+			for(Person relatedPerson: currentPerson.getRelationship().get(relationType))
+				{
+					currentPerson.removeRelationship(relationType, relatedPerson); 
+				}
+		}
+		member.remove(currentPerson.getName());
+		for(String sr: member.keySet() )
+		{
+			member.get(sr).displayProfile();
+		}
 	}
 	
 	public HashMap<String, Person> getMember() {

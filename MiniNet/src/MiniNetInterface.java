@@ -99,6 +99,8 @@ public class MiniNetInterface {
 
     public Scene addPersonScene() {
 
+    		
+    	
         // set up layout
         GridPane pane = new GridPane();
         pane.setAlignment(Pos.CENTER);
@@ -147,8 +149,8 @@ public class MiniNetInterface {
         pane.add(comboBox, 1, 4);
 
         pane.add(new Label("Photo"), 0, 5);
-        //TextField personPhoto = new TextField();
-        //pane.add(personPhoto, 1, 5);
+        Label personPhoto = new Label();
+        pane.add(personPhoto, 1, 5);
         Button upload = new Button("Upload");
         pane.add(upload, 2, 5);
         pane.add(new Label("(Optional)"), 3, 5);
@@ -163,7 +165,7 @@ public class MiniNetInterface {
 			/* add a person */
 
             String name = personName.getText().trim();
-            String photo = "/Users/zhangmo/Documents/GitHub/Assignment2/MiniNet/" + name;
+            String photo = personPhoto.getText().trim();
             //String photo = personPhoto.getText().trim();
             String status = personStatus.getText().trim();
             String gender = (String) group.getSelectedToggle().getUserData();
@@ -183,16 +185,15 @@ public class MiniNetInterface {
 
         });
 
-        // dc.addPerson(personName.getText().trim(), personPhoto.getText().trim(),
-        // personStatus.getText().trim(),(String)group.getSelectedToggle().getUserData(),
-        // Integer.parseInt(personAge.getText().trim()),
-        // ((String)comboBox.getValue()).trim() );
+
         btCancel.setOnAction(e -> {
             window.setScene(startScene());
         });
 
         upload.setOnAction(e -> {
-            uploadPhoto(personName.getText().trim());
+        		File photoFile;
+        		photoFile= uploadPhoto(personName.getText().trim(), personPhoto);
+            personPhoto.setText(photoFile.getAbsolutePath());
 
             //System.out.println(uploadPhoto(personName.getText().trim()));
         });
@@ -217,7 +218,9 @@ public class MiniNetInterface {
                 if (currentPerson == null)
                     throw new AlreadyExistPersonException();
                 else if (currentPerson instanceof Adult) {
+                	
                     dc.getMember().put(name, currentPerson);
+                    currentPerson.setPhoto(saveImage(name, photo));
                     showMessageForAddPerson(true);
 					/* add relation window */
                     //window.setScene(addRelationScene());
@@ -329,7 +332,7 @@ public class MiniNetInterface {
         });
 
         btDelete.setOnAction(e -> {
-            deletePersonAction();
+            deletePersonAction(theName);
 
         });
 
@@ -342,7 +345,7 @@ public class MiniNetInterface {
 
     }
 
-    public void deletePersonAction() {
+    public void deletePersonAction(String name) {
 
         // set up layout
         Stage stage = new Stage();
@@ -360,8 +363,10 @@ public class MiniNetInterface {
         // create event
 
         btConfirm.setOnAction(e -> {
-            // deletePerson();
-            // window.setScene(value);
+        	Person currentPerson = dc.getMemberObj(name);
+        	dc.deletePerson(currentPerson);
+        	stage.close();
+        	window.setScene(selectPersonScene());
         });
 
         btCancel.setOnAction(e -> {
@@ -404,12 +409,14 @@ public class MiniNetInterface {
         // pane.add(new Label(photo), 2, 1);
 
         ImageView imageView = new ImageView();
-        Image image = new Image(new FileInputStream("image/"+ photo));
-        if( image.equals(null)) {
+      
+        if( photo.equals("")) {
+ 
             Image defaultImage = new Image(new FileInputStream("image/default.png"));
             imageView.setImage(defaultImage);
         }else {
-            
+ 
+        		Image image = new Image(new FileInputStream("image/"+ photo));
             imageView.setImage(image);
 
         }
@@ -480,6 +487,7 @@ public class MiniNetInterface {
             String selectPerson2 = (String) comboBox2.getValue();
             System.out.print(selectPerson1 + selectPerson2);
             relationshipResult(selectPerson1, selectPerson2);
+            
 
             // get member object, call display profile
         });
@@ -515,39 +523,38 @@ public class MiniNetInterface {
     }
 
     @SuppressWarnings("deprecation")
-    public String uploadPhoto(String name) {
+    public File uploadPhoto(String name, Label personPhoto) {
 
-        Image image = null;
+        
         FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files","*.PNG");
-//      FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files","*.JPG");
-        fileChooser.getExtensionFilters().addAll(extFilterPNG);
+        FileChooser.ExtensionFilter photoFilter = new FileChooser.ExtensionFilter("PNG files, JPG files, JPEG files","*.PNG","*.JPG","*JPEG");
+        fileChooser.getExtensionFilters().addAll(photoFilter);
 
         File file = fileChooser.showOpenDialog(null);
+       
+        return file;
 
-        try {
+    }
+    public String saveImage(String name, String path)
+    {
 
-            BufferedImage bufferedImage = ImageIO.read(file);
-            image = SwingFXUtils.toFXImage(bufferedImage, null);
-
-//        //save to Github file
-//        		String newName = name;
-////            File outputFile = new File("/Users/zhangmo/Documents/GitHub/Assignment2/MiniNet" + newName);
-//        		 File outputFile = new File("image/" + newName);
-//
-//
-//              ImageIO.write(bufferedImage, "png", outputFile);
-//              ImageIO.write(bufferedImage, "jpg", outputFile);
-
-
-        } catch (IOException ex) {
-            //Logger.getLogger((MiniNetInterface.class.getName()).log(Level.SEVERE, null,ex);
-        }
-        return image.toString();
-
-        //return image.impl_getUrl();
-
-
+		String fileType;
+		
+		if(!path.equals("")) {
+			System.out.println("ffffffffff");
+			File file = new File(path);
+			fileType = file.getName().substring(file.getName().lastIndexOf(".") + 1, file.getName().length());
+			try {
+				BufferedImage bufferedImage = ImageIO.read(file);
+				File output = new File("image/" + name.trim() + "Photo." + fileType);
+				System.out.println(output.getPath());
+				ImageIO.write(bufferedImage, fileType, output);
+				return output.getName();
+			} catch (IOException e) {
+				e.getMessage();
+			}
+		}
+		return path;
     }
     
 //    public Scene addRelationScene() {

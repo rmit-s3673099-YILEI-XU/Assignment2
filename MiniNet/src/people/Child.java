@@ -60,4 +60,10 @@ public class Child extends Person{
 		
 	}
 
+	@Override
+	public void removeRelationship(String relationType, Person relatedPerson) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

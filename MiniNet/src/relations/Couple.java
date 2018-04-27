@@ -29,8 +29,12 @@ public class Couple implements RelationManipulator{
 	@Override
 	public void remove() {
 		// TODO Auto-generated method stub
-		selectPerson.getRelationship().remove("couple");
+//		selectPerson.getRelationship().remove("couple");
 		partner.getRelationship().remove("couple");
+		if(selectPerson.getRelationship().containsKey("child"))
+		{
+			
+		}
 	}
 
 }

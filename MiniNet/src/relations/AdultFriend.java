@@ -36,8 +36,10 @@ public class AdultFriend implements RelationManipulator{
 	@Override
 	public void remove() {
 		// TODO Auto-generated method stub
-		selectPerson.getRelationship().get("friend").remove(friend);
-		friend.getRelationship().get("friend").remove(selectPerson);
+		friend.getRelationship().get("friends").remove(selectPerson);
+		if(friend.getRelationship().get("friends").isEmpty())
+			friend.getRelationship().remove("friends");
+		
 	}
 
 }

@@ -57,19 +57,33 @@ public class Adult extends Person{
 			break;
 		}
 		
-//		if(relationType.equals("friends")){
-//			this.setRelationManipulator(new AdultFriend(this, relation));
-//			this.relationManipulator.add();
-//			
-//		}else if(relationType.equals("colleagues")){
-//			this.setRelationManipulator(new Colleague(this, relation));
-//			this.relationManipulator.add();
-//		}
-//		else if(relationType.equals("classmates"))
-//		{
-//			this.setRelationManipulator(new Classmate(this, relation));
-//			this.relationManipulator.add();
-//		}
+		
+	}
+
+	@Override
+	public void removeRelationship(String relationType, Person relatedPerson) {
+		
+		// TODO Auto-generated method stub
+		switch(relationType){	
+		case "friends":
+			this.setRelationManipulator(new AdultFriend(this,relatedPerson));
+			this.relationManipulator.remove();
+		break;
+		case "colleagues":
+			this.setRelationManipulator(new Colleague(this, relatedPerson));
+			this.relationManipulator.remove();
+		break;
+		case "classmates":
+			this.setRelationManipulator(new Classmate(this, relatedPerson));
+			this.relationManipulator.remove();
+		break;
+		case "couple":
+			this.setRelationManipulator(new Couple(this, relatedPerson));
+			this.relationManipulator.remove();
+		break;
+			
+		
+		}
 		
 	}
 }
