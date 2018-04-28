@@ -1,3 +1,4 @@
+import java.util.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -24,6 +25,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -75,9 +77,7 @@ public class MiniNetInterface {
         // create events
 
         addPersonBt.setOnAction(event -> {
-
             window.setScene(addPersonScene());
-
         });
 
         selectPersonBt.setOnAction(event -> {
@@ -134,16 +134,14 @@ public class MiniNetInterface {
         pane.add(new Label("(Optional)"), 2, 3);
 
         pane.add(new Label("State"), 0, 4);
-        ComboBox comboBox = new ComboBox();
+        ComboBox<String> comboBox = new ComboBox<String>();
         comboBox.getItems().add("Select State");
-        comboBox.getItems().add("ACT");
-        comboBox.getItems().add("NSW");
-        comboBox.getItems().add("NT");
-        comboBox.getItems().add("QLD");
-        comboBox.getItems().add("SA");
-        comboBox.getItems().add("TAS");
-        comboBox.getItems().add("VIC");
-        comboBox.getItems().add("WA");
+        String[] allState = {"ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC", "WA"};
+        
+        for(String s: allState) {
+        	comboBox.getItems().add(s);
+        }
+
         comboBox.getSelectionModel().selectFirst();
 
         pane.add(comboBox, 1, 4);
@@ -166,7 +164,6 @@ public class MiniNetInterface {
 
             String name = personName.getText().trim();
             String photo = personPhoto.getText().trim();
-            //String photo = personPhoto.getText().trim();
             String status = personStatus.getText().trim();
             String gender = (String) group.getSelectedToggle().getUserData();
             String ageText = personAge.getText().trim();
@@ -223,12 +220,13 @@ public class MiniNetInterface {
                     currentPerson.setPhoto(saveImage(name, photo));
                     showMessageForAddPerson(true);
 					/* add relation window */
-                    //window.setScene(addRelationScene());
+                    window.setScene(addRelationScene(currentPerson));
                 } else {
 					/* add parents window */
+                	 	window.setScene(addParentsScene(currentPerson));
 					/* add relation window */
                 }
-                window.setScene(startScene());
+                //window.setScene(startScene());
             }
         }
 
@@ -381,11 +379,12 @@ public class MiniNetInterface {
 
     public void displayProfileAction(String name) throws FileNotFoundException {
         String theName = name;
-        int age = dc.getMemberObj(theName).getAge();
-        String status = dc.getMemberObj(theName).getStatus();
-        String gender = dc.getMemberObj(theName).getGender();
-        String state = dc.getMemberObj(theName).getState();
-        String photo = dc.getMemberObj(theName).getPhoto();
+        Person currentPerson = dc.getMemberObj(theName);
+        int age = currentPerson.getAge();
+        String status = currentPerson.getStatus();
+        String gender = currentPerson.getGender();
+        String state = currentPerson.getState();
+        String photo = currentPerson.getPhoto();
 
         Button btBack = new Button("Back");
         
@@ -449,19 +448,34 @@ public class MiniNetInterface {
         Label label = new Label("please select two different people");
         Button submit = new Button("Submit");
         Button cancel = new Button("Cancel");
-        ComboBox comboBox1 = new ComboBox();
-        ComboBox comboBox2 = new ComboBox();
+        ComboBox<String> comboBox1 = new ComboBox<String>();
+        ComboBox<String> comboBox2 = new ComboBox<String>();
+        String person1, person2;
 
         comboBox1.getItems().add("selectFirstPerson");
-        comboBox1.getItems().add("小明");
-        comboBox1.getItems().add("小红");
-        comboBox1.getItems().add("小刚");
         comboBox1.getSelectionModel().selectFirst();
+        
         comboBox2.getItems().add("selectSecondPerson");
-        comboBox2.getItems().add("小明");
-        comboBox2.getItems().add("小红");
-        comboBox2.getItems().add("小刚");
         comboBox2.getSelectionModel().selectFirst();
+        
+//        for(String key: dc.getMember().keySet()) {
+//        	String name = key;
+//        comboBox1.getItems().add(name);
+//        }
+//        comboBox1.getSelectionModel().selectFirst();
+//        person1 = comboBox1.getValue();
+//        
+//        for(String key: dc.getMember().keySet()) {
+//        	String name = key;
+//        while(!name.equals(person1)) {
+//        	comboBox1.getItems().add(name);
+//        	
+//        }
+//
+//        }
+//        
+//        person2 = comboBox2.getValue();
+        
 
         // save this check to get relationship method
         // if(comboBox1.getValue().equals(comboBox2.getValue())) {
@@ -522,7 +536,6 @@ public class MiniNetInterface {
         stage.show();
     }
 
-    @SuppressWarnings("deprecation")
     public File uploadPhoto(String name, Label personPhoto) {
 
         
@@ -557,9 +570,103 @@ public class MiniNetInterface {
 		return path;
     }
     
-//    public Scene addRelationScene() {
-//    	
-//    	
-//    }
+    public Scene addRelationScene(Person person) {
+
+        GridPane pane = new GridPane();
+        pane.setAlignment(Pos.CENTER);
+        pane.setPadding(new Insets(5, 5, 5, 5));
+        pane.setHgap(5.5);
+        pane.setVgap(5.5);
+
+        pane.add(new Label("Add Relation for adult"), 1, 0);
+
+
+        Scene scene = new Scene(pane, 700, 500);
+        return scene;
+
+    }
+
+    public Scene addParentsScene(Person person) {
+
+        GridPane pane = new GridPane();
+        pane.setAlignment(Pos.CENTER);
+        pane.setPadding(new Insets(5, 5, 5, 5));
+        pane.setHgap(5.5);
+        pane.setVgap(5.5);
+        
+        
+        pane.add(new Label("The person is not an adult, please add parents"), 0, 0);
+        
+        Button btAdd = new Button("Add");
+        Button btBack = new Button("Back");
+        String parent1, parent2;
+        ComboBox<String> comboBox1 = new ComboBox<String>();
+        ComboBox<String> comboBox2 = new ComboBox<String>();
+        comboBox1.getItems().add("selectParent1");
+        comboBox2.getItems().add("selectParent2");
+        //comboBox1.getSelectionModel().selectFirst();
+        //comboBox2.getSelectionModel().selectFirst(); 
+        
+        for(String key: dc.getMember().keySet()) {
+        	String name = key;
+        	if (dc.getMemberObj(name) instanceof Adult) {
+        	comboBox1.getItems().add(name);
+        	comboBox2.getItems().add(name);
+        	}
+        }
+        
+        parent1 = comboBox1.getValue();
+        parent2 = comboBox2.getValue();
+      
+        
+        
+        pane.add(btAdd, 0, 4);
+        pane.add(btBack, 4, 4);
+        pane.add(comboBox1, 0, 1);
+        pane.add(comboBox2, 1, 1);
+        
+        //events
+        
+        btAdd.setOnAction(e ->{
+        	
+        	if(parent1.equals(parent2) || parent1.equals("selectParent1") || parent2.equals("selectParent2")) {
+        		showMessageForAddParents(false);
+        	 	window.setScene(addParentsScene(person));
+        	 	System.out.print(parent1+parent2);
+            }else {
+            	showMessageForAddParents(true);
+            	/* @Sherry  add parents to the system*/
+        		window.setScene(addRelationScene(person));
+            }
+        	
+        }
+        	);
+        
+        btBack.setOnAction(e ->{
+        	window.setScene(addPersonScene());
+        	
+        });
+        Scene scene = new Scene(pane, 700, 500);
+
+        return scene;
+    }
+    
+    public void showMessageForAddParents(boolean isSuccess)
+    {
+        Alert alert= new Alert(Alert.AlertType.CONFIRMATION);
+        if(isSuccess) {
+            alert.setTitle("MESSAGES");
+            alert.setHeaderText("SUCCESS!");
+            alert.setContentText("Congratulations! Add parents successfully!");
+        }
+        else {
+            alert.setTitle("MESSAGES");
+            alert.setHeaderText("FAIL!");
+            alert.setContentText("Sorry, add parents unsuccessfully! Please select two different unrelated Adults!");
+        }
+        alert.showAndWait();
+    }
+    
+    
 
 }
