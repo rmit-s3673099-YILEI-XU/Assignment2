@@ -224,6 +224,7 @@ public class MiniNetInterface {
                 } else {
 					/* add parents window */
                 	 	window.setScene(addParentsScene(currentPerson));
+                	 	
 					/* add relation window */
                 }
                 //window.setScene(startScene());
@@ -276,9 +277,11 @@ public class MiniNetInterface {
         // create events
 
         submit.setOnAction(e -> {
-            String selectPerson = memberList.getSelectionModel().getSelectedItem();
-            System.out.print(selectPerson);
-            window.setScene(modifyPersonScene(selectPerson));
+            String personName = memberList.getSelectionModel().getSelectedItem();
+            System.out.print(personName);
+            Person selectesPerson = dc.getMemberObj(personName);
+//            System.out.print(selectPerson);
+            window.setScene(modifyPersonScene(selectesPerson));
 
         });
 
@@ -291,8 +294,8 @@ public class MiniNetInterface {
 
     }
 
-    public Scene modifyPersonScene(String name) {
-        String theName = name;
+    public Scene modifyPersonScene(Person selectedPerson) {
+//        String theName = name;
         // set up layout
 
         GridPane pane = new GridPane();
@@ -303,26 +306,33 @@ public class MiniNetInterface {
 
         Label label = new Label("Menu for modify the person, please select one");
         Button btDisplayP = new Button("Display the profile");
+        Button btDisplayR = new Button("Display relations");
         Button btFindOutPC = new Button("Find out the parent or child of the person");
         Button btDelete = new Button("Delete this person");
         Button btBack = new Button("Back");
 
         pane.add(label, 0, 0);
         pane.add(btDisplayP, 0, 1);
-        pane.add(btFindOutPC, 0, 2);
-        pane.add(btDelete, 0, 3);
-        pane.add(btBack, 0, 4);
+        pane.add(btDisplayR, 0, 2);
+        pane.add(btFindOutPC, 0, 3);
+        pane.add(btDelete, 0, 4);
+        pane.add(btBack, 0, 5);
 
         // create event
 
         btDisplayP.setOnAction(e -> {
             try {
-                displayProfileAction(theName);
+                displayProfileAction(selectedPerson);
             } catch (FileNotFoundException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
 
+        });
+        
+        btDisplayR.setOnAction(e->{
+        	displayRealtionsAction();
+        	
         });
 
         btFindOutPC.setOnAction(e -> {
@@ -330,7 +340,7 @@ public class MiniNetInterface {
         });
 
         btDelete.setOnAction(e -> {
-            deletePersonAction(theName);
+            deletePersonAction(selectedPerson);
 
         });
 
@@ -343,7 +353,7 @@ public class MiniNetInterface {
 
     }
 
-    public void deletePersonAction(String name) {
+    public void deletePersonAction(Person seletedPerson) {
 
         // set up layout
         Stage stage = new Stage();
@@ -361,8 +371,7 @@ public class MiniNetInterface {
         // create event
 
         btConfirm.setOnAction(e -> {
-        	Person currentPerson = dc.getMemberObj(name);
-        	dc.deletePerson(currentPerson);
+        	dc.deletePerson(seletedPerson);
         	stage.close();
         	window.setScene(selectPersonScene());
         });
@@ -377,14 +386,15 @@ public class MiniNetInterface {
 
     }
 
-    public void displayProfileAction(String name) throws FileNotFoundException {
-        String theName = name;
-        Person currentPerson = dc.getMemberObj(theName);
-        int age = currentPerson.getAge();
-        String status = currentPerson.getStatus();
-        String gender = currentPerson.getGender();
-        String state = currentPerson.getState();
-        String photo = currentPerson.getPhoto();
+    public void displayProfileAction(Person selectedPerson) throws FileNotFoundException {
+     
+//        Person currentPerson = dc.getMemberObj(theName);
+    		String name =selectedPerson.getName();
+        int age = selectedPerson.getAge();
+        String status = selectedPerson.getStatus();
+        String gender = selectedPerson.getGender();
+        String state = selectedPerson.getState();
+        String photo = selectedPerson.getPhoto();
 
         Button btBack = new Button("Back");
         
@@ -402,7 +412,7 @@ public class MiniNetInterface {
         pane.add(btBack, 7, 10);
         // btBack action, put it in the right position after
         btBack.setOnAction(e -> {
-        	window.setScene(modifyPersonScene(name));
+        	window.setScene(modifyPersonScene(selectedPerson));
         });
 
         // pane.add(new Label(photo), 2, 1);
@@ -423,7 +433,7 @@ public class MiniNetInterface {
         imageView.setFitWidth(100);
         pane.add(imageView, 3, 0);
 
-        pane.add((new Label(theName)), 4, 3);
+        pane.add((new Label(name)), 4, 3);
         pane.add(new Label(Integer.toString(age)), 4, 4);
         pane.add(new Label(status), 4, 5);
         pane.add(new Label(gender), 4, 6);
@@ -433,6 +443,11 @@ public class MiniNetInterface {
         window.setScene(scene);
         window.show();
 
+    }
+    
+    public void displayRealtionsAction()
+    {
+    	
     }
 
     public Scene findOutScene() {
@@ -554,7 +569,6 @@ public class MiniNetInterface {
 		String fileType;
 		
 		if(!path.equals("")) {
-			System.out.println("ffffffffff");
 			File file = new File(path);
 			fileType = file.getName().substring(file.getName().lastIndexOf(".") + 1, file.getName().length());
 			try {
@@ -599,24 +613,42 @@ public class MiniNetInterface {
         
         Button btAdd = new Button("Add");
         Button btBack = new Button("Back");
-        String parent1, parent2;
+
+       
         ComboBox<String> comboBox1 = new ComboBox<String>();
         ComboBox<String> comboBox2 = new ComboBox<String>();
-        comboBox1.getItems().add("selectParent1");
-        comboBox2.getItems().add("selectParent2");
-        //comboBox1.getSelectionModel().selectFirst();
-        //comboBox2.getSelectionModel().selectFirst(); 
+        comboBox1.setValue("selectParent1");
+        comboBox2.setValue("selectParent2");
         
-        for(String key: dc.getMember().keySet()) {
-        	String name = key;
-        	if (dc.getMemberObj(name) instanceof Adult) {
-        	comboBox1.getItems().add(name);
-        	comboBox2.getItems().add(name);
-        	}
+        for(String name: dc.getMember().keySet()) { 
+//	        	if (dc.getMemberObj(name) instanceof Adult) {
+	        	comboBox1.getItems().add(name);
+	        	comboBox2.getItems().add(name);
+//	        	}
         }
         
-        parent1 = comboBox1.getValue();
-        parent2 = comboBox2.getValue();
+        //set couple automatically
+		comboBox1.setOnAction(e -> {
+			String name1 = comboBox1.getValue();
+			Person tempParent1 = dc.getMemberObj(name1);
+			if (tempParent1.getRelationship().containsKey("couple")) {
+				comboBox2.getSelectionModel().select(tempParent1.getRelationship().get("couple").get(0).getName());
+				
+			}
+		
+		});
+		
+		comboBox2.setOnAction(e -> {
+			String name2 = comboBox2.getValue();
+			Person tempParent2 = dc.getMemberObj(name2);
+			if (tempParent2.getRelationship().containsKey("couple")) {
+				comboBox1.getSelectionModel().select(tempParent2.getRelationship().get("couple").get(0).getName());
+
+			} 
+	
+		});
+        
+        
       
         
         
@@ -629,16 +661,25 @@ public class MiniNetInterface {
         
         btAdd.setOnAction(e ->{
         	
-        	if(parent1.equals(parent2) || parent1.equals("selectParent1") || parent2.equals("selectParent2")) {
-        		showMessageForAddParents(false);
-        	 	window.setScene(addParentsScene(person));
-        	 	System.out.print(parent1+parent2);
-            }else {
-            	showMessageForAddParents(true);
-            	/* @Sherry  add parents to the system*/
-        		window.setScene(addRelationScene(person));
-            }
-        	
+       
+        String boxValue1,boxValue2;
+        	boxValue1 = comboBox1.getValue();
+        	boxValue2 = comboBox2.getValue();
+        	if(!(boxValue1.equals("selectParent1")||boxValue2.equals("selectParent2")))
+        	{
+        		
+        		try {
+        		addParentsAction(boxValue1,boxValue2,person);
+        		}catch(NotToBeCoupledException exception)
+        		{
+        			exception.notToBeCoupleWarning();
+        		}
+        		catch(NoAvailableException exception)
+        		{
+        			exception.noAvailableWarning();
+        		}
+        	}
+        	//need to consider if two name are same!!!!@Sherry
         }
         	);
         
@@ -651,9 +692,39 @@ public class MiniNetInterface {
         return scene;
     }
     
+    public void addParentsAction(String name1, String name2,Person child) throws NotToBeCoupledException, NoAvailableException
+    {
+     	Person parent1, parent2;
+    		parent1 = dc.getMemberObj(name1);
+		parent2 = dc.getMemberObj(name2);
+    		if(!(parent1 instanceof Adult)||!(parent2 instanceof Adult))
+		{
+			throw new NotToBeCoupledException(parent1,parent2);
+		}else
+		{
+			if(parent1.getRelationship().containsKey("couple")&&!(parent1.getRelationship().get("couple").get(0).equals(parent2))||
+					parent2.getRelationship().containsKey("couple")&&!(parent2.getRelationship().get("couple").get(0).equals(parent1)))
+			{
+				throw new NoAvailableException(parent1,parent2);
+				
+			}
+			else
+			{
+				child.addRelationship("parent", parent1);
+				child.addRelationship("parent", parent2);
+				dc.getMember().put(child.getName(), child);	
+				showMessageForAddParents(true);
+	    			showMessageForAddPerson(true);
+	    			//need add relation UI for child @Emma
+	    			window.setScene(startScene());
+			}
+		}
+	
+    }
+    
     public void showMessageForAddParents(boolean isSuccess)
     {
-        Alert alert= new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert= new Alert(Alert.AlertType.WARNING);
         if(isSuccess) {
             alert.setTitle("MESSAGES");
             alert.setHeaderText("SUCCESS!");
