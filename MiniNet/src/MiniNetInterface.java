@@ -34,10 +34,19 @@ import javax.imageio.ImageIO;
 import Exceptions.*;
 import javafx.*;
 
+
+
 public class MiniNetInterface {
 
     Stage window;
     DriverClass dc;
+    
+//    GridPane pane = new GridPane();
+//    pane.setAlignment(Pos.CENTER);
+//    pane.setPadding(new Insets(5, 5, 5, 5));
+//    pane.setHgap(5.5);
+//    pane.setVgap(5.5);
+
 
     public MiniNetInterface(Stage window) {
         this.window = window;
@@ -254,7 +263,7 @@ public class MiniNetInterface {
 
         GridPane pane = new GridPane();
         pane.setAlignment(Pos.CENTER);
-        pane.setPadding(new Insets(5, 5, 5, 5));// 这是啥有没有没区别
+        pane.setPadding(new Insets(5, 5, 5, 5));
         pane.setHgap(5.5);
         pane.setVgap(5.5);
 
@@ -267,8 +276,8 @@ public class MiniNetInterface {
         memberList.getItems().addAll(dc.getMember().keySet());
         memberList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        layout.setPadding(new Insets(20, 20, 20, 20));// 没区别啊
-        layout.getChildren().addAll(memberList, submit);
+        layout.setPadding(new Insets(20, 20, 20, 20));
+        layout.getChildren().addAll(memberList);
 
         pane.add(label, 0, 0);
         pane.add(layout, 0, 1);
@@ -586,18 +595,103 @@ public class MiniNetInterface {
     
     public Scene addRelationScene(Person person) {
 
-        GridPane pane = new GridPane();
-        pane.setAlignment(Pos.CENTER);
-        pane.setPadding(new Insets(5, 5, 5, 5));
-        pane.setHgap(5.5);
-        pane.setVgap(5.5);
+    	GridPane pane = new GridPane();
+    	pane.setAlignment(Pos.CENTER);
+    	pane.setPadding(new Insets(5, 5, 5, 5));
+    	pane.setHgap(5.5);
+    	pane.setVgap(5.5);
 
-        pane.add(new Label("Add Relation for adult"), 1, 0);
+        
+        Button btAdd = new Button("Add");
+        Button btCancel = new Button("Cancel");
+       
 
-
+        pane.add(new Label("Add Relation for this person"), 1, 0);
+        pane.add(btAdd, 0, 6);
+        pane.add(btCancel, 4, 6);
+        // relation list
+        
+        String[] adultRelation = {"friend", "classmate", "colleague", "couple"};
+        String[] childRelation = {"friend", "classmate"};
+        
+        ToggleGroup group = new ToggleGroup();
+        VBox relationList = new VBox(10);
+        relationList.setPadding(new Insets(20, 20, 20, 20));
+        pane.add(relationList, 0, 1);
+        
+        
+        if(person instanceof Adult) {
+        	
+        	 for(String r: adultRelation) {
+        		 RadioButton button = new RadioButton(r);
+        		 button.setToggleGroup(group);
+        		 button.setUserData(r);
+        		 relationList.getChildren().add(button);
+        	 }
+        }else {
+        	
+        	for(String r: childRelation) {
+       		 RadioButton button = new RadioButton(r);
+       		 button.setToggleGroup(group);
+       		 button.setUserData(r);
+       		 //System.out.println(button.getUserData());
+       		 relationList.getChildren().add(button);
+        	}
+        	
+        }
+       
+     
+        
+        
+//        RadioButton friend = new RadioButton("Friend");
+//        friend.setToggleGroup(group);
+//        friend.setUserData("friend");
+//        RadioButton classmate = new RadioButton("Classmate");
+//        classmate.setToggleGroup(group);
+//        RadioButton colleague = new RadioButton("Colleague");
+//        colleague.setToggleGroup(group);
+//        RadioButton couple = new RadioButton("Couple");
+//        couple.setToggleGroup(group);
+//        
+       
+//        
+//        if(person instanceof Adult) {
+//        relationList.getChildren().addAll(friend, classmate, colleague, couple);
+//        }else{
+//        	relationList.getChildren().addAll(friend, classmate);
+//        }
+        
+    
+        
+        // people list
+        
+        ListView<String> memberList = new ListView<>();
+        memberList.getItems().addAll(dc.getMember().keySet());
+        memberList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        pane.add(memberList, 6, 1);
+        
+        btAdd.setOnAction(e ->{
+        	
+        String relation = (String)group.getSelectedToggle().getUserData();
+        
+        Person selectPerson = dc.getMemberObj(memberList.getSelectionModel().getSelectedItem());
+        	addRelationAction(person, relation, selectPerson);
+        });
+        
+        btCancel.setOnAction(e ->{
+        	window.setScene(startScene());//check where should it go back
+        });
+       
         Scene scene = new Scene(pane, 700, 500);
         return scene;
 
+    }
+        
+        
+    public void addRelationAction(Person person, String relation, Person selectPerson) {
+    	
+    	System.out.println(person.getName() + relation + selectPerson.getName());
+    		
     }
 
     public Scene addParentsScene(Person person) {
@@ -649,9 +743,6 @@ public class MiniNetInterface {
 		});
         
         
-      
-        
-        
         pane.add(btAdd, 0, 4);
         pane.add(btBack, 4, 4);
         pane.add(comboBox1, 0, 1);
@@ -661,7 +752,6 @@ public class MiniNetInterface {
         
         btAdd.setOnAction(e ->{
         	
-       
         String boxValue1,boxValue2;
         	boxValue1 = comboBox1.getValue();
         	boxValue2 = comboBox2.getValue();
@@ -716,7 +806,12 @@ public class MiniNetInterface {
 				showMessageForAddParents(true);
 	    			showMessageForAddPerson(true);
 	    			//need add relation UI for child @Emma
-	    			window.setScene(startScene());
+	    			if(child instanceof Child) {
+	    			window.setScene(addRelationScene(child));
+	    			}else {
+	    				window.setScene(startScene());
+	    			}
+	    			
 			}
 		}
 	
