@@ -25,7 +25,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -85,6 +84,11 @@ public class MiniNetInterface {
 
         // create events
 
+//        addPersonBt.setOnAction(new EventAction{
+//        		public void handle() {
+//        			
+//        		}
+//        });
         addPersonBt.setOnAction(event -> {
             window.setScene(addPersonScene());
         });
@@ -290,7 +294,7 @@ public class MiniNetInterface {
             System.out.print(personName);
             Person selectesPerson = dc.getMemberObj(personName);
 //            System.out.print(selectPerson);
-            window.setScene(modifyPersonScene(selectesPerson));
+            window.setScene(viewPersonScene(selectesPerson));
 
         });
 
@@ -303,7 +307,7 @@ public class MiniNetInterface {
 
     }
 
-    public Scene modifyPersonScene(Person selectedPerson) {
+    public Scene viewPersonScene(Person selectedPerson) {
 //        String theName = name;
         // set up layout
 
@@ -313,7 +317,7 @@ public class MiniNetInterface {
         pane.setHgap(5.5);
         pane.setVgap(5.5);
 
-        Label label = new Label("Menu for modify the person, please select one");
+        Label label = new Label("Menu for view the person, please select one");
         Button btDisplayP = new Button("Display the profile");
         Button btDisplayR = new Button("Display relations");
         Button btFindOutPC = new Button("Find out the parent or child of the person");
@@ -340,7 +344,7 @@ public class MiniNetInterface {
         });
         
         btDisplayR.setOnAction(e->{
-        	displayRealtionsAction();
+        	displayRealtionsAction(selectedPerson);
         	
         });
 
@@ -421,7 +425,7 @@ public class MiniNetInterface {
         pane.add(btBack, 7, 10);
         // btBack action, put it in the right position after
         btBack.setOnAction(e -> {
-        	window.setScene(modifyPersonScene(selectedPerson));
+        	window.setScene(viewPersonScene(selectedPerson));
         });
 
         // pane.add(new Label(photo), 2, 1);
@@ -454,9 +458,41 @@ public class MiniNetInterface {
 
     }
     
-    public void displayRealtionsAction()
+    public void displayRealtionsAction(Person person)
     {
-    	
+    		GridPane pane = new GridPane();
+        pane.setAlignment(Pos.CENTER);
+        pane.setPadding(new Insets(5, 5, 5, 5));
+        pane.setHgap(5.5);
+        pane.setVgap(5.5);
+        
+        if(!(person.getRelationship().equals(null))) {
+        pane.add(new Label("People who have relationship with" + " " + person.getName() + " " + "is/are:"), 0, 0);
+        
+        int i = 2;
+        for(String type: person.getRelationship().keySet() ) {
+        	
+        ArrayList<Person> relatedPerson = person.getRelationship().get(type);
+        
+        for(Person r: relatedPerson) {
+        	pane.add(new Label(r.getName()), 0, i);
+        	pane.add(new Label(type), 4, i);
+        	i++;
+        	//System.out.println(r.getName() + type + i);
+        }
+       
+        }
+        }else {
+        	pane.add(new Label(person.getName() + " " + "does not have relationship with anyone."), 0, 0);
+        }
+        
+        Button btBack = new Button("Back");
+        pane.add(btBack, 2, 12);
+        btBack.setOnAction(e ->{
+        	window.setScene(viewPersonScene(person));
+        });
+        Scene scene = new Scene(pane, 700, 500);
+        window.setScene(scene);
     }
 
     public Scene findOutScene() {
