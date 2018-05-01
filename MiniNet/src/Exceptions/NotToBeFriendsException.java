@@ -10,7 +10,7 @@ public void notToBeFriendsException()
 	Alert alert = new Alert(Alert.AlertType.WARNING);
 	alert.setTitle("MESSAGES");
 	alert.setHeaderText("WARNING!");
-	alert.setContentText("The person is already existing, please check the name and fill agin.");
+	alert.setContentText("They cannot be friends.");
 	alert.show();
 }
 }
