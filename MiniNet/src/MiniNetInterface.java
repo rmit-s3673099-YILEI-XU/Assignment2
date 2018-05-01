@@ -344,7 +344,7 @@ public class MiniNetInterface {
         });
         
         btDisplayR.setOnAction(e->{
-        	displayRealtionsAction(selectedPerson);
+        	displayRelationsAction(selectedPerson);
         	
         });
 
@@ -353,8 +353,8 @@ public class MiniNetInterface {
         });
 
         btDelete.setOnAction(e -> {
-            deletePersonAction(selectedPerson);
-
+        	deletePersonAction(selectedPerson);
+        	
         });
 
         btBack.setOnAction(e -> {
@@ -366,38 +366,40 @@ public class MiniNetInterface {
 
     }
 
-    public void deletePersonAction(Person seletedPerson) {
+	
 
-        // set up layout
-        Stage stage = new Stage();
-        GridPane pane = new GridPane();
-        pane.setAlignment(Pos.CENTER);
+	public boolean showDeletePersonMessage(boolean temp) {
+		
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("MESSAGES");
+		
+		if (temp) {
+			alert.setHeaderText("WARNING!");
+			alert.setContentText(
+					"Delete this person will also delete all the relationship of the person, are you sure you want to delete this person?");
+		} else {
+			alert.setHeaderText("DELETE PERSON SUCCESSFUL!");
+		}
+		
+		Optional<ButtonType> result = alert.showAndWait();
+		if(result.get() == ButtonType.OK) {
+			return true;
+		}else if(result.get() == ButtonType.CANCEL) {
+			alert.close();
+		}
+		return false;
+	}
+	
+	public void deletePersonAction(Person selectedPerson) {
+		
+		if (showDeletePersonMessage(true)) {
+    		dc.deletePerson(selectedPerson);
+    		showDeletePersonMessage(false);
+    	}
+	
 
-        Label label = new Label(
-                "Delete this person will also delete all the relationshio of the person, are you sure you want to delete this person?");
-        Button btConfirm = new Button("Yes");
-        Button btCancel = new Button("Cancel");
+	}
 
-        pane.add(label, 0, 0);
-        pane.add(btConfirm, 0, 1);
-        pane.add(btCancel, 1, 1);
-        // create event
-
-        btConfirm.setOnAction(e -> {
-        	dc.deletePerson(seletedPerson);
-        	stage.close();
-        	window.setScene(selectPersonScene());
-        });
-
-        btCancel.setOnAction(e -> {
-            stage.close();
-        });
-
-        Scene scene = new Scene(pane, 1000, 300);
-        stage.setScene(scene);
-        stage.show();
-
-    }
 
     public void displayProfileAction(Person selectedPerson) throws FileNotFoundException {
      
@@ -458,7 +460,7 @@ public class MiniNetInterface {
 
     }
     
-    public void displayRealtionsAction(Person person)
+    public void displayRelationsAction(Person person)
     {
     		GridPane pane = new GridPane();
         pane.setAlignment(Pos.CENTER);
@@ -466,7 +468,7 @@ public class MiniNetInterface {
         pane.setHgap(5.5);
         pane.setVgap(5.5);
         
-        if(!(person.getRelationship().equals(null))) {
+        if(person.getRelationship().isEmpty()) {
         pane.add(new Label("People who have relationship with" + " " + person.getName() + " " + "is/are:"), 0, 0);
         
         int i = 2;
@@ -484,6 +486,7 @@ public class MiniNetInterface {
         }
         }else {
         	pane.add(new Label(person.getName() + " " + "does not have relationship with anyone."), 0, 0);
+        	System.out.print("no relation");
         }
         
         Button btBack = new Button("Back");
