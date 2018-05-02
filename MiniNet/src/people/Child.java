@@ -29,12 +29,14 @@ public class Child extends Person{
 	}
 
 	@Override
-	public void addRelationship(String relationType, Person relation) {
+	public void addRelationship(String relationType, Person relation) throws Exception {
 		// TODO Auto-generated method stub
-		if(relationType.equals("friend"))
+		if(relationType.equals("friends"))
 		{
+			System.out.println("jjjj");
 			this.setRelationManipulator(new ChildFriend(this, relation));
-		}else if(relationType.equals("classmate"))
+			this.relationManipulator.add();
+		}else if(relationType.equals("classmates"))
 		{
 			this.setRelationManipulator(new Classmate(this, relation));
 		}

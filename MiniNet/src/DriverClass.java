@@ -111,7 +111,20 @@ public class DriverClass {
 
 					}
 					// System.out.println(st[0]+" 000 "+st[1]);
-					member.get(name).addRelationship(st[2].trim(), member.get(st[1].trim()));
+					try {
+						member.get(name).addRelationship(st[2].trim(), member.get(st[1].trim()));
+					} catch (NotToBeFriendsException e) {
+						// TODO Auto-generated catch block
+						e.notToBeFriendsException();
+					}
+					catch(TooYoungException e)
+					{
+						e.tooYoungException();
+					}
+					catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		}

@@ -25,17 +25,12 @@ public class Adult extends Person{
 	}
 	
 	@Override
-	public void addRelationship(String relationType, Person relatedPerson){
+	public void addRelationship(String relationType, Person relatedPerson) throws Exception{
 		
 		switch (relationType) {
 		case "friends":
 			this.setRelationManipulator(new AdultFriend(this, relatedPerson));
-			try {
-				this.relationManipulator.add();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			this.relationManipulator.add();
 			break;
 		case "colleagues":
 			this.setRelationManipulator(new Colleague(this, relatedPerson));
@@ -47,12 +42,7 @@ public class Adult extends Person{
 			break;
 		case "couple":
 			this.setRelationManipulator(new Couple(this, relatedPerson));
-			try {
-				this.relationManipulator.add();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			this.relationManipulator.add();
 		default:
 			break;
 		}

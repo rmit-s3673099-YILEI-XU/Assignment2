@@ -468,7 +468,7 @@ public class MiniNetInterface {
         pane.setHgap(5.5);
         pane.setVgap(5.5);
         
-        if(person.getRelationship().isEmpty()) {
+        if(!person.getRelationship().isEmpty()) {
         pane.add(new Label("People who have relationship with" + " " + person.getName() + " " + "is/are:"), 0, 0);
         
         int i = 2;
@@ -650,8 +650,8 @@ public class MiniNetInterface {
         pane.add(btCancel, 4, 6);
         // relation list
         
-        String[] adultRelation = {"friend", "classmate", "colleague", "couple"};
-        String[] childRelation = {"friend", "classmate"};
+        String[] adultRelation = {"friends", "classmates", "colleagues", "couple"};
+        String[] childRelation = {"friends", "classmates"};
         
         ToggleGroup group = new ToggleGroup();
         VBox relationList = new VBox(10);
@@ -705,7 +705,11 @@ public class MiniNetInterface {
         // people list
         
         ListView<String> memberList = new ListView<>();
-        memberList.getItems().addAll(dc.getMember().keySet());
+        for(String personName: dc.getMember().keySet())
+        {
+        		if(!personName.equals(person.getName()))
+        			memberList.getItems().add(personName);
+        }
         memberList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         pane.add(memberList, 6, 1);
         
@@ -714,7 +718,20 @@ public class MiniNetInterface {
         String relation = (String)group.getSelectedToggle().getUserData();
         
         Person selectPerson = dc.getMemberObj(memberList.getSelectionModel().getSelectedItem());
-        	addRelationAction(person, relation, selectPerson);
+        try {
+      	
+    		person.addRelationship(relation, selectPerson);
+           } catch (NotToBeFriendsException e1) {
+    		// TODO Auto-generated catch block
+        	  
+        	   e1.notToBeFriendsException();
+           }catch(TooYoungException e1)
+           {
+        	   	e1.tooYoungException();
+           }catch(Exception e1) {
+        	   
+           }
+//        	addRelationAction(person, relation, selectPerson);
         });
         
         btCancel.setOnAction(e ->{
@@ -727,11 +744,11 @@ public class MiniNetInterface {
     }
         
         
-    public void addRelationAction(Person person, String relation, Person selectPerson) {
-    	
-    	System.out.println(person.getName() + relation + selectPerson.getName());
-    		
-    }
+//    public void addRelationAction(Person person, String relation, Person selectPerson) {
+//    	
+//    	System.out.println(person.getName() + relation + selectPerson.getName());
+//    		
+//    }
 
     public Scene addParentsScene(Person person) {
 
@@ -839,8 +856,13 @@ public class MiniNetInterface {
 			}
 			else
 			{
-				child.addRelationship("parent", parent1);
-				child.addRelationship("parent", parent2);
+				try {
+					child.addRelationship("parent", parent1);
+					child.addRelationship("parent", parent2);
+				}catch(Exception e)
+				{
+					
+				}
 				dc.getMember().put(child.getName(), child);	
 				showMessageForAddParents(true);
 	    			showMessageForAddPerson(true);

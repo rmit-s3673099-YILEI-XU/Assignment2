@@ -3,7 +3,7 @@ package relations;
 import java.util.ArrayList;
 
 import Exceptions.*;
-import people.Person;
+import people.*;
 
 public class ChildFriend implements RelationManipulator{
 	
@@ -23,13 +23,19 @@ public class ChildFriend implements RelationManipulator{
 	}
 
 	@Override
-	public void add() throws NotToBeFriendsException{
+	public void add() throws NotToBeFriendsException,TooYoungException{
 		// TODO Auto-generated method stub
-		if(Math.abs(selectPerson.getAge()-friend.getAge())>3)
+		if(Math.abs(selectPerson.getAge()-friend.getAge())>3||friend instanceof Adult)
 		{
-			throw new NotToBeFriendsException();
+			
+			throw new NotToBeFriendsException(selectPerson,friend);
 		}
-		selectPerson.getRelationship().get("friends").add(friend);
+		else if(friend instanceof YoungChild)
+		{
+			throw new TooYoungException(selectPerson);
+		}else {
+			selectPerson.getRelationship().get("friends").add(friend);
+		}
 	}
 
 	@Override

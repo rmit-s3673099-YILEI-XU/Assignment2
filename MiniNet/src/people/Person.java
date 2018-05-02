@@ -121,6 +121,6 @@ public abstract class Person {
 		
 	}
 	
-	abstract public void addRelationship(String relationType, Person relation);
+	abstract public void addRelationship(String relationType, Person relation) throws Exception;
 	abstract public void removeRelationship(String relationType, Person relatedPerson);
 }
