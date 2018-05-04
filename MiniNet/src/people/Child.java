@@ -30,18 +30,19 @@ public class Child extends Person{
 
 	@Override
 	public void addRelationship(String relationType, Person relation) throws Exception {
+	
 		// TODO Auto-generated method stub
-		if(relationType.equals("friends"))
-		{
-			System.out.println("jjjj");
+		switch(relationType){
+		case "friends":
+			System.out.println("kkkkkkk");
 			this.setRelationManipulator(new ChildFriend(this, relation));
 			this.relationManipulator.add();
-		}else if(relationType.equals("classmates"))
-		{
+			break;
+		case "classmates":
 			this.setRelationManipulator(new Classmate(this, relation));
-		}
-		else if(relationType.equals("parent"))
-		{
+			this.relationManipulator.add();
+			break;
+		case "parent":
 			
 			if(parent[0].getName()==null) {
 				parent[0]= relation;
@@ -49,16 +50,46 @@ public class Child extends Person{
 			else {
 				parent[1]= relation;
 			}
-			
+//			System.out.println(parent[0].getName()+" "+parent[1].getName());
 			if(parent[0].getName()!=null&&parent[1].getName()!=null)
 				addParent(parent[0],parent[1]);
+			
+			break;
+		default:
+			break;
 		}
+		
+		
+//		if(relationType.equals("friends"))
+//		{
+//		
+//			this.setRelationManipulator(new ChildFriend(this, relation));
+//			this.relationManipulator.add();
+//		}else if(relationType.equals("classmates"))
+//		{
+//			this.setRelationManipulator(new Classmate(this, relation));
+//		}
+//		else if(relationType.equals("parent"))
+//		{
+//			
+//			if(parent[0].getName()==null) {
+//				parent[0]= relation;
+//			}
+//			else {
+//				parent[1]= relation;
+//			}
+//			
+//			if(parent[0].getName()!=null&&parent[1].getName()!=null)
+//				addParent(parent[0],parent[1]);
+//		}
 		
 	}
 	
-	private void addParent(Person parent1, Person parent2) {
+	private void addParent(Person parent1, Person parent2) throws Exception {
 		
+	
 		this.setRelationManipulator(new Parents(parent1,parent2,this));
+		this.getRelationManipulator().add();
 		
 	}
 

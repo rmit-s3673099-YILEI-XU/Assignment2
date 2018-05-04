@@ -2,7 +2,8 @@ package relations;
 
 import java.util.ArrayList;
 
-import people.Person;
+import Exceptions.NotToBeColleaguesException;
+import people.*;
 
 public class Colleague implements RelationManipulator{
 
@@ -22,14 +23,19 @@ public class Colleague implements RelationManipulator{
 		
 	}
 	@Override
-	public void add() {
+	public void add() throws NotToBeColleaguesException {
 		// TODO Auto-generated method stub
 		selectPerson.getRelationship().get("colleagues").add(colleague);
 		if(!colleague.getRelationship().containsKey("colleagues"))
 		{
 			colleague.getRelationship().put("colleagues", new ArrayList<Person>());
 		}
-		colleague.getRelationship().get("colleagues").add(selectPerson);
+		if(colleague instanceof Adult) {
+			colleague.getRelationship().get("colleagues").add(selectPerson);
+		}else
+		{
+			throw new NotToBeColleaguesException(colleague);
+		}
 	}
 
 	@Override

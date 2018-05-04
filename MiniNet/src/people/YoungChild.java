@@ -26,7 +26,7 @@ public class YoungChild extends Person{
 	}
 
 	@Override
-	public void addRelationship(String relationType, Person relation) {
+	public void addRelationship(String relationType, Person relation) throws Exception {
 		
 		// TODO Auto-generated method stub
 		if(relationType.equals("parent"))
@@ -44,9 +44,10 @@ public class YoungChild extends Person{
 		}
 	}
 	
-	private void addParent(Person parent1, Person parent2) {
+	private void addParent(Person parent1, Person parent2) throws Exception  {
 		
 		this.setRelationManipulator(new Parents(parent1,parent2,this));
+		this.getRelationManipulator().add();
 		
 	}
 

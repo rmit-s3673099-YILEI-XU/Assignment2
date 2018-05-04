@@ -15,9 +15,9 @@ public class ChildFriend implements RelationManipulator{
 		this.selectPerson = selectPerson;
 		this.friend = friend;
 		
-		if(!this.selectPerson.getRelationship().containsKey("friend"))
+		if(!this.selectPerson.getRelationship().containsKey("friends"))
 		{
-			this.selectPerson.getRelationship().put("friend", new ArrayList<Person>());
+			this.selectPerson.getRelationship().put("friends", new ArrayList<Person>());
 		}
 		
 	}
@@ -25,23 +25,23 @@ public class ChildFriend implements RelationManipulator{
 	@Override
 	public void add() throws NotToBeFriendsException,TooYoungException{
 		// TODO Auto-generated method stub
-		if(Math.abs(selectPerson.getAge()-friend.getAge())>3||friend instanceof Adult)
+		if(friend instanceof YoungChild)
 		{
-			
-			throw new NotToBeFriendsException(selectPerson,friend);
+			throw new TooYoungException(selectPerson);	
 		}
-		else if(friend instanceof YoungChild)
-		{
-			throw new TooYoungException(selectPerson);
+		else if(Math.abs(selectPerson.getAge()-friend.getAge())>3||friend instanceof Adult)
+		{	
+			throw new NotToBeFriendsException(selectPerson,friend);
 		}else {
 			selectPerson.getRelationship().get("friends").add(friend);
+			friend.getRelationship().get("friends").add(selectPerson);
 		}
 	}
 
 	@Override
 	public void remove() {
 		// TODO Auto-generated method stub
-		selectPerson.getRelationship().get("friend").remove(friend);
+		selectPerson.getRelationship().get("friends").remove(friend);
 	}
 
 }

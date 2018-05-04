@@ -110,7 +110,8 @@ public class DriverClass {
 						name = st[0];
 
 					}
-					// System.out.println(st[0]+" 000 "+st[1]);
+//					 System.out.println(st[0]+" "+st[1]+" "+st[2]);
+//					System.out.println(name+ " "+member.get(name) instanceof Child);
 					try {
 						member.get(name).addRelationship(st[2].trim(), member.get(st[1].trim()));
 					} catch (NotToBeFriendsException e) {
@@ -170,11 +171,16 @@ public class DriverClass {
 	
 	public void deletePerson(Person currentPerson)
 	{
+		
 		for(String relationType: currentPerson.getRelationship().keySet())
 		{
+			System.out.println(relationType);
 			for(Person relatedPerson: currentPerson.getRelationship().get(relationType))
 				{
 					currentPerson.removeRelationship(relationType, relatedPerson); 
+					if(relationType=="child") {
+						member.remove(relatedPerson.getName());
+					}
 				}
 		}
 		member.remove(currentPerson.getName());

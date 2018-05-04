@@ -2,7 +2,8 @@ package relations;
 
 import java.util.ArrayList;
 
-import people.Person;
+import Exceptions.NotToBeClassmatesException;
+import people.*;
 
 public class Classmate implements RelationManipulator{
 
@@ -20,12 +21,18 @@ public class Classmate implements RelationManipulator{
 	}
 	
 	@Override
-	public void add() {
+	public void add() throws NotToBeClassmatesException {
 		// TODO Auto-generated method stub
 		this.selectPerson.getRelationship().get("classmates").add(classmate);
 		if(!classmate.getRelationship().containsKey("classmates"))
 			classmate.getRelationship().put("classmates", new ArrayList<Person>());
-		classmate.getRelationship().get("classmates").add(classmate);
+		if(classmate instanceof YoungChild) {
+			throw new NotToBeClassmatesException(classmate);
+		}
+		else
+		{
+			classmate.getRelationship().get("classmates").add(classmate);
+		}
 		
 	}
 

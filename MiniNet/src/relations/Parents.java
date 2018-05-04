@@ -10,18 +10,18 @@ public class Parents implements RelationManipulator{
 	private Person parent2;
 	private Person child;
 	
-	public Parents(Person parent1, Person parent2, Person child)
+	public Parents(Person parent1, Person parent2, Person child) 
 	{
 		this.parent1 = parent1;
 		this.parent2 = parent2;
 		this.child = child;
-		add();
+		
 	}
 
 	
 	
 	@Override
-	public void add() {
+	public void add() throws Exception {
 		// TODO Auto-generated method stub
 		
 		if(!parent1.getRelationship().containsKey("couple")) {
@@ -36,6 +36,13 @@ public class Parents implements RelationManipulator{
 		{
 			parent2.getRelationship().put("child", new ArrayList<Person>());
 		}
+		if(parent1.getRelationship().get("child").size()>0)
+		{
+			for(Person sibling: parent1.getRelationship().get("child")) {
+				child.setRelationManipulator(new Sibling(child,sibling));
+				child.getRelationManipulator().add();
+			}
+		}
 		child.getRelationship().get("parent").add(parent1);
 		child.getRelationship().get("parent").add(parent2);
 		parent1.getRelationship().get("child").add(child);
@@ -48,6 +55,7 @@ public class Parents implements RelationManipulator{
 	@Override
 	public void remove() {
 		// TODO Auto-generated method stub
+
 		parent1.getRelationship().get("child").remove(child);
 		parent2.getRelationship().get("child").remove(child);
 	}

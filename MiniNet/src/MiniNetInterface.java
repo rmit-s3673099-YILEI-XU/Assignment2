@@ -148,14 +148,14 @@ public class MiniNetInterface {
 
         pane.add(new Label("State"), 0, 4);
         ComboBox<String> comboBox = new ComboBox<String>();
-        comboBox.getItems().add("Select State");
+        comboBox.setValue("Select State");
         String[] allState = {"ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC", "WA"};
         
         for(String s: allState) {
         	comboBox.getItems().add(s);
         }
 
-        comboBox.getSelectionModel().selectFirst();
+//        comboBox.getSelectionModel().selectFirst();
 
         pane.add(comboBox, 1, 4);
 
@@ -237,6 +237,7 @@ public class MiniNetInterface {
                 } else {
 					/* add parents window */
                 	 	window.setScene(addParentsScene(currentPerson));
+                	 	showMessageForAddPerson(true);
                 	 	
 					/* add relation window */
                 }
@@ -632,116 +633,114 @@ public class MiniNetInterface {
 		return path;
     }
     
-    public Scene addRelationScene(Person person) {
+	public Scene addRelationScene(Person person) {
 
-    	GridPane pane = new GridPane();
-    	pane.setAlignment(Pos.CENTER);
-    	pane.setPadding(new Insets(5, 5, 5, 5));
-    	pane.setHgap(5.5);
-    	pane.setVgap(5.5);
+		GridPane pane = new GridPane();
+		pane.setAlignment(Pos.CENTER);
+		pane.setPadding(new Insets(5, 5, 5, 5));
+		pane.setHgap(5.5);
+		pane.setVgap(5.5);
 
-        
-        Button btAdd = new Button("Add");
-        Button btCancel = new Button("Cancel");
-       
+		Button btAdd = new Button("Add");
+		Button btCancel = new Button("Cancel");
 
-        pane.add(new Label("Add Relation for this person"), 1, 0);
-        pane.add(btAdd, 0, 6);
-        pane.add(btCancel, 4, 6);
-        // relation list
-        
-        String[] adultRelation = {"friends", "classmates", "colleagues", "couple"};
-        String[] childRelation = {"friends", "classmates"};
-        
-        ToggleGroup group = new ToggleGroup();
-        VBox relationList = new VBox(10);
-        relationList.setPadding(new Insets(20, 20, 20, 20));
-        pane.add(relationList, 0, 1);
-        
-        
-        if(person instanceof Adult) {
-        	
-        	 for(String r: adultRelation) {
-        		 RadioButton button = new RadioButton(r);
-        		 button.setToggleGroup(group);
-        		 button.setUserData(r);
-        		 relationList.getChildren().add(button);
-        	 }
-        }else {
-        	
-        	for(String r: childRelation) {
-       		 RadioButton button = new RadioButton(r);
-       		 button.setToggleGroup(group);
-       		 button.setUserData(r);
-       		 //System.out.println(button.getUserData());
-       		 relationList.getChildren().add(button);
-        	}
-        	
-        }
-       
-     
-        
-        
-//        RadioButton friend = new RadioButton("Friend");
-//        friend.setToggleGroup(group);
-//        friend.setUserData("friend");
-//        RadioButton classmate = new RadioButton("Classmate");
-//        classmate.setToggleGroup(group);
-//        RadioButton colleague = new RadioButton("Colleague");
-//        colleague.setToggleGroup(group);
-//        RadioButton couple = new RadioButton("Couple");
-//        couple.setToggleGroup(group);
-//        
-       
-//        
-//        if(person instanceof Adult) {
-//        relationList.getChildren().addAll(friend, classmate, colleague, couple);
-//        }else{
-//        	relationList.getChildren().addAll(friend, classmate);
-//        }
-        
-    
-        
-        // people list
-        
-        ListView<String> memberList = new ListView<>();
-        for(String personName: dc.getMember().keySet())
-        {
-        		if(!personName.equals(person.getName()))
-        			memberList.getItems().add(personName);
-        }
-        memberList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        pane.add(memberList, 6, 1);
-        
-        btAdd.setOnAction(e ->{
-        	
-        String relation = (String)group.getSelectedToggle().getUserData();
-        
-        Person selectPerson = dc.getMemberObj(memberList.getSelectionModel().getSelectedItem());
-        try {
-      	
-    		person.addRelationship(relation, selectPerson);
-           } catch (NotToBeFriendsException e1) {
-    		// TODO Auto-generated catch block
-        	  
-        	   e1.notToBeFriendsException();
-           }catch(TooYoungException e1)
-           {
-        	   	e1.tooYoungException();
-           }catch(Exception e1) {
-        	   
-           }
-//        	addRelationAction(person, relation, selectPerson);
-        });
-        
-        btCancel.setOnAction(e ->{
-        	window.setScene(startScene());//check where should it go back
-        });
-       
-        Scene scene = new Scene(pane, 700, 500);
-        return scene;
+		pane.add(new Label("Add Relation for this person"), 1, 0);
+		pane.add(btAdd, 0, 6);
+		pane.add(btCancel, 4, 6);
+		// relation list
 
-    }
+		String[] adultRelation = { "friends", "classmates", "colleagues", "couple" };
+		String[] childRelation = { "friends", "classmates" };
+
+		ToggleGroup group = new ToggleGroup();
+		VBox relationList = new VBox(10);
+		relationList.setPadding(new Insets(20, 20, 20, 20));
+		pane.add(relationList, 0, 1);
+
+		if (person instanceof Adult) {
+
+			for (String r : adultRelation) {
+				RadioButton button = new RadioButton(r);
+				button.setToggleGroup(group);
+				button.setUserData(r);
+				relationList.getChildren().add(button);
+			}
+		} else {
+
+			for (String r : childRelation) {
+				RadioButton button = new RadioButton(r);
+				button.setToggleGroup(group);
+				button.setUserData(r);
+				// System.out.println(button.getUserData());
+				relationList.getChildren().add(button);
+			}
+
+		}
+
+		// RadioButton friend = new RadioButton("Friend");
+		// friend.setToggleGroup(group);
+		// friend.setUserData("friend");
+		// RadioButton classmate = new RadioButton("Classmate");
+		// classmate.setToggleGroup(group);
+		// RadioButton colleague = new RadioButton("Colleague");
+		// colleague.setToggleGroup(group);
+		// RadioButton couple = new RadioButton("Couple");
+		// couple.setToggleGroup(group);
+		//
+
+		//
+		// if(person instanceof Adult) {
+		// relationList.getChildren().addAll(friend, classmate, colleague, couple);
+		// }else{
+		// relationList.getChildren().addAll(friend, classmate);
+		// }
+
+		// people list
+
+		ListView<String> memberList = new ListView<>();
+		for (String personName : dc.getMember().keySet()) {
+			if (!personName.equals(person.getName()))
+				memberList.getItems().add(personName);
+		}
+		memberList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		pane.add(memberList, 6, 1);
+
+		btAdd.setOnAction(e -> {
+
+			String relation = (String) group.getSelectedToggle().getUserData();
+
+			Person selectPerson = dc.getMemberObj(memberList.getSelectionModel().getSelectedItem());
+			try {
+
+				person.addRelationship(relation, selectPerson);
+				showMessageForAddRelation();
+			} catch (NotToBeFriendsException e1) {
+				// TODO Auto-generated catch block
+				e1.notToBeFriendsException();
+			} catch (TooYoungException e1) {
+				e1.tooYoungException();
+			} catch (NoAvailableException e1) {
+				e1.noAvailableWarning();
+			} catch (NotToBeCoupledException e1) {
+				e1.notToBeCoupleWarning();
+			} catch (NotToBeColleaguesException e1) {
+				e1.notToBeColleaguesWarning();
+			} catch (NotToBeClassmatesException e1) {
+				e1.notToBeClassmatesWarning();
+			}catch (Exception e1) {
+
+			}
+			// addRelationAction(person, relation, selectPerson);
+		});
+
+		btCancel.setOnAction(e -> {
+			window.setScene(startScene());// check where should it go back
+		});
+
+		Scene scene = new Scene(pane, 700, 500);
+		return scene;
+
+	}
         
         
 //    public void addRelationAction(Person person, String relation, Person selectPerson) {
@@ -893,7 +892,16 @@ public class MiniNetInterface {
         }
         alert.showAndWait();
     }
-    
+    public void showMessageForAddRelation()
+    {
+        Alert alert= new Alert(Alert.AlertType.WARNING);
+      
+            alert.setTitle("MESSAGES");
+            alert.setHeaderText("SUCCESS!");
+            alert.setContentText("Congratulations! Add relation successfully!");
+     
+        alert.showAndWait();
+    }
     
 
 }

@@ -13,7 +13,7 @@ public class TooYoungException extends Exception{
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 		alert.setTitle("MESSAGES");
 		alert.setHeaderText("WARNING!");
-		alert.setContentText(person.getName()+" is too young, he/she cannot has that relationship.");
+		alert.setContentText(person.getName()+" is too young, he/she cannot have that relationship.");
 		alert.show();
 	}
 }
