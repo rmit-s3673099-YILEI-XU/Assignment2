@@ -40,11 +40,7 @@ public class MiniNetInterface {
     Stage window;
     DriverClass dc;
     
-//    GridPane pane = new GridPane();
-//    pane.setAlignment(Pos.CENTER);
-//    pane.setPadding(new Insets(5, 5, 5, 5));
-//    pane.setHgap(5.5);
-//    pane.setVgap(5.5);
+
 
 
     public MiniNetInterface(Stage window) {
@@ -58,6 +54,13 @@ public class MiniNetInterface {
         }
 
     }
+    
+    public DriverClass getDriver() {
+   	 
+		return dc;
+}
+
+
 
     public Scene startScene() {
 
@@ -84,11 +87,6 @@ public class MiniNetInterface {
 
         // create events
 
-//        addPersonBt.setOnAction(new EventAction{
-//        		public void handle() {
-//        			
-//        		}
-//        });
         addPersonBt.setOnAction(event -> {
             window.setScene(addPersonScene());
         });
@@ -105,7 +103,9 @@ public class MiniNetInterface {
             window.close();
         });
 
+        
         Scene scene = new Scene(pane, 700, 500);
+        scene.getStylesheets().add("GUI.css");
         return scene;
 
     }
@@ -181,8 +181,9 @@ public class MiniNetInterface {
             String gender = (String) group.getSelectedToggle().getUserData();
             String ageText = personAge.getText().trim();
             String state = (String) comboBox.getValue();
+            AddPersonGUI addPerson = new AddPersonGUI(window);
             try {
-                addPersonAction(name, photo, status, gender, ageText, state);
+                addPerson.addPersonAction(name, photo, status, gender, ageText, state);
             } catch (NotFillAllNecessInfo exception) {
                 exception.lackNecessInforWarning();
             } catch (NotNumberFormatException exception) {
@@ -211,56 +212,56 @@ public class MiniNetInterface {
         Scene scene = new Scene(pane, 700, 500);
         return scene;
     }
-
-    public void addPersonAction(String name, String photo, String status, String gender, String ageText, String state)
-            throws NotFillAllNecessInfo, NotNumberFormatException, NoSuchAgeException, AlreadyExistPersonException {
-        Person currentPerson;
-        if (name.equals("") || ageText.equals("") || state.equals("Select State")) {
-            throw new NotFillAllNecessInfo();
-        } else if (!(ageText.matches("\\d*") || ageText.matches("-\\d*"))) {
-            throw new NotNumberFormatException();
-        } else {
-            int age = Integer.parseInt(ageText);
-            if (age < 0 || age > 150)
-                throw new NoSuchAgeException();
-            else {
-                currentPerson = dc.addPerson(name, photo, status, gender, age, state);
-                if (currentPerson == null)
-                    throw new AlreadyExistPersonException();
-                else if (currentPerson instanceof Adult) {
-                	
-                    dc.getMember().put(name, currentPerson);
-                    currentPerson.setPhoto(saveImage(name, photo));
-                    showMessageForAddPerson(true);
-					/* add relation window */
-                    window.setScene(addRelationScene(currentPerson));
-                } else {
-					/* add parents window */
-                	 	window.setScene(addParentsScene(currentPerson));
-                	 	showMessageForAddPerson(true);
-                	 	
-					/* add relation window */
-                }
-                //window.setScene(startScene());
-            }
-        }
-
-    }
-    public void showMessageForAddPerson(boolean isSuccess)
-    {
-        Alert alert= new Alert(Alert.AlertType.WARNING);
-        if(isSuccess) {
-            alert.setTitle("MESSAGES");
-            alert.setHeaderText("SUCCESS!");
-            alert.setContentText("Congratulations! Add person successfully!");
-        }
-        else {
-            alert.setTitle("MESSAGES");
-            alert.setHeaderText("FAIL!");
-            alert.setContentText("Sorry, add person unsuccessfully!");
-        }
-        alert.showAndWait();
-    }
+//
+//    public void addPersonAction(String name, String photo, String status, String gender, String ageText, String state)
+//            throws NotFillAllNecessInfo, NotNumberFormatException, NoSuchAgeException, AlreadyExistPersonException {
+//        Person currentPerson;
+//        if (name.equals("") || ageText.equals("") || state.equals("Select State")) {
+//            throw new NotFillAllNecessInfo();
+//        } else if (!(ageText.matches("\\d*") || ageText.matches("-\\d*"))) {
+//            throw new NotNumberFormatException();
+//        } else {
+//            int age = Integer.parseInt(ageText);
+//            if (age < 0 || age > 150)
+//                throw new NoSuchAgeException();
+//            else {
+//                currentPerson = dc.addPerson(name, photo, status, gender, age, state);
+//                if (currentPerson == null)
+//                    throw new AlreadyExistPersonException();
+//                else if (currentPerson instanceof Adult) {
+//                	
+//                    dc.getMember().put(name, currentPerson);
+//                    currentPerson.setPhoto(saveImage(name, photo));
+//                    showMessageForAddPerson(true);
+//					/* add relation window */
+//                    window.setScene(addRelationScene(currentPerson));
+//                } else {
+//					/* add parents window */
+//                	 	window.setScene(addParentsScene(currentPerson));
+//                	 	showMessageForAddPerson(true);
+//                	 	
+//					/* add relation window */
+//                }
+//                //window.setScene(startScene());
+//            }
+//        }
+//
+//    }
+//    public void showMessageForAddPerson(boolean isSuccess)
+//    {
+//        Alert alert= new Alert(Alert.AlertType.WARNING);
+//        if(isSuccess) {
+//            alert.setTitle("MESSAGES");
+//            alert.setHeaderText("SUCCESS!");
+//            alert.setContentText("Congratulations! Add person successfully!");
+//        }
+//        else {
+//            alert.setTitle("MESSAGES");
+//            alert.setHeaderText("FAIL!");
+//            alert.setContentText("Sorry, add person unsuccessfully!");
+//        }
+//        alert.showAndWait();
+//    }
 
     public Scene selectPersonScene() {
 
@@ -864,7 +865,8 @@ public class MiniNetInterface {
 				}
 				dc.getMember().put(child.getName(), child);	
 				showMessageForAddParents(true);
-	    			showMessageForAddPerson(true);
+				AddPersonGUI addPerson = new AddPersonGUI(window);
+	    			addPerson.showMessageForAddPerson(true);
 	    			//need add relation UI for child @Emma
 	    			if(child instanceof Child) {
 	    			window.setScene(addRelationScene(child));

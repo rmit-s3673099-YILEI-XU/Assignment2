@@ -1,6 +1,7 @@
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class MiniNet extends Application{
 	
@@ -8,6 +9,7 @@ public class MiniNet extends Application{
 	@Override
     public void start(Stage primaryStage) throws Exception{
     	   window = primaryStage;
+    	  // window.initStyle(StageStyle.TRANSPARENT);
        window.setTitle("MiniNet");
        window.setScene(new MiniNetInterface(window).startScene());
        window.setResizable(false);
