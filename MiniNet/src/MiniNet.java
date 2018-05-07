@@ -1,3 +1,7 @@
+import java.io.IOException;
+
+import Controller.DriverClass;
+import GUI.MainMenu;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
@@ -7,14 +11,21 @@ public class MiniNet extends Application{
 	
 	Stage window;
 	@Override
-    public void start(Stage primaryStage) throws Exception{
-    	   window = primaryStage;
-    	  // window.initStyle(StageStyle.TRANSPARENT);
-       window.setTitle("MiniNet");
-       window.setScene(new MiniNetInterface(window).startScene());
-       window.setResizable(false);
-       window.show();
-       
+    public void start(Stage primaryStage) throws IOException{
+		  DriverClass dc = new DriverClass();
+	        try {
+	            dc.initialData();
+	        } catch (IOException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        }
+	        window = primaryStage;
+	        // window.initStyle(StageStyle.TRANSPARENT);
+	        window.setTitle("MiniNet");
+//	       window.setScene(new MiniNetInterface(window).startScene());
+	        window.setScene(new MainMenu(window, dc).startScene());
+	        window.setResizable(false);
+	        window.show();
     } 
 
 	public static void main(String[] args)

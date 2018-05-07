@@ -30,6 +30,7 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
+import Controller.DriverClass;
 import Exceptions.*;
 import javafx.*;
 
@@ -181,18 +182,18 @@ public class MiniNetInterface {
             String gender = (String) group.getSelectedToggle().getUserData();
             String ageText = personAge.getText().trim();
             String state = (String) comboBox.getValue();
-            AddPersonGUI addPerson = new AddPersonGUI(window);
-            try {
-                addPerson.addPersonAction(name, photo, status, gender, ageText, state);
-            } catch (NotFillAllNecessInfo exception) {
-                exception.lackNecessInforWarning();
-            } catch (NotNumberFormatException exception) {
-                exception.notNumberFormatWarning();
-            } catch (NoSuchAgeException exception) {
-                exception.noSuchAgeWarning();
-            } catch (AlreadyExistPersonException exception) {
-                exception.alreadyExistPersonWarning();
-            }
+//            AddPersonGUI addPerson = new AddPersonGUI(window);
+//            try {
+//                addPerson.addPersonAction(name, photo, status, gender, ageText, state);
+//            } catch (NotFillAllNecessInfo exception) {
+//                exception.lackNecessInforWarning();
+//            } catch (NotNumberFormatException exception) {
+//                exception.notNumberFormatWarning();
+//            } catch (NoSuchAgeException exception) {
+//                exception.noSuchAgeWarning();
+//            } catch (AlreadyExistPersonException exception) {
+//                exception.alreadyExistPersonWarning();
+//            }
 
         });
 
@@ -865,8 +866,8 @@ public class MiniNetInterface {
 				}
 				dc.getMember().put(child.getName(), child);	
 				showMessageForAddParents(true);
-				AddPersonGUI addPerson = new AddPersonGUI(window);
-	    			addPerson.showMessageForAddPerson(true);
+//				AddPersonGUI addPerson = new AddPersonGUI(window);
+//	    			addPerson.showMessageForAddPerson(true);
 	    			//need add relation UI for child @Emma
 	    			if(child instanceof Child) {
 	    			window.setScene(addRelationScene(child));
