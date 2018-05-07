@@ -1,10 +1,18 @@
 .root{
 
-	-fx-background-color: #383838;
-	
+	//-fx-background-color: #383838;
+	-fx-background-image:url("file:/Users/zhangmo/Documents/GitHub/Assignment2/MiniNet/image/background.jpg");
+	-fx-background-size: cover;
 }
+
 
 .label{
 
  -fx-text-fill: #FFFFFF;
+}
+
+.button{
+
+ // -fx-background-color: linear-gradient(#D8D8D8, #B8B8B8);
+
 }

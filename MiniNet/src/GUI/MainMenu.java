@@ -38,9 +38,10 @@ public  class MainMenu {
     static public Scene startScene() {
 
         // set up layout
-        Label label1 = new Label("Welcome to Mininet, Please choose one from the menu");
-
-        GridPane pane = setUpPane();
+    		GridPane pane = setUpPane();    
+    		
+    		Label label1 = new Label("Welcome to Mininet, Please choose one from the menu");
+    		label1.setStyle("-fx-font-size: 13pt");
         pane.add(label1, 0, 0);
         Button addPersonBt = new Button("Add person");
         pane.add(addPersonBt, 0, 1);

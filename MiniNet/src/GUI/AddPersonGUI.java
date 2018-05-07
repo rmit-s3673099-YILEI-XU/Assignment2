@@ -34,11 +34,7 @@ public class AddPersonGUI {
 	public Scene addPersonScene() {
 
 		// set up layout
-		// GridPane pane = new GridPane();
-		// pane.setAlignment(Pos.CENTER);
-		// pane.setPadding(new Insets(5, 5, 5, 5));
-		// pane.setHgap(5.5);
-		// pane.setVgap(5.5);
+	
 
 		GridPane pane = MainMenu.setUpPane();
 
@@ -193,7 +189,7 @@ public class AddPersonGUI {
 					MainMenu.window.setScene(addRelationGUI.addRelationScene(currentPerson));
 
 				} else {
-					MainMenu.window.setScene(addRelationGUI.addParentsScene(currentPerson));
+					MainMenu.window.setScene(addRelationGUI.addParentsScene1(currentPerson));
 //					showMessageForAddPerson(true);
 //					MainMenu.window.setScene(addRelationGUI.addRelationScene(currentPerson));
 

@@ -6,6 +6,7 @@ import Exceptions.NotToBeColleaguesException;
 import Exceptions.NotToBeCoupledException;
 import Exceptions.NotToBeFriendsException;
 import Exceptions.TooYoungException;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -27,11 +28,7 @@ public class AddRelationGUI {
 
 	public Scene addRelationScene(Person person) {
 
-		GridPane pane = new GridPane();
-		pane.setAlignment(Pos.CENTER);
-		pane.setPadding(new Insets(5, 5, 5, 5));
-		pane.setHgap(5.5);
-		pane.setVgap(5.5);
+		GridPane pane = MainMenu.setUpPane();
 
 		Button btAdd = new Button("Add");
 		Button btCancel = new Button("Cancel");
@@ -114,27 +111,82 @@ public class AddRelationGUI {
 
 	}
 
-	public Scene addParentsScene(Person person) {
+	public Scene addParentsScene1(Person person) {
 
-		GridPane pane = new GridPane();
-		pane.setAlignment(Pos.CENTER);
-		pane.setPadding(new Insets(5, 5, 5, 5));
-		pane.setHgap(5.5);
-		pane.setVgap(5.5);
+		GridPane pane = MainMenu.setUpPane();
 
-		pane.add(new Label("The person is not an adult, please add parents"), 0, 0);
+		pane.add(new Label("The person is under 18 years old, please add the first parent"), 0, 0);
 
 		Button btAdd = new Button("Add");
 		Button btBack = new Button("Back");
 
 		ComboBox<String> comboBox1 = new ComboBox<String>();
-		ComboBox<String> comboBox2 = new ComboBox<String>();
+		//ComboBox<String> comboBox2 = new ComboBox<String>();
 		comboBox1.setValue("selectParent1");
-		comboBox2.setValue("selectParent2");
+		//comboBox2.setValue("selectParent2");
 
 		for (String name : MainMenu.dc.getMember().keySet()) {
 			// if (dc.getMemberObj(name) instanceof Adult) {
 			comboBox1.getItems().add(name);
+			//comboBox2.getItems().add(name);
+			// }
+		}
+
+		// set couple automatically
+		comboBox1.setOnAction(e -> {
+			String name1 = comboBox1.getValue();
+			Person tempParent1 = MainMenu.dc.getMemberObj(name1);
+//			if (tempParent1.getRelationship().containsKey("couple")) {
+//				comboBox2.getSelectionModel().select(tempParent1.getRelationship().get("couple").get(0).getName());
+//
+//			}
+
+		});
+
+
+		pane.add(btAdd, 0, 4);
+		pane.add(btBack, 4, 4);
+		pane.add(comboBox1, 0, 1);
+		GridPane.setHalignment(comboBox1, HPos.CENTER);
+
+
+		// events
+
+		btAdd.setOnAction(e -> {
+
+			String boxValue1;
+			boxValue1 = comboBox1.getValue();
+			MainMenu.window.setScene(addParentsScene2(person, boxValue1, comboBox1));
+
+		});
+
+		btBack.setOnAction(e -> {
+			// MainMenu.window.setScene(addPersonScene());
+			MainMenu.window.setScene(MainMenu.startScene());
+
+		});
+		Scene scene = new Scene(pane, 700, 500);
+
+		return scene;
+	}
+	
+	public Scene addParentsScene2(Person person, String boxValue1, ComboBox<String> comboBox1) {
+
+		GridPane pane = MainMenu.setUpPane();
+
+		pane.add(new Label("The person is under 18 years old, please add the second parent"), 0, 0);
+
+		Button btAdd = new Button("Add");
+		Button btBack = new Button("Back");
+
+		//ComboBox<String> comboBox1 = new ComboBox<String>();
+		ComboBox<String> comboBox2 = new ComboBox<String>();
+		//comboBox1.setValue("selectParent1");
+		comboBox2.setValue("selectParent2");
+
+		for (String name : MainMenu.dc.getMember().keySet()) {
+			// if (dc.getMemberObj(name) instanceof Adult) {
+			//comboBox1.getItems().add(name);
 			comboBox2.getItems().add(name);
 			// }
 		}
@@ -162,32 +214,35 @@ public class AddRelationGUI {
 
 		pane.add(btAdd, 0, 4);
 		pane.add(btBack, 4, 4);
-		pane.add(comboBox1, 0, 1);
-		pane.add(comboBox2, 1, 1);
+		//pane.add(comboBox1, 0, 1);
+		pane.add(comboBox2, 0, 1);
+		//GridPane.setHalignment(tmp[currArrPos], HPos.CENTER);
+		GridPane.setHalignment(comboBox2, HPos.CENTER);
 
 		// events
 
 		btAdd.setOnAction(e -> {
 
-			String boxValue1, boxValue2;
-			boxValue1 = comboBox1.getValue();
+			String boxValue2;
+			//boxValue1 = comboBox1.getValue();
 			boxValue2 = comboBox2.getValue();
-			if (!(boxValue1.equals("selectParent1") || boxValue2.equals("selectParent2"))) {
-
+			//if (!(boxValue1.equals("selectParent1") || boxValue2.equals("selectParent2"))) {
+			if (!(boxValue1.equals(boxValue2)) && !(boxValue1.equals("selectParent1") || boxValue2.equals("selectParent2"))){
 				try {
 					addParentsAction(boxValue1, boxValue2, person);
 				} catch (NotToBeCoupledException exception) {
 					exception.notToBeCoupleWarning();
+					//MainMenu.window.setScene(addParentsScene1(person));
 				} catch (NoAvailableException exception) {
 					exception.noAvailableWarning();
 				}
 			}
-			// need to consider if two name are same!!!!@Sherry
+//			// need to consider if two name are same!!!!@Sherry
 		});
 
 		btBack.setOnAction(e -> {
 			// MainMenu.window.setScene(addPersonScene());
-			MainMenu.window.setScene(MainMenu.startScene());
+			MainMenu.window.setScene(addParentsScene1(person));
 
 		});
 		Scene scene = new Scene(pane, 700, 500);

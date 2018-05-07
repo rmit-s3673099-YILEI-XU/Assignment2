@@ -29,6 +29,7 @@ public class NotToBeCoupledException extends Exception{
 		{
 			alert.setContentText(parent2.getName() +" is not ADULT! "+parent1.getName() +" and "+parent2.getName()+" cannot be couple. "
 					+ "Please rechoose the SECOND parent.");
+			
 		}
 		alert.show();
 	}
