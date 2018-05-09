@@ -46,17 +46,23 @@ public class Couple implements RelationManipulator{
 //		selectPerson.getRelationship().remove("couple");
 		partner.getRelationship().remove("couple");
 
-		if(selectPerson.getRelationship().containsKey("child"))
-		{
-			for(Person child:selectPerson.getRelationship().get("child")) {
-				for(String relationType: child.getRelationship().keySet()) {
-					for(Person childRelation: child.getRelationship().get(relationType))
-						child.removeRelationship(relationType, childRelation);
-				}
-				
-			}
-			partner.getRelationship().remove("child");
-		}
+//		if(selectPerson.getRelationship().containsKey("child"))
+//		{
+//		
+//			for(Person child:selectPerson.getRelationship().get("child")) {
+//				
+//				for(String relationType: child.getRelationship().keySet()) {
+//					
+//					for(Person childRelation: child.getRelationship().get(relationType)) {
+//						System.out.println("inside "+child.getName()+" "+relationType+" "+childRelation.getName());
+//						child.removeRelationship(relationType, childRelation);
+//					}
+//				}
+////				System.out.println("inside "+child.getName());
+//				
+//			}
+////			partner.getRelationship().remove("child");
+//		}
 	}
 
 }

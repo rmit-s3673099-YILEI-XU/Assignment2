@@ -31,7 +31,7 @@ public class Classmate implements RelationManipulator{
 		}
 		else
 		{
-			classmate.getRelationship().get("classmates").add(classmate);
+			classmate.getRelationship().get("classmates").add(selectPerson);
 		}
 		
 	}
@@ -39,7 +39,7 @@ public class Classmate implements RelationManipulator{
 	@Override
 	public void remove() {
 		// TODO Auto-generated method stub
-		this.selectPerson.getRelationship().get("classmates").remove(classmate);
+//		this.selectPerson.getRelationship().get("classmates").remove(classmate);
 		this.classmate.getRelationship().get("classmates").remove(selectPerson);
 		
 	}

@@ -32,6 +32,10 @@ public class Sibling implements RelationManipulator{
 	public void remove() {
 		// TODO Auto-generated method stub
 		
+		sibling.getRelationship().get("sibling").remove(selectPerson);
+		if(sibling.getRelationship().get("sibling").isEmpty())
+			sibling.getRelationship().remove("sibling");
+		
 	}
 
 }

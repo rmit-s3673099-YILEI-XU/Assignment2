@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import Exceptions.*;
@@ -84,7 +85,7 @@ public class DriverClass {
 			addRelationData();
 		} catch (NoParentsException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.noParentsWarning();
 		}
 		for(String sr: member.keySet() )
 		{
@@ -97,6 +98,8 @@ public class DriverClass {
 	//如果数据有错，找不到人应该有错误提示![稍后加]
 	private void addRelationData() throws NoParentsException {
 
+		ArrayList<Person> noParentsChildList = new ArrayList();
+		
 		for (String[] st : relationData) {
 			
 			for (String name : member.keySet()) {
@@ -137,9 +140,16 @@ public class DriverClass {
 			if(!(pr instanceof Adult))
 				if(pr.getRelationship().get("parent").size()<2)
 				{
-					System.out.println(pr.getName()+" doesn't have parents\n");
-					throw new NoParentsException();
+					noParentsChildList.add(pr);
 				}
+		}
+		if(noParentsChildList.size()>0)
+		{
+			for(Person child: noParentsChildList)
+			{
+				deletePerson(child);
+			}
+			throw new NoParentsException(noParentsChildList);
 		}
 	}
 	
@@ -172,22 +182,37 @@ public class DriverClass {
 	
 	public void deletePerson(Person currentPerson)
 	{
+		ArrayList<Person> childList = new ArrayList<Person>();
 		
 		for(String relationType: currentPerson.getRelationship().keySet())
 		{
-			System.out.println(relationType);
+			
 			for(Person relatedPerson: currentPerson.getRelationship().get(relationType))
 				{
+					System.out.println("ooooooooooo "+currentPerson.getName()+" "+relatedPerson.getName());
 					currentPerson.removeRelationship(relationType, relatedPerson); 
 					if(relationType=="child") {
-						member.remove(relatedPerson.getName());
+						childList.add(relatedPerson);
+//						relatedPerson.removeRelationship(relationType, relatedPerson);
+//						member.remove(relatedPerson.getName());
 					}
 				}
+			
 		}
 		member.remove(currentPerson.getName());
-		for(String sr: member.keySet() )
-		{
-			member.get(sr).displayProfile();
+		
+		if (childList.size() > 0) {
+			for (Person child : childList) {
+				for (String relationType : child.getRelationship().keySet()) {
+
+					for (Person relatedPerson : child.getRelationship().get(relationType)) {
+						
+						child.removeRelationship(relationType, relatedPerson);
+
+					}
+				}
+				member.remove(child.getName());
+			}
 		}
 	}
 	

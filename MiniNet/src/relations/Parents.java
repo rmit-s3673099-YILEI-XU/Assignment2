@@ -56,9 +56,15 @@ public class Parents implements RelationManipulator{
 	@Override
 	public void remove() {
 		// TODO Auto-generated method stub
-
+		System.out.println("inside++++++ "+parent1.getName()+" "+parent2.getName());
+		System.out.println(parent1.getRelationship().get("child").get(0).getName());
+		System.out.println(parent2.getRelationship().get("child").get(0).getName());
 		parent1.getRelationship().get("child").remove(child);
 		parent2.getRelationship().get("child").remove(child);
+//		if(parent1.getRelationship().get("child").isEmpty())
+//			parent1.getRelationship().remove("child");
+//		if(parent2.getRelationship().get("child").isEmpty())
+//			parent2.getRelationship().remove("child");
 	}
 
 }

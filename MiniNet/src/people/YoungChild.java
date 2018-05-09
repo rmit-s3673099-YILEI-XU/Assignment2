@@ -3,7 +3,10 @@ package people;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import relations.ChildFriend;
+import relations.Classmate;
 import relations.Parents;
+import relations.Sibling;
 
 public class YoungChild extends Person{
 	
@@ -54,6 +57,33 @@ public class YoungChild extends Person{
 	@Override
 	public void removeRelationship(String relationType, Person relatedPerson) {
 		// TODO Auto-generated method stub
+		switch(relationType){
+		
+		case"parent":
+			if(parent[1].getName().equals(relatedPerson.getName()))
+			{
+				this.setRelationManipulator(new Parents(parent[0],parent[1],this));
+				this.relationManipulator.remove();
+			}
+				
+//			if(parent[0].getName()==null) {
+//				parent[0]= relatedPerson;
+//			}
+//			else if (parent[1].getName()==null){
+//				parent[1]= relatedPerson;
+//			}
+//			if(parent[0].getName()!=null&&parent[1].getName()!=null) {
+////				this.setRelationManipulator(new Parents(parent[0],parent[1],this));
+//				this.relationManipulator.remove();
+////			}
+			break;
+		case "sibling":
+			if(relatedPerson!=null) {
+			this.setRelationManipulator(new Sibling(this, relatedPerson));
+			this.relationManipulator.remove();
+			}
+			break;
+		}
 		
 	}
 

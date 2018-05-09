@@ -98,7 +98,34 @@ public class Child extends Person{
 	@Override
 	public void removeRelationship(String relationType, Person relatedPerson) {
 		// TODO Auto-generated method stub
+		System.out.println("hhhhhhhhhhhhhhhhhhhhh");
 		
+		switch(relationType){
+		case "friends":
+//			System.out.println("kkkkkkk");
+			this.setRelationManipulator(new ChildFriend(this, relatedPerson));
+			this.relationManipulator.remove();
+			break;
+		case "classmates":
+			this.setRelationManipulator(new Classmate(this, relatedPerson));
+			this.relationManipulator.remove();
+			break;
+		case"parent":
+			
+			if(parent[1].getName().equals(relatedPerson.getName()))
+			{
+				this.setRelationManipulator(new Parents(parent[0],parent[1],this));
+				this.relationManipulator.remove();
+			}
+			break;
+			
+		case "sibling":
+			if(relatedPerson!=null) {
+			this.setRelationManipulator(new Sibling(this, relatedPerson));
+			this.relationManipulator.remove();
+			}
+			break;
+		}
 	}
 
 }

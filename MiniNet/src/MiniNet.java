@@ -12,13 +12,8 @@ public class MiniNet extends Application{
 	Stage window;
 	@Override
     public void start(Stage primaryStage) throws IOException{
+		
 		  DriverClass dc = new DriverClass();
-	        try {
-	            dc.initialData();
-	        } catch (IOException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-	        }
 	        window = primaryStage;
 	        // window.initStyle(StageStyle.TRANSPARENT);
 	        window.setTitle("MiniNet");
@@ -26,6 +21,13 @@ public class MiniNet extends Application{
 	        window.setScene(new MainMenu(window, dc).startScene());
 	        window.setResizable(false);
 	        window.show();
+	        
+	        try {
+	            dc.initialData();
+	        } catch (IOException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        }
     } 
 
 	public static void main(String[] args)
