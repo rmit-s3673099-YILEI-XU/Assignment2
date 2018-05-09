@@ -189,7 +189,7 @@ public class DriverClass {
 			
 			for(Person relatedPerson: currentPerson.getRelationship().get(relationType))
 				{
-					System.out.println("ooooooooooo "+currentPerson.getName()+" "+relatedPerson.getName());
+				
 					currentPerson.removeRelationship(relationType, relatedPerson); 
 					if(relationType=="child") {
 						childList.add(relatedPerson);

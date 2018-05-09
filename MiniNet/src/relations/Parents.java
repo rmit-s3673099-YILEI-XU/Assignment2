@@ -43,22 +43,18 @@ public class Parents implements RelationManipulator{
 				child.getRelationManipulator().add();
 			}
 		}
+		
 		child.getRelationship().get("parent").add(parent1);
 		child.getRelationship().get("parent").add(parent2);
 		parent1.getRelationship().get("child").add(child);
 		parent2.getRelationship().get("child").add(child);
-		
-		
-		
 	
 	}
 
 	@Override
 	public void remove() {
 		// TODO Auto-generated method stub
-		System.out.println("inside++++++ "+parent1.getName()+" "+parent2.getName());
-		System.out.println(parent1.getRelationship().get("child").get(0).getName());
-		System.out.println(parent2.getRelationship().get("child").get(0).getName());
+		
 		parent1.getRelationship().get("child").remove(child);
 		parent2.getRelationship().get("child").remove(child);
 //		if(parent1.getRelationship().get("child").isEmpty())
