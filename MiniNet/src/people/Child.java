@@ -34,7 +34,7 @@ public class Child extends Person{
 		// TODO Auto-generated method stub
 		switch(relationType){
 		case "friends":
-			System.out.println("kkkkkkk");
+//			System.out.println("kkkkkkk");
 			this.setRelationManipulator(new ChildFriend(this, relation));
 			this.relationManipulator.add();
 			break;
@@ -51,8 +51,10 @@ public class Child extends Person{
 				parent[1]= relation;
 			}
 //			System.out.println(parent[0].getName()+" "+parent[1].getName());
-			if(parent[0].getName()!=null&&parent[1].getName()!=null)
+			if(parent[0].getName()!=null&&parent[1].getName()!=null) {
+				System.out.println(parent[0].getName()+" "+parent[1].getName());
 				addParent(parent[0],parent[1]);
+			}
 			
 			break;
 		default:

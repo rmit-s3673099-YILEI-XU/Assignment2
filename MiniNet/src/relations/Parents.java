@@ -25,10 +25,10 @@ public class Parents implements RelationManipulator{
 		// TODO Auto-generated method stub
 		
 		if(!parent1.getRelationship().containsKey("couple")) {
-			parent1.setRelationManipulator(new Couple(parent1, parent2));		
+			parent1.setRelationManipulator(new Couple(parent1, parent2));	
+			parent1.getRelationManipulator().add();
 		}
-		else 
-		if(!parent1.getRelationship().containsKey("child"))
+		else if(!parent1.getRelationship().containsKey("child"))
 		{
 			parent1.getRelationship().put("child", new ArrayList<Person>());
 		}
@@ -47,6 +47,7 @@ public class Parents implements RelationManipulator{
 		child.getRelationship().get("parent").add(parent2);
 		parent1.getRelationship().get("child").add(child);
 		parent2.getRelationship().get("child").add(child);
+		
 		
 		
 	

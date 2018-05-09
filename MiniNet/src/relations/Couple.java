@@ -21,15 +21,19 @@ public class Couple implements RelationManipulator{
 
 	@Override
 	public void add() throws NoAvailableException, NotToBeCoupledException {
+		
+//		System.out.println(selectPerson.getName()+" "+partner.getName());
 		// TODO Auto-generated method stub
 		if(!(partner instanceof Adult))
 		{
-			throw new NotToBeCoupledException(selectPerson, partner);
+			System.out.println("llllllll");
+			throw new NotToBeCoupledException(partner);
 		}
 		else if(this.partner.getRelationship().containsKey("couple")) {
-			throw new NoAvailableException(partner, selectPerson);
+			throw new NoAvailableException(partner);
 		}
 		else {
+			System.out.println("kkkkkk");
 		selectPerson.getRelationship().get("couple").add(partner);
 		partner.getRelationship().put("couple", new ArrayList<Person>());
 		partner.getRelationship().get("couple").add(selectPerson);

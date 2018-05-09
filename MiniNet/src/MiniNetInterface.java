@@ -724,7 +724,7 @@ public class MiniNetInterface {
 			} catch (NoAvailableException e1) {
 				e1.noAvailableWarning();
 			} catch (NotToBeCoupledException e1) {
-				e1.notToBeCoupleWarning();
+//				e1.notToBeCoupleWarning();
 			} catch (NotToBeColleaguesException e1) {
 				e1.notToBeColleaguesWarning();
 			} catch (NotToBeClassmatesException e1) {
@@ -846,13 +846,13 @@ public class MiniNetInterface {
 		parent2 = dc.getMemberObj(name2);
     		if(!(parent1 instanceof Adult)||!(parent2 instanceof Adult))
 		{
-			throw new NotToBeCoupledException(parent1,parent2);
+//			throw new NotToBeCoupledException(parent1,parent2);
 		}else
 		{
 			if(parent1.getRelationship().containsKey("couple")&&!(parent1.getRelationship().get("couple").get(0).equals(parent2))||
 					parent2.getRelationship().containsKey("couple")&&!(parent2.getRelationship().get("couple").get(0).equals(parent1)))
 			{
-				throw new NoAvailableException(parent1,parent2);
+//				throw new NoAvailableException(parent1,parent2);
 				
 			}
 			else

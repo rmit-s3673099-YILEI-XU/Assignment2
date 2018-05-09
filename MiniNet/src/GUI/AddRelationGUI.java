@@ -117,7 +117,7 @@ public class AddRelationGUI {
 
 		pane.add(new Label("The person is under 18 years old, please add the first parent"), 0, 0);
 
-		Button btAdd = new Button("Add");
+		Button btNext = new Button("Next");
 		Button btBack = new Button("Back");
 
 		ComboBox<String> comboBox1 = new ComboBox<String>();
@@ -132,19 +132,9 @@ public class AddRelationGUI {
 			// }
 		}
 
-		// set couple automatically
-		comboBox1.setOnAction(e -> {
-			String name1 = comboBox1.getValue();
-			Person tempParent1 = MainMenu.dc.getMemberObj(name1);
-//			if (tempParent1.getRelationship().containsKey("couple")) {
-//				comboBox2.getSelectionModel().select(tempParent1.getRelationship().get("couple").get(0).getName());
-//
-//			}
-
-		});
 
 
-		pane.add(btAdd, 0, 4);
+		pane.add(btNext, 0, 4);
 		pane.add(btBack, 4, 4);
 		pane.add(comboBox1, 0, 1);
 		GridPane.setHalignment(comboBox1, HPos.CENTER);
@@ -152,11 +142,20 @@ public class AddRelationGUI {
 
 		// events
 
-		btAdd.setOnAction(e -> {
+		btNext.setOnAction(e -> {
 
-			String boxValue1;
-			boxValue1 = comboBox1.getValue();
-			MainMenu.window.setScene(addParentsScene2(person, boxValue1, comboBox1));
+			String name1 = comboBox1.getValue();
+			Person tempParent1 = MainMenu.dc.getMemberObj(name1);
+			if(tempParent1 instanceof Adult) {
+			MainMenu.window.setScene(addParentsScene2(person, tempParent1));
+			}else {
+				try {
+					throw new NotToBeCoupledException(tempParent1);
+				} catch (NotToBeCoupledException e1) {
+					// TODO Auto-generated catch block
+					e1.notToBeCoupleWarning();
+				}
+			}
 
 		});
 
@@ -170,47 +169,40 @@ public class AddRelationGUI {
 		return scene;
 	}
 	
-	public Scene addParentsScene2(Person person, String boxValue1, ComboBox<String> comboBox1) {
+	public Scene addParentsScene2(Person person, Person tempParent1) {
 
 		GridPane pane = MainMenu.setUpPane();
 
-		pane.add(new Label("The person is under 18 years old, please add the second parent"), 0, 0);
+		
 
 		Button btAdd = new Button("Add");
 		Button btBack = new Button("Back");
 
 		//ComboBox<String> comboBox1 = new ComboBox<String>();
 		ComboBox<String> comboBox2 = new ComboBox<String>();
+		if(tempParent1.getRelationship().containsKey("couple"))
+		{
+			pane.add(new Label(tempParent1.getName()+" has a partter. Therefore, the second parent is:"), 0, 0);
+			comboBox2.setValue(tempParent1.getRelationship().get("couple").get(0).getName());
+			
+//			comboBox2.setDisable(true);
+//			comboBox2.
+		}else {
 		//comboBox1.setValue("selectParent1");
-		comboBox2.setValue("selectParent2");
+			
+			pane.add(new Label("The first parent is "+tempParent1.getName()+". Please select the second parent for "+person.getName()), 0, 0);
+			comboBox2.setValue("selectParent2");
+		
 
 		for (String name : MainMenu.dc.getMember().keySet()) {
-			// if (dc.getMemberObj(name) instanceof Adult) {
-			//comboBox1.getItems().add(name);
+		
+			if(!name.equals(tempParent1.getName()))
 			comboBox2.getItems().add(name);
-			// }
+	
+		}
 		}
 
-		// set couple automatically
-		comboBox1.setOnAction(e -> {
-			String name1 = comboBox1.getValue();
-			Person tempParent1 = MainMenu.dc.getMemberObj(name1);
-			if (tempParent1.getRelationship().containsKey("couple")) {
-				comboBox2.getSelectionModel().select(tempParent1.getRelationship().get("couple").get(0).getName());
-
-			}
-
-		});
-
-		comboBox2.setOnAction(e -> {
-			String name2 = comboBox2.getValue();
-			Person tempParent2 = MainMenu.dc.getMemberObj(name2);
-			if (tempParent2.getRelationship().containsKey("couple")) {
-				comboBox1.getSelectionModel().select(tempParent2.getRelationship().get("couple").get(0).getName());
-
-			}
-
-		});
+	
 
 		pane.add(btAdd, 0, 4);
 		pane.add(btBack, 4, 4);
@@ -222,22 +214,20 @@ public class AddRelationGUI {
 		// events
 
 		btAdd.setOnAction(e -> {
-
-			String boxValue2;
-			//boxValue1 = comboBox1.getValue();
-			boxValue2 = comboBox2.getValue();
-			//if (!(boxValue1.equals("selectParent1") || boxValue2.equals("selectParent2"))) {
-			if (!(boxValue1.equals(boxValue2)) && !(boxValue1.equals("selectParent1") || boxValue2.equals("selectParent2"))){
+			String boxValue2 = comboBox2.getValue();
+			if (!boxValue2.equals("selectParent2")) {
 				try {
-					addParentsAction(boxValue1, boxValue2, person);
+					addParentsAction(tempParent1, boxValue2, person);
 				} catch (NotToBeCoupledException exception) {
 					exception.notToBeCoupleWarning();
-					//MainMenu.window.setScene(addParentsScene1(person));
+					// MainMenu.window.setScene(addParentsScene1(person));
 				} catch (NoAvailableException exception) {
 					exception.noAvailableWarning();
+				} catch (Exception exception) {
+
 				}
 			}
-//			// need to consider if two name are same!!!!@Sherry
+
 		});
 
 		btBack.setOnAction(e -> {
@@ -250,27 +240,24 @@ public class AddRelationGUI {
 		return scene;
 	}
 
-	public void addParentsAction(String name1, String name2, Person child)
-			throws NotToBeCoupledException, NoAvailableException {
-		Person parent1, parent2;
-		parent1 = MainMenu.dc.getMemberObj(name1);
+	public void addParentsAction(Person parent1, String name2, Person child)
+			throws Exception {
+		Person parent2;
 		parent2 = MainMenu.dc.getMemberObj(name2);
-		if (!(parent1 instanceof Adult) || !(parent2 instanceof Adult)) {
-			throw new NotToBeCoupledException(parent1, parent2);
-		} else {
-			if (parent1.getRelationship().containsKey("couple")
-					&& !(parent1.getRelationship().get("couple").get(0).equals(parent2))
-					|| parent2.getRelationship().containsKey("couple")
-							&& !(parent2.getRelationship().get("couple").get(0).equals(parent1))) {
-				throw new NoAvailableException(parent1, parent2);
-
-			} else {
-				try {
-					child.addRelationship("parent", parent1);
-					child.addRelationship("parent", parent2);
-				} catch (Exception e) {
-
-				}
+		
+		if(parent2 instanceof Adult) {
+			if(parent2.getRelationship().containsKey("couple")&&!(parent1.getRelationship().get("couple").get(0).equals(parent2)))
+			{
+				throw new NoAvailableException(parent2);
+			}else {
+			child.addRelationship("parent", parent1);
+			child.addRelationship("parent", parent2);
+			}
+		}else
+		{
+			throw new NotToBeCoupledException(parent2);
+		}
+		
 				MainMenu.dc.getMember().put(child.getName(), child);
 				showMessageForAddParents(true);
 				// AddPersonGUI addPerson = new AddPersonGUI(window);
@@ -282,8 +269,8 @@ public class AddRelationGUI {
 					MainMenu.window.setScene(MainMenu.startScene());
 				}
 
-			}
-		}
+//			}
+//		}
 
 	}
 
