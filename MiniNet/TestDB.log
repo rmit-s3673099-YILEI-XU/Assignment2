@@ -9,5 +9,3 @@ INSERT INTO PEOPLE VALUES('Mark Turner','Mark.jpeg','','M',2,'VIC')
 COMMIT
 INSERT INTO PEOPLE VALUES('Zoe Foster','','Founder of ZFX','F',28,'VIC')
 COMMIT
-INSERT INTO PEOPLE VALUES('ddd','','','F',20,'ACT')
-COMMIT
