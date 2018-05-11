@@ -1,5 +1,7 @@
 package GUI;
 
+import java.util.ArrayList;
+
 import Exceptions.*;
 
 import javafx.geometry.HPos;
@@ -16,6 +18,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import people.Adult;
 import people.Child;
 import people.Person;
@@ -69,6 +72,7 @@ public class AddRelationGUI {
 		}
 		memberList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		pane.add(memberList, 6, 1);
+		
 
 		btAdd.setOnAction(e -> {
 
@@ -110,7 +114,39 @@ public class AddRelationGUI {
 		});
 
 		Scene scene = new Scene(pane, 700, 500);
+		
+		// display relation
+		
+		if(!person.getRelationship().isEmpty()) {
+	        pane.add(new Label(person.getName() + "'s " + "relationship:"), 0, 1);
+
+	        int i = 2;
+	        for(String type: person.getRelationship().keySet() ) {
+
+	        ArrayList<Person> relatedPerson = person.getRelationship().get(type);
+
+	        for(Person r: relatedPerson) {
+	        	pane.add(new Label(r.getName()), 0, i);
+	        	pane.add(new Label(type), 1, i);
+	        	i++;
+	        }
+
+	        }
+	        }else {
+	        	pane.add(new Label(person.getName() + " " + "does not have relationship with anyone."), 0, 1);
+	        }
+		//SelectPersonGUI selectP = new SelectPersonGUI();
+////		VBox vBox = new VBox();
+////		vBox.getChildren().addAll(relationList, selectP.displayRelationsAction(person));
+////		pane.add(vBox, 0, 5);
+//		Stage stage = new Stage();
+//		Scene relationScene = new Scene(selectP.displayRelationsAction(person), 300, 100);
+//		stage.setScene(relationScene);
+//		stage.show();
+		
 		return scene;
+		
+		
 
 	}
 	

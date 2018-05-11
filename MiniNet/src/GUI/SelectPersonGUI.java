@@ -74,7 +74,8 @@ public class SelectPersonGUI {
 //	         set up layout
 
 	    		GridPane pane = MainMenu.setUpPane();
-	        Label label = new Label("Menu for view the person, please select one");
+	        Label label = new Label("You have selected" + " " + selectedPerson.getName());
+	        Label label1 = new Label("please select one option below");
 	        Button btDisplayP = new Button("Display the profile");
 	        Button btDisplayR = new Button("Display relations");
 	        Button btAddR = new Button("Add relation");
@@ -82,11 +83,12 @@ public class SelectPersonGUI {
 	        Button btBack = new Button("Back");
 
 	        pane.add(label, 0, 0);
-	        pane.add(btDisplayP, 0, 1);
-	        pane.add(btDisplayR, 0, 2);
-	        pane.add(btAddR, 0, 3);
-	        pane.add(btDelete, 0, 4);
-	        pane.add(btBack, 0, 5);
+	        pane.add(label1, 0, 1);
+	        pane.add(btDisplayP, 0, 2);
+	        pane.add(btDisplayR, 0, 3);
+	        pane.add(btAddR, 0, 4);
+	        pane.add(btDelete, 0, 5);
+	        pane.add(btBack, 0, 6);
 
 	        // create event
 
@@ -183,7 +185,7 @@ public class SelectPersonGUI {
 
 }
 	 
-	 public void displayRelationsAction(Person person)
+	 public GridPane displayRelationsAction(Person person)
 	    {
 	    		GridPane pane = MainMenu.setUpPane();
 
@@ -215,6 +217,7 @@ public class SelectPersonGUI {
 	        });
 	        Scene scene = new Scene(pane, 700, 500);
 	        MainMenu.window.setScene(scene);
+	        return pane;
 	    }
 
 
