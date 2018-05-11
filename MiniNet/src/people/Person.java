@@ -2,6 +2,9 @@ package people;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import java.util.TreeMap;
+
 import relations.RelationManipulator;
 
 public abstract class Person {

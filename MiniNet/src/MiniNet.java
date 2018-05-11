@@ -1,6 +1,6 @@
 import java.io.IOException;
 
-import Controller.DriverClass;
+import Controller.*;
 import GUI.MainMenu;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
@@ -28,6 +28,9 @@ public class MiniNet extends Application{
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();
 	        }
+	        
+	    
+	        
     } 
 
 	public static void main(String[] args)

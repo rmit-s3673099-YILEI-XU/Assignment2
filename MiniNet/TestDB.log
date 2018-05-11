@@ -1,0 +1,15 @@
+/*C3*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+INSERT INTO PEOPLE VALUES('Mark Turner','Mark.jpeg','','M',2,'VIC')
+COMMIT
+INSERT INTO PEOPLE VALUES('Zoe Foster','','Founder of ZFX','F',28,'VIC')
+COMMIT
+INSERT INTO PEOPLE VALUES('Alex Smith','','student at RMIT','M',21,'WA')
+COMMIT
+INSERT INTO PEOPLE VALUES('Ben Turner','BenPhoto.jpg','manager at Coles','M',35,'VIC')
+COMMIT
+DELETE FROM PEOPLE WHERE NAME='Zoe Foster' AND PHOTO='' AND STATUS='Founder of ZFX' AND GENDER='F' AND AGE=28 AND STATE='VIC'
+COMMIT
+DELETE FROM PEOPLE WHERE NAME='Mark Turner' AND PHOTO='Mark.jpeg' AND STATUS='' AND GENDER='M' AND AGE=2 AND STATE='VIC'
+COMMIT

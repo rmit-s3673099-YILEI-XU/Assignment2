@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 import Exceptions.*;
@@ -17,11 +18,13 @@ public class DriverClass {
 	
 	private HashMap<String, Person> member;
 	ArrayList<String[]> relationData;
+    DatabaseController databaseController = new DatabaseController();
 	
 	public void initialData() throws IOException
 	{
 
 		member = new HashMap<String, Person>();
+		databaseController.initialDatabase();
 
 		
 		BufferedReader peopleFileReader = null;
@@ -87,10 +90,11 @@ public class DriverClass {
 			// TODO Auto-generated catch block
 			e.noParentsWarning();
 		}
-		for(String sr: member.keySet() )
-		{
-			member.get(sr).displayProfile();
-		}
+		databaseController.initialDataInDB(member);
+//		for(String sr: member.keySet() )
+//		{
+//			member.get(sr).displayProfile();
+//		}
 		
 		
 	}
@@ -200,6 +204,8 @@ public class DriverClass {
 			
 		}
 		member.remove(currentPerson.getName());
+		databaseController.modifyDatabase(currentPerson, "deletePerson");
+		System.out.println("________________________Adult!");
 		
 		if (childList.size() > 0) {
 			for (Person child : childList) {
@@ -212,10 +218,17 @@ public class DriverClass {
 					}
 				}
 				member.remove(child.getName());
+				databaseController.modifyDatabase(child, "deletePerson");
+				System.out.println("________________________Child!");
 			}
 		}
 	}
 	
+	public void modifyDatabase(Person person,String operation) {
+		
+		databaseController.modifyDatabase(person, operation);
+		
+	}
 	public HashMap<String, Person> getMember() {
 		return member;
 	}

@@ -182,9 +182,10 @@ public class AddPersonGUI {
 				if (currentPerson == null)
 					throw new AlreadyExistPersonException();
 				else if (currentPerson instanceof Adult) {
-
-					MainMenu.dc.getMember().put(name, currentPerson);
+					
 					currentPerson.setPhoto(saveImage(name, photo));
+					MainMenu.dc.getMember().put(name, currentPerson);
+					MainMenu.dc.modifyDatabase(currentPerson, "addPerson");
 					showMessageForAddPerson(true);
 					MainMenu.window.setScene(addRelationGUI.addRelationScene(currentPerson));
 
