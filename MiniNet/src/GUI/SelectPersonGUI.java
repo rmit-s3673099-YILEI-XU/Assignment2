@@ -110,7 +110,7 @@ public class SelectPersonGUI {
 
 	        btDelete.setOnAction(e -> {
 	        	deletePersonAction(selectedPerson);
-	        	MainMenu.window.setScene(selectPersonScene());
+//	        	MainMenu.window.setScene(selectPersonScene());
 
 	        });
 
@@ -247,29 +247,22 @@ public class SelectPersonGUI {
 //
 	 public void deletePersonAction(Person selectedPerson) {
 
-			if (showDeletePersonMessage(true)) {
+		if (showDeletePersonMessage()) {
+			if (showDeleteChildMessage()) {
 				MainMenu.dc.deletePerson(selectedPerson);
-
-//	    		for(String m: dc.getMember().keySet()) {
-//	    			System.out.println(m);
-//	    		}
-	    		showDeletePersonMessage(false);
-
-	    	}
+				MainMenu.window.setScene(selectPersonScene());
+				showMessageForDeletePerson();
+			}
+		}
 	 }
 
-	public boolean showDeletePersonMessage(boolean temp) {
+	public boolean showDeletePersonMessage() {
 
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setTitle("MESSAGES");
-
-		if (temp) {
-			alert.setHeaderText("WARNING!");
-			alert.setContentText(
+		alert.setHeaderText("WARNING!");
+		alert.setContentText(
 					"Delete this person will also delete all the relationship of the person, are you sure you want to delete this person?");
-		} else {
-			alert.setHeaderText("DELETE PERSON SUCCESSFUL!");
-		}
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if(result.get() == ButtonType.OK) {
@@ -280,6 +273,29 @@ public class SelectPersonGUI {
 		return false;
 	}
 
+	public boolean showDeleteChildMessage() {
+
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("MESSAGES");
+		alert.setHeaderText("WARNING! Children issue!");
+		alert.setContentText(
+					"This person has children, if delete this person, the children also will be deleted, are you sure you want to delete this person?");
+		Optional<ButtonType> result = alert.showAndWait();
+		if(result.get() == ButtonType.OK) {
+			return true;
+		}else if(result.get() == ButtonType.CANCEL) {
+			alert.close();
+		}
+		return false;
+	}
+	
+	public void showMessageForDeletePerson() {
+		Alert alert = new Alert(Alert.AlertType.WARNING);
+			alert.setTitle("MESSAGES");
+			alert.setHeaderText("SUCCESS!");
+			alert.setContentText("Congratulations! Delete person successfully!");
+			alert.show();
+	}
 	
 
 }

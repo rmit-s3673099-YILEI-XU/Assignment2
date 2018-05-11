@@ -1,8 +1,6 @@
 package people;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import java.util.TreeMap;
 
 import relations.RelationManipulator;
@@ -16,9 +14,22 @@ public abstract class Person {
 	private int age;
 	private String state;
 	
-	private HashMap<String, ArrayList<Person>> relationship;
+	private TreeMap<String, ArrayList<Person>> relationship;
 //	private ArrayList<RelationManipulator> relationManipulator; 
 	RelationManipulator relationManipulator;
+	public Person() {
+		
+	}
+	public Person(String name, String photo, String status, String gender,int age, String state)
+	{
+		this.name = name;
+		this.photo = photo;
+		this.status = status;
+		this.gender = gender;
+		this.age = age;
+		this.state = state;
+		this.relationship = new TreeMap<String,ArrayList<Person>>();
+	}
 	
 	public void setRelationManipulator(RelationManipulator relationManipulator) {
 		this.relationManipulator = relationManipulator;
@@ -91,12 +102,12 @@ public abstract class Person {
 	}
 
 
-	public HashMap<String, ArrayList<Person>> getRelationship() {
+	public TreeMap<String, ArrayList<Person>> getRelationship() {
 		return relationship;
 	}
 
 
-	public void setRelationship(HashMap<String, ArrayList<Person>> relationship) {
+	public void setRelationship(TreeMap<String, ArrayList<Person>> relationship) {
 		this.relationship = relationship;
 	}
 

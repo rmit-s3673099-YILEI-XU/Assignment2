@@ -1,8 +1,7 @@
 package people;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
+import java.util.TreeMap;
 
 import relations.*;
 
@@ -12,14 +11,8 @@ public class Child extends Person{
 	
 	public Child(String name, String photo, String status, String gender,int age, String state)
 	{
-		this.setRelationship(new HashMap<String,ArrayList<Person>>());
+		super(name, photo,status,gender,age,state);
 		this.getRelationship().put("parent",new ArrayList<Person>());
-		this.setName(name);
-		this.setPhoto(photo);
-		this.setStatus(status);
-		this.setGender(gender);
-		this.setAge(age);
-		this.setState(state);
 		parent= new Adult[2];
 		parent[0]= new Adult();
 		parent[1]= new Adult();

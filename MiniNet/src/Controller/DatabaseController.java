@@ -4,8 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.HashMap;
+import java.util.TreeMap;
 
 import org.hsqldb.Server;
 
@@ -40,7 +39,7 @@ public class DatabaseController {
 		}
 	}
 
-	public void initialDataInDB(HashMap<String, Person> member) {
+	public void initialDataInDB(TreeMap<String, Person> member) {
 		
 		try {
 			 // query from the db
@@ -68,7 +67,7 @@ public class DatabaseController {
 				break;
 			case "deletePerson":
 				connection.prepareStatement("delete from people where name = '"+person.getName()+"';").execute();
-				System.out.println("*****************************");
+				
 				break;
 			}
 		} catch (SQLException e) {

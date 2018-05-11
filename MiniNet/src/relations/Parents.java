@@ -43,7 +43,7 @@ public class Parents implements RelationManipulator{
 				child.getRelationManipulator().add();
 			}
 		}
-		
+//		System.out.println(parent1.getName()+" "+parent2.getName()+" "+child.getName());
 		child.getRelationship().get("parent").add(parent1);
 		child.getRelationship().get("parent").add(parent2);
 		parent1.getRelationship().get("child").add(child);

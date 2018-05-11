@@ -5,10 +5,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 import Exceptions.*;
 import people.*;
@@ -16,14 +15,14 @@ import people.*;
 
 public class DriverClass {
 	
-	private HashMap<String, Person> member;
+	private TreeMap<String, Person> member;
 	ArrayList<String[]> relationData;
     DatabaseController databaseController = new DatabaseController();
 	
 	public void initialData() throws IOException
 	{
 
-		member = new HashMap<String, Person>();
+		member = new TreeMap<String, Person>();
 		databaseController.initialDatabase();
 
 		
@@ -107,10 +106,10 @@ public class DriverClass {
 		for (String[] st : relationData) {
 			
 			for (String name : member.keySet()) {
-
+//				System.out.println("oooooo"+st[0]+" "+st[1]+" "+st[2]);
 				//for parent relation
 				if (name.equals(st[0].trim())) {
-					
+
 					if (st[2].trim().equals("parent") && (member.get(st[0].trim()) instanceof Adult)) {
 						String temp = st[0];
 						st[0] = st[1].trim();
@@ -118,6 +117,7 @@ public class DriverClass {
 						name = st[0];
 
 					}
+//					System.out.println("iiiiiiii"+st[0]+" "+st[1]+" "+st[2]);
 //					 System.out.println(st[0]+" "+st[1]+" "+st[2]);
 //					System.out.println(name+ " "+member.get(name) instanceof Child);
 					try {
@@ -134,6 +134,7 @@ public class DriverClass {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					break;
 				}
 			}
 		}
@@ -205,7 +206,7 @@ public class DriverClass {
 		}
 		member.remove(currentPerson.getName());
 		databaseController.modifyDatabase(currentPerson, "deletePerson");
-		System.out.println("________________________Adult!");
+
 		
 		if (childList.size() > 0) {
 			for (Person child : childList) {
@@ -219,9 +220,10 @@ public class DriverClass {
 				}
 				member.remove(child.getName());
 				databaseController.modifyDatabase(child, "deletePerson");
-				System.out.println("________________________Child!");
+		
 			}
 		}
+		
 	}
 	
 	public void modifyDatabase(Person person,String operation) {
@@ -229,7 +231,7 @@ public class DriverClass {
 		databaseController.modifyDatabase(person, operation);
 		
 	}
-	public HashMap<String, Person> getMember() {
+	public TreeMap<String, Person> getMember() {
 		return member;
 	}
 
@@ -239,6 +241,22 @@ public class DriverClass {
 		
 		return member.get(key);
 	}
+	
+//	public static HashMap<String, String> sortMapByKey(HashMap<String, String> orignalMap) {
+//	    if (orignalMap == null || orignalMap.isEmpty()) {
+//	        return null;
+//	    }
+//
+//	    HashMap<String, String> map = new HashMap<String, String>(
+//                new Comparator<String>() {
+//                    public int compare(String obj1, String obj2) {
+//                        // 降序排序
+//                        return obj2.compareTo(obj1);
+//                    }
+//                });
+//	    sortMap.putAll(oriMap);
+//	    return sortMap;
+//	}
 	
 	
 }
