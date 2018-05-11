@@ -15,7 +15,7 @@ public class NotToBeClassmatesException extends Exception{
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 		alert.setTitle("MESSAGES");
 		alert.setHeaderText("WARNING!");
-		alert.setContentText("Colleague relation ONLY applies on ADULTS and CHILDREN, not on YOUNG CHILDREN! "
+		alert.setContentText("Classmate relation ONLY applies on ADULTS and CHILDREN, not on YOUNG CHILDREN! "
 		+classmate.getName() +" is young children. They cannot be classmates.");
 		alert.show();
 	}

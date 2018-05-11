@@ -98,4 +98,9 @@ public class DatabaseController {
 			e.printStackTrace();
 		}
 	}
+	
+	public  void disconnectDB()
+	{
+		hsqlServer.shutdown();
+	}
 }

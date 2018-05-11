@@ -185,7 +185,7 @@ public class AddPersonGUI {
 					
 					currentPerson.setPhoto(saveImage(name, photo));
 					MainMenu.dc.getMember().put(name, currentPerson);
-					MainMenu.dc.modifyDatabase(currentPerson, "addPerson");
+					MainMenu.dc.getDatabaseController().modifyDatabase(currentPerson, "addPerson");
 					showMessageForAddPerson(true);
 					MainMenu.window.setScene(addRelationGUI.addRelationScene(currentPerson));
 

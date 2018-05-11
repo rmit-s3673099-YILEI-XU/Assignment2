@@ -23,14 +23,15 @@ public class Classmate implements RelationManipulator{
 	@Override
 	public void add() throws NotToBeClassmatesException {
 		// TODO Auto-generated method stub
-		this.selectPerson.getRelationship().get("classmates").add(classmate);
-		if(!classmate.getRelationship().containsKey("classmates"))
-			classmate.getRelationship().put("classmates", new ArrayList<Person>());
+		
 		if(classmate instanceof YoungChild) {
 			throw new NotToBeClassmatesException(classmate);
 		}
 		else
 		{
+			this.selectPerson.getRelationship().get("classmates").add(classmate);
+			if(!classmate.getRelationship().containsKey("classmates"))
+				classmate.getRelationship().put("classmates", new ArrayList<Person>());
 			classmate.getRelationship().get("classmates").add(selectPerson);
 		}
 		

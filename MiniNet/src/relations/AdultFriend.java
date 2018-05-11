@@ -25,17 +25,18 @@ public class AdultFriend implements RelationManipulator{
 	@Override
 	public void add() throws NotToBeFriendsException, TooYoungException {
 		// TODO Auto-generated method stub
-		selectPerson.getRelationship().get("friends").add(friend);
-		if(!friend.getRelationship().containsKey("friends"))
-		{
-			friend.getRelationship().put("friends", new ArrayList<Person>());
-		}
+		
 		if(friend instanceof Child)
 			throw new NotToBeFriendsException(selectPerson,friend);
 		else if(friend instanceof YoungChild) {
 			throw new TooYoungException(selectPerson);
 		}else {
-		friend.getRelationship().get("friends").add(selectPerson);
+			selectPerson.getRelationship().get("friends").add(friend);
+			if(!friend.getRelationship().containsKey("friends"))
+			{
+				friend.getRelationship().put("friends", new ArrayList<Person>());
+			}
+			friend.getRelationship().get("friends").add(selectPerson);
 		}
 		//this.selectPerson.setRelationship(relationship)
 	}

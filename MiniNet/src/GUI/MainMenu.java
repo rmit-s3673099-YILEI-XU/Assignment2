@@ -71,6 +71,7 @@ public  class MainMenu {
         });
 
         exitBt.setOnAction(event -> {
+        		MainMenu.dc.getDatabaseController().disconnectDB();
             window.close();
         });
 

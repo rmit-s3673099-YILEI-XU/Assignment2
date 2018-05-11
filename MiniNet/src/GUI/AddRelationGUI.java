@@ -1,11 +1,7 @@
 package GUI;
 
-import Exceptions.NoAvailableException;
-import Exceptions.NotToBeClassmatesException;
-import Exceptions.NotToBeColleaguesException;
-import Exceptions.NotToBeCoupledException;
-import Exceptions.NotToBeFriendsException;
-import Exceptions.TooYoungException;
+import Exceptions.*;
+
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -78,27 +74,34 @@ public class AddRelationGUI {
 
 			String relation = (String) group.getSelectedToggle().getUserData();
 
-			Person selectPerson = MainMenu.dc.getMemberObj(memberList.getSelectionModel().getSelectedItem());
+			Person relatedPerson = MainMenu.dc.getMemberObj(memberList.getSelectionModel().getSelectedItem());
+		
 			try {
+				MainMenu.dc.checkAlreadyExitRelation(person, relatedPerson);
+				try {
+					person.addRelationship(relation, relatedPerson);
+					showMessageForAddRelation();
+				}catch (NotToBeFriendsException e1) {
+					// TODO Auto-generated catch block
+					e1.notToBeFriendsException();
+				} catch (TooYoungException e1) {
+					e1.tooYoungException();
+				} catch (NoAvailableException e1) {
+					e1.noAvailableWarning();
+				} catch (NotToBeCoupledException e1) {
+					e1.notToBeCoupleWarning();
+				} catch (NotToBeColleaguesException e1) {
+					e1.notToBeColleaguesWarning();
+				} catch (NotToBeClassmatesException e1) {
+					e1.notToBeClassmatesWarning();
+				} catch (Exception e1) {
 
-				person.addRelationship(relation, selectPerson);
-				showMessageForAddRelation();
-			} catch (NotToBeFriendsException e1) {
+				}
+			} catch (AlreadyHaveRelationException e2) {
 				// TODO Auto-generated catch block
-				e1.notToBeFriendsException();
-			} catch (TooYoungException e1) {
-				e1.tooYoungException();
-			} catch (NoAvailableException e1) {
-				e1.noAvailableWarning();
-			} catch (NotToBeCoupledException e1) {
-				e1.notToBeCoupleWarning();
-			} catch (NotToBeColleaguesException e1) {
-				e1.notToBeColleaguesWarning();
-			} catch (NotToBeClassmatesException e1) {
-				e1.notToBeClassmatesWarning();
-			} catch (Exception e1) {
-
+				e2.alreadyHaveRelationWarning();
 			}
+			
 			// addRelationAction(person, relation, selectPerson);
 		});
 
@@ -110,6 +113,8 @@ public class AddRelationGUI {
 		return scene;
 
 	}
+	
+	
 
 	public Scene addParentsScene1(Person person) {
 

@@ -17,7 +17,7 @@ public class DriverClass {
 	
 	private TreeMap<String, Person> member;
 	ArrayList<String[]> relationData;
-    DatabaseController databaseController = new DatabaseController();
+    private DatabaseController databaseController = new DatabaseController();
 	
 	public void initialData() throws IOException
 	{
@@ -226,11 +226,11 @@ public class DriverClass {
 		
 	}
 	
-	public void modifyDatabase(Person person,String operation) {
-		
-		databaseController.modifyDatabase(person, operation);
-		
-	}
+//	public void modifyDatabase(Person person,String operation) {
+//		
+//		databaseController.modifyDatabase(person, operation);
+//		
+//	}
 	public TreeMap<String, Person> getMember() {
 		return member;
 	}
@@ -241,22 +241,25 @@ public class DriverClass {
 		
 		return member.get(key);
 	}
+
+	public DatabaseController getDatabaseController() {
+		return databaseController;
+	}
 	
-//	public static HashMap<String, String> sortMapByKey(HashMap<String, String> orignalMap) {
-//	    if (orignalMap == null || orignalMap.isEmpty()) {
-//	        return null;
-//	    }
-//
-//	    HashMap<String, String> map = new HashMap<String, String>(
-//                new Comparator<String>() {
-//                    public int compare(String obj1, String obj2) {
-//                        // 降序排序
-//                        return obj2.compareTo(obj1);
-//                    }
-//                });
-//	    sortMap.putAll(oriMap);
-//	    return sortMap;
-//	}
+	
+	public void checkAlreadyExitRelation(Person selectedPerson, Person relatedPerson) throws AlreadyHaveRelationException {
+		
+		for(String relation: selectedPerson.getRelationship().keySet())
+		{
+			for(Person alreadyRelatedPerson: selectedPerson.getRelationship().get(relation))
+			{
+				if(alreadyRelatedPerson.equals(relatedPerson))
+				throw new AlreadyHaveRelationException(selectedPerson,relatedPerson);
+			}
+		}
+		
+		
+	}
 	
 	
 }
