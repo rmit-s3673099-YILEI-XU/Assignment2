@@ -10,13 +10,14 @@ import java.util.Scanner;
 import java.util.TreeMap;
 
 import Exceptions.*;
+import javafx.scene.control.Alert;
 import people.*;
 
 
 public class DriverClass {
 	
 	private TreeMap<String, Person> member;
-	ArrayList<String[]> relationData;
+	private ArrayList<String[]> relationData;
     private DatabaseController databaseController = new DatabaseController();
 	
 	public void initialData() throws IOException
@@ -25,80 +26,78 @@ public class DriverClass {
 		member = new TreeMap<String, Person>();
 		databaseController.initialDatabase();
 
-		
 		BufferedReader peopleFileReader = null;
 		BufferedReader relationsFileReader = null;
-		
+
 		String[] pTextData = null;
 		String[] rTextData = null;
 		relationData = new ArrayList<String[]>();
 		Person currentPerson;
-		
+
 		try {
-			relationsFileReader = new BufferedReader(new FileReader("db/relations.txt"));
+			peopleFileReader = new BufferedReader(new FileReader("db/people.txt"));
 			String currentLine;
-			while((currentLine = relationsFileReader.readLine())!=null)
-			{
-				rTextData = currentLine.split(",");
-				relationData.add(rTextData);
-			}
-			relationsFileReader.close();
-			
-		}catch(FileNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		
-		try {
-			peopleFileReader = new BufferedReader(new FileReader("db/people.txt"));	
-			String currentLine;
-			while((currentLine=peopleFileReader.readLine())!=null)
-			{
+			while ((currentLine = peopleFileReader.readLine()) != null) {
 				pTextData = currentLine.split(",");
-			
-				for(int i =0;i<pTextData.length;i++)
-				{
-					pTextData[i]=pTextData[i].replace("\"", "");
+
+				for (int i = 0; i < pTextData.length; i++) {
+					pTextData[i] = pTextData[i].replace("\"", "");
 				}
 				int age = Integer.parseInt(pTextData[4].trim());
-				if(age<3)
-				{
-					currentPerson = new YoungChild(pTextData[0].trim(),pTextData[1].trim(),pTextData[2].trim(),pTextData[3].trim(),age, pTextData[5].trim());
-				}
-				else if(age<=16)
-				{
-					currentPerson = new Child(pTextData[0].trim(),pTextData[1].trim(),pTextData[2].trim(),pTextData[3].trim(),age, pTextData[5].trim());//					member.put(pTextData[0].trim(), currentPerson);
-				}
-				else{
-					currentPerson = new Adult(pTextData[0].trim(),pTextData[1].trim(),pTextData[2].trim(),pTextData[3].trim(),age, pTextData[5].trim());
+				if (age < 3) {
+					currentPerson = new YoungChild(pTextData[0].trim(), pTextData[1].trim(), pTextData[2].trim(),
+							pTextData[3].trim(), age, pTextData[5].trim());
+				} else if (age <= 16) {
+					currentPerson = new Child(pTextData[0].trim(), pTextData[1].trim(), pTextData[2].trim(),
+							pTextData[3].trim(), age, pTextData[5].trim());// member.put(pTextData[0].trim(),
+																			// currentPerson);
+				} else {
+					currentPerson = new Adult(pTextData[0].trim(), pTextData[1].trim(), pTextData[2].trim(),
+							pTextData[3].trim(), age, pTextData[5].trim());
 
 				}
 				member.put(pTextData[0].trim(), currentPerson);
 
 			}
 			peopleFileReader.close();
-			
+
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			cannotFoundFileMessage();
+			
 		}
-		
-		try {
-			addRelationData();
-		} catch (NoParentsException e) {
-			// TODO Auto-generated catch block
-			e.noParentsWarning();
+		if (!member.isEmpty()) {
+			try {
+				relationsFileReader = new BufferedReader(new FileReader("db/relations.txt"));
+				String currentLine;
+				while ((currentLine = relationsFileReader.readLine()) != null) {
+					rTextData = currentLine.split(",");
+					relationData.add(rTextData);
+				}
+				relationsFileReader.close();
+
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			if (!relationData.isEmpty()) {
+				try {
+					addRelationData();
+				} catch (NoParentsException e) {
+					// TODO Auto-generated catch block
+					e.noParentsWarning();
+				}
+			}
+			databaseController.initialDataInDB(member);
+
 		}
-		databaseController.initialDataInDB(member);
-//		for(String sr: member.keySet() )
-//		{
-//			member.get(sr).displayProfile();
-//		}
-		
-		
+		// for(String sr: member.keySet() )
+		// {
+		// member.get(sr).displayProfile();
+		// }
+
 	}
 	
-	//如果数据有错，找不到人应该有错误提示![稍后加]
 	private void addRelationData() throws NoParentsException {
 
 		ArrayList<Person> noParentsChildList = new ArrayList();
@@ -118,7 +117,7 @@ public class DriverClass {
 
 					}
 //					System.out.println("iiiiiiii"+st[0]+" "+st[1]+" "+st[2]);
-//					 System.out.println(st[0]+" "+st[1]+" "+st[2]);
+//					System.out.println(st[0]+" "+st[1]+" "+st[2]);
 //					System.out.println(name+ " "+member.get(name) instanceof Child);
 					try {
 						member.get(name).addRelationship(st[2].trim(), member.get(st[1].trim()));
@@ -226,11 +225,7 @@ public class DriverClass {
 		
 	}
 	
-//	public void modifyDatabase(Person person,String operation) {
-//		
-//		databaseController.modifyDatabase(person, operation);
-//		
-//	}
+
 	public TreeMap<String, Person> getMember() {
 		return member;
 	}
@@ -257,8 +252,16 @@ public class DriverClass {
 				throw new AlreadyHaveRelationException(selectedPerson,relatedPerson);
 			}
 		}
-		
-		
+
+	}
+	
+	private void cannotFoundFileMessage()
+	{
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setTitle("MESSAGES");
+		alert.setHeaderText("ERROR!");
+		alert.setContentText("people.txt file cannot be found! Fail to initail network.");
+		alert.show();
 	}
 	
 	

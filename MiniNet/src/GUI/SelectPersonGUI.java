@@ -37,17 +37,20 @@ public class SelectPersonGUI {
 	        VBox layout = new VBox(10);
 
 	        ListView<String> memberList = new ListView<>();
-//	        System.out.println(getDriver());
+
 	        memberList.getItems().addAll(MainMenu.dc.getMember().keySet());
 	        memberList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+	        memberList.getSelectionModel().select(0);
 
 	        layout.setPadding(new Insets(20, 20, 20, 20));
 	        layout.getChildren().addAll(memberList);
+	       
 
 	        pane.add(label, 0, 0);
 	        pane.add(layout, 0, 1);
 	        pane.add(submit, 0, 2);
 	        pane.add(cancel, 1, 2);
+	        
 	        // create events
 
 	        submit.setOnAction(e -> {
@@ -79,6 +82,7 @@ public class SelectPersonGUI {
 	        Button btDisplayP = new Button("Display the profile");
 	        Button btDisplayR = new Button("Display relations");
 	        Button btAddR = new Button("Add relation");
+	        Button btRemoveR = new Button("Remove relation");
 	        Button btDelete = new Button("Delete this person");
 	        Button btBack = new Button("Back");
 
@@ -87,8 +91,9 @@ public class SelectPersonGUI {
 	        pane.add(btDisplayP, 0, 2);
 	        pane.add(btDisplayR, 0, 3);
 	        pane.add(btAddR, 0, 4);
-	        pane.add(btDelete, 0, 5);
-	        pane.add(btBack, 0, 6);
+	        pane.add(btRemoveR, 0, 5);
+	        pane.add(btDelete, 0, 6);
+	        pane.add(btBack, 0, 7);
 
 	        // create event
 
@@ -108,6 +113,9 @@ public class SelectPersonGUI {
 
 	        btAddR.setOnAction(e -> {
 	        	 MainMenu.window.setScene(new AddRelationGUI().addRelationScene(selectedPerson));
+	        });
+	        btRemoveR.setOnAction(e->{
+	        	MainMenu.window.setScene(new RemoveRelationGUI().removeRelationScene(selectedPerson));
 	        });
 
 	        btDelete.setOnAction(e -> {
@@ -222,36 +230,18 @@ public class SelectPersonGUI {
 
 
 	 
-//	 public void findOutPorC(Person selectedPerson) {
-//		 /* find out the parent or child of the person*/
-//	 }
-//
-//	 public boolean showDeletePersonMessage(boolean temp) {
-//
-//			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//			alert.setTitle("MESSAGES");
-//
-//			if (temp) {
-//				alert.setHeaderText("WARNING!");
-//				alert.setContentText(
-//						"Delete this person will also delete all the relationship of the person, are you sure you want to delete this person?");
-//			} else {
-//				alert.setHeaderText("DELETE PERSON SUCCESSFUL!");
-//			}
-//
-//			Optional<ButtonType> result = alert.showAndWait();
-//			if(result.get() == ButtonType.OK) {
-//				return true;
-//			}else if(result.get() == ButtonType.CANCEL) {
-//				alert.close();
-//			}
-//			return false;
-//		}
-//
+
+
 	 public void deletePersonAction(Person selectedPerson) {
 
 		if (showDeletePersonMessage()) {
+			if(selectedPerson.getRelationship().containsKey("child")) {
 			if (showDeleteChildMessage()) {
+				MainMenu.dc.deletePerson(selectedPerson);
+				MainMenu.window.setScene(selectPersonScene());
+				showMessageForDeletePerson();
+			}
+			}else {
 				MainMenu.dc.deletePerson(selectedPerson);
 				MainMenu.window.setScene(selectPersonScene());
 				showMessageForDeletePerson();

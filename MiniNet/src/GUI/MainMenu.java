@@ -49,10 +49,10 @@ public  class MainMenu {
         pane.add(selectPersonBt, 0, 2);
         Button findOutBt = new Button("Find out relationship");
         pane.add(findOutBt, 0, 3);
-        Button defineReBt = new Button("Define relationship");
-        pane.add(defineReBt, 0, 4);
+//        Button defineReBt = new Button("Define relationship");
+//        pane.add(defineReBt, 0, 4);
         Button exitBt = new Button("Exit");
-        pane.add(exitBt, 0, 5);
+        pane.add(exitBt, 0, 4);
 
         // create events
 
@@ -68,6 +68,7 @@ public  class MainMenu {
 
         findOutBt.setOnAction(e -> {
 //            window.setScene(findOutScene());
+        window.setScene(new FindOutRelationGUI().findOutRelationScene());
         });
 
         exitBt.setOnAction(event -> {

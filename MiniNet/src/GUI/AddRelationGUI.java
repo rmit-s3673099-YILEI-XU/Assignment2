@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import Exceptions.*;
@@ -16,6 +17,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -28,13 +31,19 @@ public class AddRelationGUI {
 	public Scene addRelationScene(Person person) {
 
 		GridPane pane = MainMenu.setUpPane();
+		GridPane subPane = new GridPane();
+		subPane.setAlignment(Pos.CENTER);
 
 		Button btAdd = new Button("Add");
 		Button btCancel = new Button("Cancel");
 
-		pane.add(new Label("Add Relation for this person"), 1, 0);
-		pane.add(btAdd, 0, 6);
-		pane.add(btCancel, 4, 6);
+		pane.add(new Label("Please add Relation for "+ person.getName()), 0, 0);
+		pane.add(subPane, 0, 1);
+//		headerPane.setStyle("-fx-background-color:#ffffff");
+		pane.add(btAdd, 0, 2);	
+		pane.add(btCancel, 2, 2);
+
+		
 		// relation list
 
 		String[] adultRelation = { "friends", "classmates", "colleagues", "couple" };
@@ -42,8 +51,9 @@ public class AddRelationGUI {
 
 		ToggleGroup group = new ToggleGroup();
 		VBox relationList = new VBox(10);
-		relationList.setPadding(new Insets(20, 20, 20, 20));
-		pane.add(relationList, 0, 1);
+		relationList.setPadding(new Insets(20, 50, 20, 20));
+		boolean isSelected = false;
+		
 
 		if (person instanceof Adult) {
 
@@ -52,6 +62,11 @@ public class AddRelationGUI {
 				button.setToggleGroup(group);
 				button.setUserData(r);
 				relationList.getChildren().add(button);
+				if(!isSelected)
+				{
+					button.setSelected(true);
+					isSelected = true;
+				}
 			}
 		} else {
 
@@ -61,6 +76,11 @@ public class AddRelationGUI {
 				button.setUserData(r);
 				// System.out.println(button.getUserData());
 				relationList.getChildren().add(button);
+				if(!isSelected)
+				{
+					button.setSelected(true);
+					isSelected = true;
+				}
 			}
 
 		}
@@ -71,11 +91,43 @@ public class AddRelationGUI {
 				memberList.getItems().add(personName);
 		}
 		memberList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-		pane.add(memberList, 6, 1);
+		memberList.getSelectionModel().select(0);
+		subPane.add(memberList, 1, 0);
 		
+		
+		GridPane innerpane = new GridPane();
+		innerpane.setAlignment(Pos.CENTER);
+		innerpane.setPadding(new Insets(5, 50, 5, 20));
+//		innerpane.setStyle("-fx-background-color:#000000");
+		innerpane.setHgap(5.5);
+		innerpane.setVgap(5.5);
+		subPane.add(innerpane, 0, 0);
+		
+		if(!person.getRelationship().isEmpty()) {
+			innerpane.add(new Label("Already exist relationship:"), 0, 0);
+			GridPane innerpane2 = new GridPane();
+			innerpane2.setAlignment(Pos.CENTER);
+//			innerpane2.setPadding(new Insets(5, 30, 5, 5));
+			innerpane2.setHgap(5.5);
+			innerpane2.setVgap(5.5);
+			innerpane.add(innerpane2, 0, 1);
+	        int i = 0;
+	        for(String type: person.getRelationship().keySet() ) {
+
+	        ArrayList<Person> relatedPerson = person.getRelationship().get(type);
+
+	        for(Person r: relatedPerson) {
+	        	innerpane2.add(new Label(r.getName()), 0, i);
+	        	innerpane2.add(new Label(type), 3, i);
+	        	i++;
+	        }
+
+	        }
+		}
+		subPane.add(relationList, 0, 0);
 
 		btAdd.setOnAction(e -> {
-
+	
 			String relation = (String) group.getSelectedToggle().getUserData();
 
 			Person relatedPerson = MainMenu.dc.getMemberObj(memberList.getSelectionModel().getSelectedItem());
@@ -106,35 +158,21 @@ public class AddRelationGUI {
 				e2.alreadyHaveRelationWarning();
 			}
 			
+			
 			// addRelationAction(person, relation, selectPerson);
 		});
 
 		btCancel.setOnAction(e -> {
-			MainMenu.window.setScene(MainMenu.startScene());// check where should it go back
+			MainMenu.window.setScene(new SelectPersonGUI().selectPersonScene());// check where should it go back
 		});
 
 		Scene scene = new Scene(pane, 700, 500);
 		
 		// display relation
 		
-		if(!person.getRelationship().isEmpty()) {
-	        pane.add(new Label(person.getName() + "'s " + "relationship:"), 0, 1);
-
-	        int i = 2;
-	        for(String type: person.getRelationship().keySet() ) {
-
-	        ArrayList<Person> relatedPerson = person.getRelationship().get(type);
-
-	        for(Person r: relatedPerson) {
-	        	pane.add(new Label(r.getName()), 0, i);
-	        	pane.add(new Label(type), 1, i);
-	        	i++;
-	        }
-
-	        }
-	        }else {
-	        	pane.add(new Label(person.getName() + " " + "does not have relationship with anyone."), 0, 1);
-	        }
+//	        }else {
+//	        	pane.add(new Label(person.getName() + " " + "does not have relationship with anyone."), 0, 1);
+//	        }
 		//SelectPersonGUI selectP = new SelectPersonGUI();
 ////		VBox vBox = new VBox();
 ////		vBox.getChildren().addAll(relationList, selectP.displayRelationsAction(person));
@@ -337,5 +375,14 @@ public class AddRelationGUI {
 		alert.setContentText("Congratulations! Add relation successfully!");
 
 		alert.showAndWait();
+	}
+	public void showMessageForEmpty() {
+		Alert alert = new Alert(Alert.AlertType.WARNING);
+
+		alert.setTitle("MESSAGES");
+		alert.setHeaderText("UNSUCCESS!");
+		alert.setContentText("Choosing can't be empty! Please choose relation/person!");
+
+		alert.show();
 	}
 }
