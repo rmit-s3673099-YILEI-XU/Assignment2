@@ -72,7 +72,6 @@ public class AddPersonGUI {
 			comboBox.getItems().add(s);
 		}
 
-		// comboBox.getSelectionModel().selectFirst();
 
 		pane.add(comboBox, 1, 4);
 
@@ -83,10 +82,11 @@ public class AddPersonGUI {
 		pane.add(upload, 2, 5);
 		pane.add(new Label("(Optional)"), 3, 5);
 
+		Button btBack = new Button("Back");
+		pane.add(btBack, 0, 9);
 		Button btAdd = new Button("Add");
-		pane.add(btAdd, 0, 6);
-		Button btCancel = new Button("Cancel");
-		pane.add(btCancel, 2, 6);
+		pane.add(btAdd, 2, 9);
+		
 
 		// create events
 		btAdd.setOnAction(e -> {
@@ -98,9 +98,8 @@ public class AddPersonGUI {
 			String gender = (String) group.getSelectedToggle().getUserData();
 			String ageText = personAge.getText().trim();
 			String state = (String) comboBox.getValue();
-			// AddPersonGUI addPerson = new AddPersonGUI(window);
+	
 			try {
-				// addPerson.addPersonAction(name, photo, status, gender, ageText, state);
 				addPersonAction(name, photo, status, gender, ageText, state);
 			} catch (NotFillAllNecessInfo exception) {
 				exception.lackNecessInforWarning();
@@ -114,7 +113,7 @@ public class AddPersonGUI {
 
 		});
 
-		btCancel.setOnAction(e -> {
+		btBack.setOnAction(e -> {
 			MainMenu.window.setScene(MainMenu.startScene());
 		});
 
@@ -122,8 +121,6 @@ public class AddPersonGUI {
 			File photoFile;
 			photoFile = uploadPhoto(personName.getText().trim(), personPhoto);
 			personPhoto.setText(photoFile.getAbsolutePath());
-
-			// System.out.println(uploadPhoto(personName.getText().trim()));
 		});
 
 		Scene scene = new Scene(pane, 700, 500);
@@ -191,8 +188,6 @@ public class AddPersonGUI {
 
 				} else {
 					MainMenu.window.setScene(addRelationGUI.addParentsScene1(currentPerson));
-//					showMessageForAddPerson(true);
-//					MainMenu.window.setScene(addRelationGUI.addRelationScene(currentPerson));
 
 					/* add relation window */
 
@@ -202,7 +197,6 @@ public class AddPersonGUI {
 		}
 	}
 
-	
 
 	public void showMessageForAddPerson(boolean isSuccess) {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
