@@ -170,8 +170,8 @@ public class ModifyRelationGUI {
 						relationList.getItems().add(newRelatedPerson.getName()+"      "+relation1);	
 						}
 					}
-					relationBox.setValue("selectRelation");
-					personBox.setValue("selectPerson");
+//					relationBox.setValue("selectRelation");
+//					personBox.setValue("selectPerson");
 					showMessageForAddRelation(true);
 				}catch (NotToBeFriendsException e1) {
 					// TODO Auto-generated catch block

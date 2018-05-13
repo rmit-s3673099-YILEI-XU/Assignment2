@@ -120,7 +120,8 @@ public class AddPersonGUI {
 		upload.setOnAction(e -> {
 			File photoFile;
 			photoFile = uploadPhoto(personName.getText().trim(), personPhoto);
-			personPhoto.setText(photoFile.getAbsolutePath());
+			if(photoFile!=null)
+				personPhoto.setText(photoFile.getAbsolutePath());
 		});
 
 		Scene scene = new Scene(pane, 700, 500);

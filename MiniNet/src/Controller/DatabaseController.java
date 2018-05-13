@@ -67,7 +67,9 @@ public class DatabaseController {
 				break;
 			case "deletePerson":
 				connection.prepareStatement("delete from people where name = '"+person.getName()+"';").execute();
-				
+				break;
+			case "modifyProfile":
+				connection.prepareStatement("Update from people where name = '"+person.getName()+"';").execute();
 				break;
 			}
 		} catch (SQLException e) {
@@ -98,6 +100,7 @@ public class DatabaseController {
 			e.printStackTrace();
 		}
 	}
+	
 	
 	public  void disconnectDB()
 	{

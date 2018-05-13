@@ -9,5 +9,5 @@ INSERT INTO PEOPLE VALUES('Mark Turner','Mark.jpeg','','M',2,'VIC')
 COMMIT
 INSERT INTO PEOPLE VALUES('Zoe Foster','','Founder of ZFX','F',28,'VIC')
 COMMIT
-INSERT INTO PEOPLE VALUES('ddd','','','F',20,'NSW')
+INSERT INTO PEOPLE VALUES('monica','','','F',18,'VIC')
 COMMIT

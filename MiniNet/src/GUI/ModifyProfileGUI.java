@@ -94,7 +94,8 @@ public class ModifyProfileGUI {
 		upload.setOnAction(e -> {
 			File photoFile;
 			photoFile = addPersonGUI.uploadPhoto(personName.getText().trim(), personPhoto);
-			personPhoto.setText(photoFile.getAbsolutePath());
+			if(photoFile!=null)
+				personPhoto.setText(photoFile.getAbsolutePath());
 		});
 		
 		btSubmit.setOnAction(e->{
@@ -176,6 +177,7 @@ public class ModifyProfileGUI {
 			currentPerson.setPhoto(photo);
 			currentPerson.setState(state);
 			currentPerson.setStatus(status);
+			currentPerson.setPhoto(addPersonGUI.saveImage(currentPerson.getName(), photo));
 			showSuccessMessage();
 			MainMenuGUI.window.setScene(new SelectPersonGUI().viewPersonScene(currentPerson));
 		}
