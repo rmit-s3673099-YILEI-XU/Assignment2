@@ -9,18 +9,17 @@ import javafx.stage.StageStyle;
 
 public class MiniNet extends Application{
 	
-	Stage window;
 	@Override
     public void start(Stage primaryStage) throws IOException{
 		
 		  DriverClass dc = new DriverClass();
-	        window = primaryStage;
+	      
 	        // window.initStyle(StageStyle.TRANSPARENT);
-	        window.setTitle("MiniNet");
+		  primaryStage.setTitle("MiniNet");
 //	       window.setScene(new MiniNetInterface(window).startScene());
-	        window.setScene(new MainMenu(window, dc).startScene());
-	        window.setResizable(false);
-	        window.show();
+		  primaryStage.setScene(new MainMenu(primaryStage, dc).startScene());
+		  primaryStage.setResizable(false);
+		  primaryStage.show();
 	        
 	        try {
 	            dc.initialData();

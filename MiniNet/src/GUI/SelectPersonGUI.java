@@ -24,6 +24,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import people.Person;
+import people.YoungChild;
 
 public class SelectPersonGUI {
 
@@ -38,7 +39,7 @@ public class SelectPersonGUI {
 		Button back = new Button("Back");
 		VBox vBox = new VBox(10);
 		HBox hBox = new HBox();
-		hBox.setSpacing(500);
+		hBox.setSpacing(300);
 		hBox.getChildren().addAll(back, submit);
 
 		ListView<String> memberList = new ListView<>();
@@ -47,8 +48,10 @@ public class SelectPersonGUI {
 		memberList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		memberList.getSelectionModel().select(0);
 
-		// vBox.setPadding(new Insets(20, 20, 20, 20));
-		vBox.prefWidth(100);
+//		 vBox.setPadding(new Insets(20, 20, 20, 20));
+//		vBox.prefWidth(100);
+		vBox.setMaxWidth(250);
+		vBox.setMaxHeight(350);
 		vBox.getChildren().addAll(memberList);
 
 		BorderPane pane = MainMenu.setUpBorderPane(label, vBox, hBox, null, null);
@@ -89,8 +92,7 @@ public class SelectPersonGUI {
 		// Label label1 = new Label("please select one option below");
 		Button btDisplayP = new Button("Display the profile");
 		Button btDisplayR = new Button("Display relations");
-		Button btAddR = new Button("Add relation");
-		Button btRemoveR = new Button("Remove relation");
+		Button btModifyR = new Button("Modify relation");
 		Button btDelete = new Button("Delete this person");
 		Button btBack = new Button("Back");
 
@@ -98,10 +100,9 @@ public class SelectPersonGUI {
 		// GPane.add(label1, 0, 1);
 		GPane.add(btDisplayP, 0, 2);
 		GPane.add(btDisplayR, 0, 3);
-		GPane.add(btAddR, 0, 4);
-		GPane.add(btRemoveR, 0, 5);
-		GPane.add(btDelete, 0, 6);
-		GPane.add(btBack, 0, 7);
+		GPane.add(btModifyR, 0, 4);
+		GPane.add(btDelete, 0, 5);
+		GPane.add(btBack, 0, 6);
 
 		BorderPane pane = MainMenu.setUpBorderPane(label, GPane, null, null, null);
 
@@ -121,12 +122,12 @@ public class SelectPersonGUI {
 
 		});
 
-		btAddR.setOnAction(e -> {
-			MainMenu.window.setScene(new AddRelationGUI().addRelationScene(selectedPerson));
+		btModifyR.setOnAction(e -> {
+			MainMenu.window.setScene(new ModifyRelationGUI().addRelationScene(selectedPerson));
+			if(selectedPerson instanceof YoungChild)
+				youngChildModifyRwarning();
 		});
-		btRemoveR.setOnAction(e -> {
-			MainMenu.window.setScene(new RemoveRelationGUI().removeRelationScene(selectedPerson));
-		});
+
 
 		btDelete.setOnAction(e -> {
 			deletePersonAction(selectedPerson);
@@ -305,6 +306,16 @@ public class SelectPersonGUI {
 		alert.setTitle("MESSAGES");
 		alert.setHeaderText("SUCCESS!");
 		alert.setContentText("Congratulations! Delete person successfully!");
+		alert.show();
+	}
+	
+	public void youngChildModifyRwarning() {
+		Alert alert = new Alert(Alert.AlertType.WARNING);
+
+		alert.setTitle("MESSAGES");
+		alert.setHeaderText("WARNING!");
+		alert.setContentText("The relation of young child cannot be modified !");
+
 		alert.show();
 	}
 

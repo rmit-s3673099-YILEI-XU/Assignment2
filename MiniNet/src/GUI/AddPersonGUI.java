@@ -164,7 +164,7 @@ public class AddPersonGUI {
 			throws NotFillAllNecessInfo, NotNumberFormatException, NoSuchAgeException, AlreadyExistPersonException {
 
 		Person currentPerson;
-		AddRelationGUI addRelationGUI = new AddRelationGUI();
+		ModifyRelationGUI addRelationGUI = new ModifyRelationGUI();
 
 		if (name.equals("") || ageText.equals("") || state.equals("Select State")) {
 			throw new NotFillAllNecessInfo();
