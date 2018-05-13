@@ -96,8 +96,6 @@ public class AddRelationGUI {
 		ListView<String> memberList = new ListView<>();
 		GridPane GPaneC = MainMenu.setUpPane();
 		GPaneC.add(memberList, 0, 1);
-//		VBox vBox = new VBox(200);
-//		vBox.getChildren().add(memberList);
 		
 		for (String personName : MainMenu.dc.getMember().keySet()) {
 			if (!personName.equals(person.getName()))
