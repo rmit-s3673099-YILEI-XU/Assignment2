@@ -69,7 +69,9 @@ public class DatabaseController {
 				connection.prepareStatement("delete from people where name = '"+person.getName()+"';").execute();
 				break;
 			case "modifyProfile":
-				connection.prepareStatement("Update from people where name = '"+person.getName()+"';").execute();
+				connection.prepareStatement("UPDATE people SET photo= '"+person.getPhoto()+"', status= '"+person.getStatus()
+						+"', gender = '"+person.getGender()+"', age = "+person.getAge()+", state = '"+person.getState()
+						+ "' where name = '"+person.getName()+"';").execute();
 				break;
 			}
 		} catch (SQLException e) {

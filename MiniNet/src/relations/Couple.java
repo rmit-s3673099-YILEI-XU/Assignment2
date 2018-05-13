@@ -15,8 +15,8 @@ public class Couple implements RelationManipulator{
 		this.selectPerson = selectPerson;
 		this.partner = partner;
 		
-//		if(!this.selectPerson.getRelationship().containsKey("couple"))
-		this.selectPerson.getRelationship().put("couple", new ArrayList<Person>());
+		if(!this.selectPerson.getRelationship().containsKey("couple"))
+			this.selectPerson.getRelationship().put("couple", new ArrayList<Person>());
 	}
 
 	@Override
@@ -29,14 +29,17 @@ public class Couple implements RelationManipulator{
 		
 			throw new NotToBeCoupledException(partner);
 		}
+		else if(selectPerson.getRelationship().get("couple").size()>0) {
+			throw new NoAvailableException(selectPerson);
+		}
 		else if(this.partner.getRelationship().containsKey("couple")) {
 			throw new NoAvailableException(partner);
 		}
 		else {
 		
-		selectPerson.getRelationship().get("couple").add(partner);
-		partner.getRelationship().put("couple", new ArrayList<Person>());
-		partner.getRelationship().get("couple").add(selectPerson);
+			selectPerson.getRelationship().get("couple").add(partner);
+			partner.getRelationship().put("couple", new ArrayList<Person>());
+			partner.getRelationship().get("couple").add(selectPerson);
 		}
 	}
 

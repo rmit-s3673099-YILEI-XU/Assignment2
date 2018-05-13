@@ -178,6 +178,7 @@ public class ModifyProfileGUI {
 			currentPerson.setState(state);
 			currentPerson.setStatus(status);
 			currentPerson.setPhoto(addPersonGUI.saveImage(currentPerson.getName(), photo));
+			MainMenuGUI.dc.getDatabaseController().modifyDatabase(currentPerson, "modifyProfile");
 			showSuccessMessage();
 			MainMenuGUI.window.setScene(new SelectPersonGUI().viewPersonScene(currentPerson));
 		}
