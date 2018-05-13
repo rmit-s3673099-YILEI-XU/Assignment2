@@ -14,12 +14,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public  class MainMenu {
+public  class MainMenuGUI {
 
     static public Stage window;
     static public DriverClass dc;
 
-    public MainMenu(Stage window, DriverClass dc){
+    public MainMenuGUI(Stage window, DriverClass dc){
         this.window = window;
         this.dc = dc;
 
@@ -103,13 +103,13 @@ public  class MainMenu {
         });
 
         exitBt.setOnAction(event -> {
-        		MainMenu.dc.getDatabaseController().disconnectDB();
+        		MainMenuGUI.dc.getDatabaseController().disconnectDB();
             window.close();
         });
         
         // define the close button event on the stage
         window.setOnCloseRequest(e ->{
-        	MainMenu.dc.getDatabaseController().disconnectDB();
+        	MainMenuGUI.dc.getDatabaseController().disconnectDB();
         window.close();
         
         });

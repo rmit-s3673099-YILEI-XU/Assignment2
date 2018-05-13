@@ -1,7 +1,7 @@
 import java.io.IOException;
 
 import Controller.*;
-import GUI.MainMenu;
+import GUI.MainMenuGUI;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
@@ -17,7 +17,7 @@ public class MiniNet extends Application{
 	        // window.initStyle(StageStyle.TRANSPARENT);
 		  primaryStage.setTitle("MiniNet");
 //	       window.setScene(new MiniNetInterface(window).startScene());
-		  primaryStage.setScene(new MainMenu(primaryStage, dc).startScene());
+		  primaryStage.setScene(new MainMenuGUI(primaryStage, dc).startScene());
 		  primaryStage.setResizable(false);
 		  primaryStage.show();
 	        

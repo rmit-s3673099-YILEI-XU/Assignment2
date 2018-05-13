@@ -32,7 +32,7 @@ public class SelectPersonGUI {
 
 		// set up layout
 
-		GridPane GPane = MainMenu.setUpPane();
+		GridPane GPane = MainMenuGUI.setUpPane();
 
 		Label label = new Label("All members as below, please select one person");
 		Button submit = new Button("Submit");
@@ -44,7 +44,7 @@ public class SelectPersonGUI {
 
 		ListView<String> memberList = new ListView<>();
 
-		memberList.getItems().addAll(MainMenu.dc.getMember().keySet());
+		memberList.getItems().addAll(MainMenuGUI.dc.getMember().keySet());
 		memberList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		memberList.getSelectionModel().select(0);
 
@@ -54,7 +54,7 @@ public class SelectPersonGUI {
 		vBox.setMaxHeight(350);
 		vBox.getChildren().addAll(memberList);
 
-		BorderPane pane = MainMenu.setUpBorderPane(label, vBox, hBox, null, null);
+		BorderPane pane = MainMenuGUI.setUpBorderPane(label, vBox, hBox, null, null);
 		hBox.setAlignment(Pos.CENTER);
 
 		// pane.add(label, 0, 0);
@@ -67,14 +67,14 @@ public class SelectPersonGUI {
 		submit.setOnAction(e -> {
 			String personName = memberList.getSelectionModel().getSelectedItem();
 			System.out.print(personName);
-			Person selectedPerson = MainMenu.dc.getMemberObj(personName);
+			Person selectedPerson = MainMenuGUI.dc.getMemberObj(personName);
 			// ViewPersonGUI viewP = new ViewPersonGUI(window);
-			MainMenu.window.setScene(viewPersonScene(selectedPerson));
+			MainMenuGUI.window.setScene(viewPersonScene(selectedPerson));
 
 		});
 
 		back.setOnAction(e -> {
-			MainMenu.window.setScene(MainMenu.startScene());
+			MainMenuGUI.window.setScene(MainMenuGUI.startScene());
 		});
 
 		Scene scene = new Scene(pane, 700, 500);
@@ -86,7 +86,7 @@ public class SelectPersonGUI {
 
 		// set up layout
 
-		GridPane GPane = MainMenu.setUpPane();
+		GridPane GPane = MainMenuGUI.setUpPane();
 		Label label = new Label(
 				"You have selected" + " " + selectedPerson.getName() + " " + "please select one option below");
 		// Label label1 = new Label("please select one option below");
@@ -104,7 +104,7 @@ public class SelectPersonGUI {
 		GPane.add(btDelete, 0, 5);
 		GPane.add(btBack, 0, 6);
 
-		BorderPane pane = MainMenu.setUpBorderPane(label, GPane, null, null, null);
+		BorderPane pane = MainMenuGUI.setUpBorderPane(label, GPane, null, null, null);
 
 		// create event
 
@@ -123,7 +123,7 @@ public class SelectPersonGUI {
 		});
 
 		btModifyR.setOnAction(e -> {
-			MainMenu.window.setScene(new ModifyRelationGUI().addRelationScene(selectedPerson));
+			MainMenuGUI.window.setScene(new ModifyRelationGUI().addRelationScene(selectedPerson));
 			if(selectedPerson instanceof YoungChild)
 				youngChildModifyRwarning();
 		});
@@ -137,7 +137,7 @@ public class SelectPersonGUI {
 
 		btBack.setOnAction(e -> {
 			// SelectPersonGUI selectP = new SelectPersonGUI(window);
-			MainMenu.window.setScene(selectPersonScene());
+			MainMenuGUI.window.setScene(selectPersonScene());
 		});
 
 		Scene scene = new Scene(pane, 700, 500);
@@ -157,7 +157,7 @@ public class SelectPersonGUI {
 
 		Button btBack = new Button("Back");
 
-		GridPane GPane = MainMenu.setUpPane();
+		GridPane GPane = MainMenuGUI.setUpPane();
 
 		GPane.add((new Label("Name: ")), 1, 3);
 		GPane.add(new Label("Age: "), 1, 4);
@@ -167,7 +167,7 @@ public class SelectPersonGUI {
 		GPane.add(btBack, 7, 10);
 		// btBack action, put it in the right position after
 		btBack.setOnAction(e -> {
-			MainMenu.window.setScene(viewPersonScene(selectedPerson));
+			MainMenuGUI.window.setScene(viewPersonScene(selectedPerson));
 		});
 
 		// pane.add(new Label(photo), 2, 1);
@@ -195,20 +195,20 @@ public class SelectPersonGUI {
 		GPane.add(new Label(state), 4, 7);
 
 		
-		BorderPane pane = MainMenu.setUpBorderPane(imageView, GPane, btBack, null, null);
+		BorderPane pane = MainMenuGUI.setUpBorderPane(imageView, GPane, btBack, null, null);
 		pane.setAlignment(btBack, Pos.CENTER);
 //		btBack.setLayoutX(50);
 //		btBack.setLayoutY(30);
 		Scene scene = new Scene(pane, 700, 500);
 		scene.getStylesheets().add("GUI.css");
-		MainMenu.window.setScene(scene);
-		MainMenu.window.show();
+		MainMenuGUI.window.setScene(scene);
+		MainMenuGUI.window.show();
 
 	}
 
 	public GridPane displayRelationsAction(Person person) {
 
-		GridPane GPane = MainMenu.setUpPane();
+		GridPane GPane = MainMenuGUI.setUpPane();
 		Label label;
 
 		if (!person.getRelationship().isEmpty()) {
@@ -239,15 +239,15 @@ public class SelectPersonGUI {
 
 		// pane.add(btBack, 2, 12);
 		btBack.setOnAction(e -> {
-			MainMenu.window.setScene(viewPersonScene(person));
+			MainMenuGUI.window.setScene(viewPersonScene(person));
 		});
 
-		BorderPane pane = MainMenu.setUpBorderPane(label, GPane, btBack, null, null);
+		BorderPane pane = MainMenuGUI.setUpBorderPane(label, GPane, btBack, null, null);
 		pane.setAlignment(btBack, Pos.CENTER);
 
 		Scene scene = new Scene(pane, 700, 500);
 		scene.getStylesheets().add("GUI.css");
-		MainMenu.window.setScene(scene);
+		MainMenuGUI.window.setScene(scene);
 		return GPane;
 	}
 
@@ -256,13 +256,13 @@ public class SelectPersonGUI {
 		if (showDeletePersonMessage()) {
 			if (selectedPerson.getRelationship().containsKey("child")) {
 				if (showDeleteChildMessage()) {
-					MainMenu.dc.deletePerson(selectedPerson);
-					MainMenu.window.setScene(selectPersonScene());
+					MainMenuGUI.dc.deletePerson(selectedPerson);
+					MainMenuGUI.window.setScene(selectPersonScene());
 					showMessageForDeletePerson();
 				}
 			} else {
-				MainMenu.dc.deletePerson(selectedPerson);
-				MainMenu.window.setScene(selectPersonScene());
+				MainMenuGUI.dc.deletePerson(selectedPerson);
+				MainMenuGUI.window.setScene(selectPersonScene());
 				showMessageForDeletePerson();
 			}
 		}

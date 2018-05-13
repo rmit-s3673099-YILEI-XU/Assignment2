@@ -34,8 +34,8 @@ public class FindOutRelationGUI {
 		comboBox2.setValue("selectPerson2");
 
 		// initial the data in 2 conboBox
-		comboBox1.getItems().addAll(MainMenu.dc.getMember().keySet());
-		comboBox2.getItems().addAll(MainMenu.dc.getMember().keySet());
+		comboBox1.getItems().addAll(MainMenuGUI.dc.getMember().keySet());
+		comboBox2.getItems().addAll(MainMenuGUI.dc.getMember().keySet());
 
 		HBox peoBox = new HBox();
 		peoBox.getChildren().addAll(comboBox1, comboBox2);
@@ -47,7 +47,7 @@ public class FindOutRelationGUI {
 		mainBox.getChildren().addAll(peoBox, result);
 		mainBox.setPadding(new Insets(20, 20, 50, 20));
 
-		BorderPane pane = MainMenu.setUpBorderPane(description, mainBox, functionBox, null, null);
+		BorderPane pane = MainMenuGUI.setUpBorderPane(description, mainBox, functionBox, null, null);
 		mainBox.setAlignment(Pos.CENTER);
 		functionBox.setAlignment(Pos.CENTER);
 
@@ -61,8 +61,8 @@ public class FindOutRelationGUI {
 				result.setText("Relation result: Warning! Please choose 2 people!");
 
 			} else {
-				Person person1 = MainMenu.dc.getMemberObj(comboBox1.getValue());
-				Person person2 = MainMenu.dc.getMemberObj(comboBox2.getValue());
+				Person person1 = MainMenuGUI.dc.getMemberObj(comboBox1.getValue());
+				Person person2 = MainMenuGUI.dc.getMemberObj(comboBox2.getValue());
 
 				if (person1.equals(person2)) {
 
@@ -97,7 +97,7 @@ public class FindOutRelationGUI {
 		});
 
 		btBack.setOnAction(e -> {
-			MainMenu.window.setScene(MainMenu.startScene());
+			MainMenuGUI.window.setScene(MainMenuGUI.startScene());
 
 		});
 		Scene scene = new Scene(pane, 700, 500);

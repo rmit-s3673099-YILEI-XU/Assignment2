@@ -36,7 +36,7 @@ public class AddPersonGUI {
 		// set up layout
 	
 
-		GridPane pane = MainMenu.setUpPane();
+		GridPane pane = MainMenuGUI.setUpPane();
 
 		pane.add(new Label("Name:"), 0, 0);
 		TextField personName = new TextField();
@@ -114,7 +114,7 @@ public class AddPersonGUI {
 		});
 
 		btBack.setOnAction(e -> {
-			MainMenu.window.setScene(MainMenu.startScene());
+			MainMenuGUI.window.setScene(MainMenuGUI.startScene());
 		});
 
 		upload.setOnAction(e -> {
@@ -175,19 +175,19 @@ public class AddPersonGUI {
 			if (age < 0 || age > 150)
 				throw new NoSuchAgeException();
 			else {
-				currentPerson = MainMenu.dc.addPerson(name, photo, status, gender, age, state);
+				currentPerson = MainMenuGUI.dc.addPerson(name, photo, status, gender, age, state);
 				if (currentPerson == null)
 					throw new AlreadyExistPersonException();
 				else if (currentPerson instanceof Adult) {
 					
 					currentPerson.setPhoto(saveImage(name, photo));
-					MainMenu.dc.getMember().put(name, currentPerson);
-					MainMenu.dc.getDatabaseController().modifyDatabase(currentPerson, "addPerson");
+					MainMenuGUI.dc.getMember().put(name, currentPerson);
+					MainMenuGUI.dc.getDatabaseController().modifyDatabase(currentPerson, "addPerson");
 					showMessageForAddPerson(true);
-					MainMenu.window.setScene(addRelationGUI.addRelationScene(currentPerson));
+					MainMenuGUI.window.setScene(addRelationGUI.addRelationScene(currentPerson));
 
 				} else {
-					MainMenu.window.setScene(addRelationGUI.addParentsScene1(currentPerson));
+					MainMenuGUI.window.setScene(addRelationGUI.addParentsScene1(currentPerson));
 
 					/* add relation window */
 

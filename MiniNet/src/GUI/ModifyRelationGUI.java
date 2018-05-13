@@ -85,7 +85,7 @@ public class ModifyRelationGUI {
 		}
 		
 		
-		for (String personName : MainMenu.dc.getMember().keySet()) {
+		for (String personName : MainMenuGUI.dc.getMember().keySet()) {
 			if (!personName.equals(person.getName()))
 				personBox.getItems().add(personName);
 		}
@@ -142,7 +142,7 @@ public class ModifyRelationGUI {
 		hBoxBotton.getChildren().addAll(btBack, btRemove);
 		hBoxBotton.setSpacing(300);
 		
-		BorderPane pane = MainMenu.setUpBorderPane(label, vBoxModifyRelation, hBoxBotton, null, null);
+		BorderPane pane = MainMenuGUI.setUpBorderPane(label, vBoxModifyRelation, hBoxBotton, null, null);
 		
 		hBoxBotton.setAlignment(Pos.TOP_CENTER);
 		vBoxModifyRelation.setAlignment(Pos.TOP_CENTER);
@@ -161,10 +161,10 @@ public class ModifyRelationGUI {
 			}else {
 			String relation = relationBox.getSelectionModel().getSelectedItem();
 
-			Person relatedPerson = MainMenu.dc.getMemberObj(personBox.getSelectionModel().getSelectedItem());
+			Person relatedPerson = MainMenuGUI.dc.getMemberObj(personBox.getSelectionModel().getSelectedItem());
 		
 			try {
-				MainMenu.dc.checkAlreadyExitRelation(person, relatedPerson);
+				MainMenuGUI.dc.checkAlreadyExitRelation(person, relatedPerson);
 				try {
 					person.addRelationship(relation, relatedPerson);
 					//refresh the list
@@ -200,7 +200,7 @@ public class ModifyRelationGUI {
 		});
 
 		btBack.setOnAction(e -> {
-			MainMenu.window.setScene(new SelectPersonGUI().viewPersonScene(person));// check where should it go back
+			MainMenuGUI.window.setScene(new SelectPersonGUI().viewPersonScene(person));// check where should it go back
 		});
 
 		Scene scene = new Scene(pane, 700, 500);
@@ -213,7 +213,7 @@ public class ModifyRelationGUI {
 
 	public Scene addParentsScene1(Person person) {
 
-		GridPane pane = MainMenu.setUpPane();
+		GridPane pane = MainMenuGUI.setUpPane();
 
 		pane.add(new Label("The person is under 18 years old, please add the first parent"), 0, 0);
 
@@ -224,7 +224,7 @@ public class ModifyRelationGUI {
 
 		comboBox1.setValue("selectParent1");
 
-		for (String name : MainMenu.dc.getMember().keySet()) {
+		for (String name : MainMenuGUI.dc.getMember().keySet()) {
 
 			comboBox1.getItems().add(name);
 
@@ -243,9 +243,9 @@ public class ModifyRelationGUI {
 		btNext.setOnAction(e -> {
 
 			String name1 = comboBox1.getValue();
-			Person tempParent1 = MainMenu.dc.getMemberObj(name1);
+			Person tempParent1 = MainMenuGUI.dc.getMemberObj(name1);
 			if(tempParent1 instanceof Adult) {
-			MainMenu.window.setScene(addParentsScene2(person, tempParent1));
+			MainMenuGUI.window.setScene(addParentsScene2(person, tempParent1));
 			}else {
 				try {
 					throw new NotToBeCoupledException(tempParent1);
@@ -258,7 +258,7 @@ public class ModifyRelationGUI {
 		});
 
 		btBack.setOnAction(e -> {
-			MainMenu.window.setScene(MainMenu.startScene());
+			MainMenuGUI.window.setScene(MainMenuGUI.startScene());
 
 		});
 		Scene scene = new Scene(pane, 700, 500);
@@ -268,7 +268,7 @@ public class ModifyRelationGUI {
 	
 	public Scene addParentsScene2(Person person, Person tempParent1) {
 
-		GridPane pane = MainMenu.setUpPane();
+		GridPane pane = MainMenuGUI.setUpPane();
 
 		Button btAdd = new Button("Add");
 		Button btBack = new Button("Back");
@@ -285,7 +285,7 @@ public class ModifyRelationGUI {
 			comboBox2.setValue("selectParent2");
 		
 
-		for (String name : MainMenu.dc.getMember().keySet()) {
+		for (String name : MainMenuGUI.dc.getMember().keySet()) {
 		
 			if(!name.equals(tempParent1.getName()))
 			comboBox2.getItems().add(name);
@@ -317,7 +317,7 @@ public class ModifyRelationGUI {
 		});
 
 		btBack.setOnAction(e -> {
-			MainMenu.window.setScene(addParentsScene1(person));
+			MainMenuGUI.window.setScene(addParentsScene1(person));
 
 		});
 		Scene scene = new Scene(pane, 700, 500);
@@ -328,7 +328,7 @@ public class ModifyRelationGUI {
 	public void addParentsAction(Person parent1, String name2, Person child)
 			throws Exception {
 		Person parent2;
-		parent2 = MainMenu.dc.getMemberObj(name2);
+		parent2 = MainMenuGUI.dc.getMemberObj(name2);
 		
 		if(parent2 instanceof Adult) {
 			if(parent2.getRelationship().containsKey("couple")&&!(parent1.getRelationship().get("couple").get(0).equals(parent2)))
@@ -343,21 +343,21 @@ public class ModifyRelationGUI {
 			throw new NotToBeCoupledException(parent2);
 		}
 		
-				MainMenu.dc.getMember().put(child.getName(), child);
+				MainMenuGUI.dc.getMember().put(child.getName(), child);
 				showMessageForAddParents(true);
 
 				// need add relation UI for child @Emma
 				if (child instanceof Child) {
-					MainMenu.window.setScene(addRelationScene(child));
+					MainMenuGUI.window.setScene(addRelationScene(child));
 				} else {
-					MainMenu.window.setScene(MainMenu.startScene());
+					MainMenuGUI.window.setScene(MainMenuGUI.startScene());
 				}
 
 	}
 
 	
 	public boolean removeRelationAction(Person selectedPerson,String name,String relation) {
-		Person reletedPerson = MainMenu.dc.getMemberObj(name);
+		Person reletedPerson = MainMenuGUI.dc.getMemberObj(name);
 		if(relation.equals("couple"))
 		{
 			if(selectedPerson.getRelationship().containsKey("child")&&selectedPerson.getRelationship().get("child").size()>0)
@@ -377,7 +377,7 @@ public class ModifyRelationGUI {
 		}else if(relation.equals("child"))
 		{
 			if(showRemoveChildRelationMessage(name)) {
-				MainMenu.dc.deletePerson(reletedPerson);
+				MainMenuGUI.dc.deletePerson(reletedPerson);
 				return true;
 			}
 			else {
