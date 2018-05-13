@@ -91,6 +91,7 @@ public class SelectPersonGUI {
 				"You have selected" + " " + selectedPerson.getName() + " " + "please select one option below");
 		// Label label1 = new Label("please select one option below");
 		Button btDisplayP = new Button("Display the profile");
+		Button btModifyP = new Button("Modify the profile");
 		Button btDisplayR = new Button("Display relations");
 		Button btModifyR = new Button("Modify relation");
 		Button btDelete = new Button("Delete this person");
@@ -98,7 +99,8 @@ public class SelectPersonGUI {
 
 		// GPane.add(label, 0, 0);
 		// GPane.add(label1, 0, 1);
-		GPane.add(btDisplayP, 0, 2);
+		GPane.add(btDisplayP, 0, 1);
+		GPane.add(btModifyP, 0, 2);
 		GPane.add(btDisplayR, 0, 3);
 		GPane.add(btModifyR, 0, 4);
 		GPane.add(btDelete, 0, 5);
@@ -117,6 +119,11 @@ public class SelectPersonGUI {
 
 		});
 
+		btModifyP.setOnAction(e->{
+			MainMenuGUI.window.setScene(new ModifyProfileGUI().modifyProfileScene(selectedPerson));
+		});
+		
+		
 		btDisplayR.setOnAction(e -> {
 			displayRelationsAction(selectedPerson);
 

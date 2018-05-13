@@ -127,7 +127,7 @@ public class AddPersonGUI {
 		return scene;
 	}
 
-	private File uploadPhoto(String name, Label personPhoto) {
+	public File uploadPhoto(String name, Label personPhoto) {
 
 		FileChooser fileChooser = new FileChooser();
 		FileChooser.ExtensionFilter photoFilter = new FileChooser.ExtensionFilter("PNG files, JPG files, JPEG files",
@@ -140,7 +140,7 @@ public class AddPersonGUI {
 
 	}
 
-	private String saveImage(String name, String path) {
+	public String saveImage(String name, String path) {
 
 		String fileType;
 

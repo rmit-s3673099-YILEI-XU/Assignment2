@@ -51,10 +51,6 @@ public class ModifyRelationGUI {
 		
 		ComboBox<String> relationBox = new ComboBox<String>();
 		ComboBox<String> personBox = new ComboBox<String>();
-		
-		
-		
-		
 
 		
 		// relation list
@@ -174,6 +170,8 @@ public class ModifyRelationGUI {
 						relationList.getItems().add(newRelatedPerson.getName()+"      "+relation1);	
 						}
 					}
+					relationBox.setValue("selectRelation");
+					personBox.setValue("selectPerson");
 					showMessageForAddRelation(true);
 				}catch (NotToBeFriendsException e1) {
 					// TODO Auto-generated catch block
@@ -362,7 +360,7 @@ public class ModifyRelationGUI {
 		{
 			if(selectedPerson.getRelationship().containsKey("child")&&selectedPerson.getRelationship().get("child").size()>0)
 			{
-				showUnsuccessWaning(relation);
+				showUnsuccessWarning(relation);
 				return false;
 			}
 			else {
@@ -372,7 +370,7 @@ public class ModifyRelationGUI {
 			}
 			
 		}else if(relation.equals("parent")||relation.equals("sibling")){
-			showUnsuccessWaning(relation);
+			showUnsuccessWarning(relation);
 			return false;
 		}else if(relation.equals("child"))
 		{
@@ -473,7 +471,7 @@ public class ModifyRelationGUI {
 
 		alert.showAndWait();
 	}
-	public void showUnsuccessWaning(String relation) {
+	public void showUnsuccessWarning(String relation) {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 
 		alert.setTitle("MESSAGES");
