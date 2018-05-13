@@ -33,25 +33,15 @@ import people.*;
 public class ModifyRelationGUI {
 
 	public Scene addRelationScene(Person person) {
-
-//		GridPane pane = MainMenu.setUpPane();
-//		GridPane subPane = new GridPane();
-//		subPane.setAlignment(Pos.CENTER);
 		
 		Label label = new Label("Modify relation for" + " " + person.getName());
 		Button btAdd = new Button("Add");
 		Button btBack = new Button("Back");
 		Button btRemove = new Button("Remove");
 		ListView<String> relationList = new ListView<>();
-		
-		//pane.add(new Label("Please add Relation for "+ person.getName()), 0, 0);
-//		pane.add(subPane, 0, 1);
-//		pane.add(btAdd, 0, 2);	
-//		pane.add(btCancel, 2, 2);
-		
+				
 		ComboBox<String> relationBox = new ComboBox<String>();
 		ComboBox<String> personBox = new ComboBox<String>();
-
 		
 		// relation list
 
@@ -75,30 +65,20 @@ public class ModifyRelationGUI {
 				personBox.setDisable(true);
 				btAdd.setDisable(true);
 				btRemove.setDisable(true);
-				relationList.setDisable(true);
-				
-	
+				relationList.setDisable(true);					
 		}
-		
-		
+				
 		for (String personName : MainMenuGUI.dc.getMember().keySet()) {
 			if (!personName.equals(person.getName()))
 				personBox.getItems().add(personName);
-		}
-		
-		
-		
+		}		
 		
 		HBox hBoxAddRelation = new HBox();
 		hBoxAddRelation.getChildren().addAll(relationBox, personBox,btAdd );
-		hBoxAddRelation.setSpacing(50);
-		
-		
-		
+		hBoxAddRelation.setSpacing(50);		
 		
 		VBox vBoxModifyRelation = new VBox(10);
-		
-		
+				
 		for(String relation: person.getRelationship().keySet()) {
 			for (Person relatedPerson : person.getRelationship().get(relation)) {
 			relationList.getItems().add(relatedPerson.getName()+"      "+relation);	
@@ -112,8 +92,6 @@ public class ModifyRelationGUI {
 		Label labelRemoveMessage = new Label("EXIST RELATION LIST");
 		vBoxModifyRelation.getChildren().addAll(hBoxAddRelation,labelRemoveMessage,relationList);
         
-	
-
 		btRemove.setOnAction(e->{
 			String name, relation;
 			String[] data = relationList.getSelectionModel().getSelectedItem().split("      ");
@@ -132,8 +110,7 @@ public class ModifyRelationGUI {
 				}
 			}
 		});
-		
-		
+				
 		HBox hBoxBotton = new HBox();
 		hBoxBotton.getChildren().addAll(btBack, btRemove);
 		hBoxBotton.setSpacing(300);
@@ -143,10 +120,7 @@ public class ModifyRelationGUI {
 		hBoxBotton.setAlignment(Pos.TOP_CENTER);
 		vBoxModifyRelation.setAlignment(Pos.TOP_CENTER);
 		hBoxAddRelation.setAlignment(Pos.TOP_CENTER);
-		
-
-		
-		
+				
 		//event
 		
 		btAdd.setOnAction(e -> {
@@ -170,8 +144,7 @@ public class ModifyRelationGUI {
 						relationList.getItems().add(newRelatedPerson.getName()+"      "+relation1);	
 						}
 					}
-//					relationBox.setValue("selectRelation");
-//					personBox.setValue("selectPerson");
+
 					showMessageForAddRelation(true);
 				}catch (NotToBeFriendsException e1) {
 					// TODO Auto-generated catch block
@@ -193,8 +166,7 @@ public class ModifyRelationGUI {
 				// TODO Auto-generated catch block
 				e2.alreadyHaveRelationWarning();
 			}
-			}
-			
+			}			
 		});
 
 		btBack.setOnAction(e -> {
@@ -202,12 +174,9 @@ public class ModifyRelationGUI {
 		});
 
 		Scene scene = new Scene(pane, 700, 500);
-		
+		scene.getStylesheets().add("GUI2.css");
 		return scene;
-
 	}
-
-
 
 	public Scene addParentsScene1(Person person) {
 
@@ -228,13 +197,10 @@ public class ModifyRelationGUI {
 
 		}
 
-
-
-		pane.add(btNext, 0, 4);
-		pane.add(btBack, 4, 4);
+		pane.add(btBack, 0, 4);
+		pane.add(btNext, 4, 4);
 		pane.add(comboBox1, 0, 1);
 		GridPane.setHalignment(comboBox1, HPos.CENTER);
-
 
 		// events
 
@@ -260,7 +226,7 @@ public class ModifyRelationGUI {
 
 		});
 		Scene scene = new Scene(pane, 700, 500);
-
+		scene.getStylesheets().add("GUI2.css");
 		return scene;
 	}
 	
@@ -291,8 +257,8 @@ public class ModifyRelationGUI {
 		}
 		}
 
-		pane.add(btAdd, 0, 4);
-		pane.add(btBack, 4, 4);
+		pane.add(btBack, 0, 4);
+		pane.add(btAdd, 4, 4);
 		pane.add(comboBox2, 0, 1);
 		GridPane.setHalignment(comboBox2, HPos.CENTER);
 
@@ -319,7 +285,7 @@ public class ModifyRelationGUI {
 
 		});
 		Scene scene = new Scene(pane, 700, 500);
-
+		scene.getStylesheets().add("GUI2.css");
 		return scene;
 	}
 

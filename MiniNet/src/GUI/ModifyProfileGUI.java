@@ -122,11 +122,9 @@ public class ModifyProfileGUI {
 		btBack.setOnAction(e -> {
 			MainMenuGUI.window.setScene(new SelectPersonGUI().viewPersonScene(selectedPerson));// check where should it go back
 		});
-		
-		
-		
-		
+	
 		Scene scene = new Scene(pane, 700, 500);
+		scene.getStylesheets().add("GUI2.css");
 		return scene;
 		
 	}

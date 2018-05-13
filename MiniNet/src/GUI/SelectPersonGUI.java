@@ -48,8 +48,6 @@ public class SelectPersonGUI {
 		memberList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		memberList.getSelectionModel().select(0);
 
-//		 vBox.setPadding(new Insets(20, 20, 20, 20));
-//		vBox.prefWidth(100);
 		vBox.setMaxWidth(250);
 		vBox.setMaxHeight(350);
 		vBox.getChildren().addAll(memberList);
@@ -57,76 +55,56 @@ public class SelectPersonGUI {
 		BorderPane pane = MainMenuGUI.setUpBorderPane(label, vBox, hBox, null, null);
 		hBox.setAlignment(Pos.CENTER);
 
-		// pane.add(label, 0, 0);
-		// pane.add(layout, 0, 1);
-		// pane.add(submit, 0, 2);
-		// pane.add(cancel, 1, 2);
-
 		// create events
 
 		submit.setOnAction(e -> {
 			String personName = memberList.getSelectionModel().getSelectedItem();
 			System.out.print(personName);
 			Person selectedPerson = MainMenuGUI.dc.getMemberObj(personName);
-			// ViewPersonGUI viewP = new ViewPersonGUI(window);
 			MainMenuGUI.window.setScene(viewPersonScene(selectedPerson));
-
 		});
 
 		back.setOnAction(e -> {
 			MainMenuGUI.window.setScene(MainMenuGUI.startScene());
 		});
-
+		
 		Scene scene = new Scene(pane, 700, 500);
+		scene.getStylesheets().add("GUI2.css");
 		return scene;
-
 	}
 
 	public Scene viewPersonScene(Person selectedPerson) {
 
-		// set up layout
-
-		GridPane GPane = MainMenuGUI.setUpPane();
 		Label label = new Label(
 				"You have selected" + " " + selectedPerson.getName() + " " + "please select one option below");
-		// Label label1 = new Label("please select one option below");
 		Button btDisplayP = new Button("Display the profile");
 		Button btModifyP = new Button("Modify the profile");
 		Button btDisplayR = new Button("Display relations");
 		Button btModifyR = new Button("Modify relation");
 		Button btDelete = new Button("Delete this person");
 		Button btBack = new Button("Back");
+		
+		VBox vBox = new VBox();
+		vBox.getChildren().addAll(btDisplayP, btModifyP, btDisplayR, btModifyR, btDelete, btBack);
 
-		// GPane.add(label, 0, 0);
-		// GPane.add(label1, 0, 1);
-		GPane.add(btDisplayP, 0, 1);
-		GPane.add(btModifyP, 0, 2);
-		GPane.add(btDisplayR, 0, 3);
-		GPane.add(btModifyR, 0, 4);
-		GPane.add(btDelete, 0, 5);
-		GPane.add(btBack, 0, 6);
-
-		BorderPane pane = MainMenuGUI.setUpBorderPane(label, GPane, null, null, null);
-
-		// create event
-
+		BorderPane pane = MainMenuGUI.setUpBorderPane(label, vBox, null, null, null);
+		vBox.setAlignment(Pos.CENTER);
+		vBox.setSpacing(5.5);
+		
 		btDisplayP.setOnAction(e -> {
 			try {
 				displayProfileAction(selectedPerson);
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
 			}
-
 		});
 
 		btModifyP.setOnAction(e->{
 			MainMenuGUI.window.setScene(new ModifyProfileGUI().modifyProfileScene(selectedPerson));
 		});
-		
-		
+			
 		btDisplayR.setOnAction(e -> {
 			displayRelationsAction(selectedPerson);
-
 		});
 
 		btModifyR.setOnAction(e -> {
@@ -135,22 +113,16 @@ public class SelectPersonGUI {
 				youngChildModifyRwarning();
 		});
 
-
 		btDelete.setOnAction(e -> {
 			deletePersonAction(selectedPerson);
-			// MainMenu.window.setScene(selectPersonScene());
-
 		});
 
 		btBack.setOnAction(e -> {
-			// SelectPersonGUI selectP = new SelectPersonGUI(window);
 			MainMenuGUI.window.setScene(selectPersonScene());
 		});
-
 		Scene scene = new Scene(pane, 700, 500);
-		scene.getStylesheets().add("GUI.css");
+		scene.getStylesheets().add("GUI2.css");
 		return scene;
-
 	}
 
 	public void displayProfileAction(Person selectedPerson) throws FileNotFoundException {
@@ -177,8 +149,6 @@ public class SelectPersonGUI {
 			MainMenuGUI.window.setScene(viewPersonScene(selectedPerson));
 		});
 
-		// pane.add(new Label(photo), 2, 1);
-
 		ImageView imageView = new ImageView();
 
 		if (photo.equals("")) {
@@ -189,7 +159,6 @@ public class SelectPersonGUI {
 
 			Image image = new Image(new FileInputStream("image/" + photo));
 			imageView.setImage(image);
-
 		}
 		imageView.setFitHeight(100);
 		imageView.setFitWidth(100);
@@ -204,10 +173,8 @@ public class SelectPersonGUI {
 		
 		BorderPane pane = MainMenuGUI.setUpBorderPane(imageView, GPane, btBack, null, null);
 		pane.setAlignment(btBack, Pos.CENTER);
-//		btBack.setLayoutX(50);
-//		btBack.setLayoutY(30);
 		Scene scene = new Scene(pane, 700, 500);
-		scene.getStylesheets().add("GUI.css");
+		scene.getStylesheets().add("GUI2.css");
 		MainMenuGUI.window.setScene(scene);
 		MainMenuGUI.window.show();
 
@@ -220,7 +187,6 @@ public class SelectPersonGUI {
 
 		if (!person.getRelationship().isEmpty()) {
 			label = new Label("People who have relationship with" + " " + person.getName() + " " + "is/are:");
-			// pane.add(label, 0, 0);
 
 			int i = 2;
 			for (String type : person.getRelationship().keySet()) {
@@ -231,20 +197,14 @@ public class SelectPersonGUI {
 					GPane.add(new Label(r.getName()), 0, i);
 					GPane.add(new Label(type), 3, i);
 					i++;
-					// System.out.println(r.getName() + type + i);
 				}
-
 			}
 		} else {
 			label = new Label(person.getName() + " " + "does not have relationship with anyone.");
-			// GPane.add(new Label(person.getName() + " " + "does not have relationship with
-			// anyone."), 0, 0);
-			// System.out.print("no relation");
 		}
 
 		Button btBack = new Button("Back");
 
-		// pane.add(btBack, 2, 12);
 		btBack.setOnAction(e -> {
 			MainMenuGUI.window.setScene(viewPersonScene(person));
 		});
@@ -253,7 +213,7 @@ public class SelectPersonGUI {
 		pane.setAlignment(btBack, Pos.CENTER);
 
 		Scene scene = new Scene(pane, 700, 500);
-		scene.getStylesheets().add("GUI.css");
+		scene.getStylesheets().add("GUI2.css");
 		MainMenuGUI.window.setScene(scene);
 		return GPane;
 	}

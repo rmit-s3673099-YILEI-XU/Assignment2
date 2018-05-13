@@ -10,14 +10,12 @@
 .label{
 
  //-fx-text-fill: #FFFFFF;
- -fx-font-size: 15px;
+ -fx-font-size: 17px;
+ -fx-font-weight: bold;
 }
 
 .button{
-
-  //-fx-background-color: #D8D8D8;
-  -fx-background-image: url('/image/background1.jpg');
-  -fx-pref-width: 200px;
-  -fx-pref-height: 50px;
+ //-fx-pref-width: 200px;
+  //-fx-pref-height: 20px;
 
 }

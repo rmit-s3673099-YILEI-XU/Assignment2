@@ -13,14 +13,11 @@ public class MiniNet extends Application{
     public void start(Stage primaryStage) throws IOException{
 		
 		  DriverClass dc = new DriverClass();
-	      
-	        // window.initStyle(StageStyle.TRANSPARENT);
+
 		  primaryStage.setTitle("MiniNet");
-//	       window.setScene(new MiniNetInterface(window).startScene());
 		  primaryStage.setScene(new MainMenuGUI(primaryStage, dc).startScene());
 		  primaryStage.setResizable(false);
-		  primaryStage.show();
-	        
+		  primaryStage.show();	        
 	        try {
 	            dc.initialData();
 	        } catch (IOException e) {
@@ -34,8 +31,6 @@ public class MiniNet extends Application{
 
 	public static void main(String[] args)
 	{
-//		DriverClass dc = new DriverClass();
-//		dc.initialData();
 	  	Application.launch(args);
 	
 	}

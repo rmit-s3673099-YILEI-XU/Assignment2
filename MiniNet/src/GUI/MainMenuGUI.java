@@ -8,6 +8,8 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -54,14 +56,15 @@ public  class MainMenuGUI {
     static public Scene startScene() {
 
         // set up layout
-    	
+   
 	    	Label label = new Label("Welcome to MiniNet, Please choose one from the menu");
 	    	Button addPersonBt = new Button("Add person");
 	    	Button selectPersonBt = new Button("Select a Person");	
 	    	Button findOutBt = new Button("Find out relationship");
+	    //ImageView imageView = new ImageView(new Image("image/background.jpg") );
 	    	Button exitBt = new Button("Exit");
-	    	
-	    	
+	    	//exitBt.setStyle("-fx-background-image: url('/image/background1.jpg')");
+
 	    	GridPane GPane = setUpPane();
 	    	GPane.add(addPersonBt, 0, 0);
 	    	GPane.add(selectPersonBt, 0, 1);
@@ -69,25 +72,7 @@ public  class MainMenuGUI {
 	    	GPane.add(exitBt, 0, 3);
 
 	    	BorderPane pane = setUpBorderPane(label, GPane, null, null, null);
-	    	
-	    	
-	    	
-//    		GridPane pane = setUpPane();    
-//    		
-//    		Label label = new Label("Welcome to Mininet, Please choose one from the menu");
-//    		label1.setStyle("-fx-font-size: 13pt");
-//        pane.add(label1, 0, 0);
-//        Button addPersonBt = new Button("Add person");
-//        pane.add(addPersonBt, 0, 1);
-//        Button selectPersonBt = new Button("Select a Person");
-//        pane.add(selectPersonBt, 0, 2);
-//        Button findOutBt = new Button("Find out relationship");
-//        pane.add(findOutBt, 0, 3);
-//
-//        Button exitBt = new Button("Exit");
-//        pane.add(exitBt, 0, 4);
-    
-    
+
         // create events
 
         addPersonBt.setOnAction(event -> {
@@ -110,31 +95,11 @@ public  class MainMenuGUI {
         // define the close button event on the stage
         window.setOnCloseRequest(e ->{
         	MainMenuGUI.dc.getDatabaseController().disconnectDB();
-        window.close();
-        
+        window.close();     
         });
-
         Scene scene = new Scene(pane, 700, 500);
         scene.getStylesheets().add("GUI.css");
         return scene;
-
     }
     
-    
-
-
-//    static public void showMessageForAddPerson(boolean isSuccess) {
-//        Alert alert = new Alert(Alert.AlertType.WARNING);
-//        if (isSuccess) {
-//            alert.setTitle("MESSAGES");
-//            alert.setHeaderText("SUCCESS!");
-//            alert.setContentText("Congratulations! Add person successfully!");
-//        } else {
-//            alert.setTitle("MESSAGES");
-//            alert.setHeaderText("FAIL!");
-//            alert.setContentText("Sorry, add person unsuccessfully!");
-//        }
-//        alert.showAndWait();
-//    }
-
 }

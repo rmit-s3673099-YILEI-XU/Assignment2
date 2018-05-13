@@ -33,21 +33,60 @@ public class AddPersonGUI {
 
 	public Scene addPersonScene() {
 
-		// set up layout
-	
-
 		GridPane pane = MainMenuGUI.setUpPane();
 
-		pane.add(new Label("Name:"), 0, 0);
+		pane.add(new Label("Name*:"), 0, 0);
 		TextField personName = new TextField();
 		pane.add(personName, 1, 0);
-		pane.add(new Label("Age"), 0, 1);
+		pane.add(new Label("Age*"), 0, 1);
 		TextField personAge = new TextField();
-		pane.add(personAge, 1, 1);
-		pane.add(new Label("Gender"), 0, 2);
+		pane.add(personAge, 1, 1);		
+		pane.add(new Label("Gender*"), 0, 2);
+		ToggleGroup group = new ToggleGroup();		
+		pane.add(setGenderButton(group), 1, 2);		
+		pane.add(new Label("Status"), 0, 3);
+		TextField personStatus = new TextField();
+		pane.add(personStatus, 1, 3);
+		pane.add(new Label("State*"), 0, 4);
+		ComboBox<String> comboBox = new ComboBox<String>();
+		comboBox.setValue("Select State");
+		String[] allState = { "ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC", "WA" };
+		for (String s : allState) {
+			comboBox.getItems().add(s);
+		}
+		pane.add(comboBox, 1, 4);
+		pane.add(new Label("Photo"), 0, 5);
+		Label personPhoto = new Label();
+		pane.add(personPhoto, 1, 5);
+		Button upload = new Button("Upload");
+		pane.add(upload, 2, 5);
 
+		Button btBack = new Button("Back");
+		pane.add(btBack, 0, 9);
+		Button btAdd = new Button("Add");
+		pane.add(btAdd, 2, 9);
+
+		btAdd.setOnAction(e -> {			
+			addButtonAction(personName, personPhoto, personStatus, group, personAge, comboBox);
+		});
+		btBack.setOnAction(e -> {
+			MainMenuGUI.window.setScene(MainMenuGUI.startScene());
+		});
+		upload.setOnAction(e -> {
+			File photoFile;
+			photoFile = uploadPhoto(personName.getText().trim(), personPhoto);
+			if(photoFile!=null)
+				personPhoto.setText(photoFile.getAbsolutePath());
+		});
+		Scene scene = new Scene(pane, 700, 500);
+		scene.getStylesheets().add("GUI2.css");
+		return scene;
+	}
+
+	public HBox setGenderButton(ToggleGroup group) {
+		
 		HBox root = new HBox();
-		ToggleGroup group = new ToggleGroup();
+
 		RadioButton female = new RadioButton("Female");
 		female.setToggleGroup(group);
 		female.setSelected(true);
@@ -57,75 +96,32 @@ public class AddPersonGUI {
 		male.setUserData("M");
 		root.getChildren().add(female);
 		root.getChildren().add(male);
-		pane.add(root, 1, 2);
-		pane.add(new Label("Status"), 0, 3);
-		TextField personStatus = new TextField();
-		pane.add(personStatus, 1, 3);
-		pane.add(new Label("(Optional)"), 2, 3);
+		return root;
+	}
 
-		pane.add(new Label("State"), 0, 4);
-		ComboBox<String> comboBox = new ComboBox<String>();
-		comboBox.setValue("Select State");
-		String[] allState = { "ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC", "WA" };
-
-		for (String s : allState) {
-			comboBox.getItems().add(s);
-		}
-
-
-		pane.add(comboBox, 1, 4);
-
-		pane.add(new Label("Photo"), 0, 5);
-		Label personPhoto = new Label();
-		pane.add(personPhoto, 1, 5);
-		Button upload = new Button("Upload");
-		pane.add(upload, 2, 5);
-		pane.add(new Label("(Optional)"), 3, 5);
-
-		Button btBack = new Button("Back");
-		pane.add(btBack, 0, 9);
-		Button btAdd = new Button("Add");
-		pane.add(btAdd, 2, 9);
+	public void addButtonAction(
+			
+		TextField personName, Label personPhoto, TextField personStatus, ToggleGroup personGender, TextField personAge, ComboBox personState) {
 		
+		String name = personName.getText().trim();
+		String photo = personPhoto.getText().trim();
+		String status = personStatus.getText().trim();
+		String gender = (String) personGender.getSelectedToggle().getUserData();
+		String ageText = personAge.getText().trim();
+		String state = (String) personState.getValue();
 
-		// create events
-		btAdd.setOnAction(e -> {
-			/* add a person */
-
-			String name = personName.getText().trim();
-			String photo = personPhoto.getText().trim();
-			String status = personStatus.getText().trim();
-			String gender = (String) group.getSelectedToggle().getUserData();
-			String ageText = personAge.getText().trim();
-			String state = (String) comboBox.getValue();
-	
-			try {
-				addPersonAction(name, photo, status, gender, ageText, state);
-			} catch (NotFillAllNecessInfo exception) {
-				exception.lackNecessInforWarning();
-			} catch (NotNumberFormatException exception) {
-				exception.notNumberFormatWarning();
-			} catch (NoSuchAgeException exception) {
-				exception.noSuchAgeWarning();
-			} catch (AlreadyExistPersonException exception) {
-				exception.alreadyExistPersonWarning();
-			}
-
-		});
-
-		btBack.setOnAction(e -> {
-			MainMenuGUI.window.setScene(MainMenuGUI.startScene());
-		});
-
-		upload.setOnAction(e -> {
-			File photoFile;
-			photoFile = uploadPhoto(personName.getText().trim(), personPhoto);
-			if(photoFile!=null)
-				personPhoto.setText(photoFile.getAbsolutePath());
-		});
-
-		Scene scene = new Scene(pane, 700, 500);
-		return scene;
+		try {
+			addPersonAction(name, photo, status, gender, ageText, state);
+		} catch (NotFillAllNecessInfo exception) {
+			exception.lackNecessInforWarning();
+		} catch (NotNumberFormatException exception) {
+			exception.notNumberFormatWarning();
+		} catch (NoSuchAgeException exception) {
+			exception.noSuchAgeWarning();
+		} catch (AlreadyExistPersonException exception) {
+			exception.alreadyExistPersonWarning();
+		}
+		
 	}
 
 	public File uploadPhoto(String name, Label personPhoto) {
@@ -189,16 +185,10 @@ public class AddPersonGUI {
 
 				} else {
 					MainMenuGUI.window.setScene(addRelationGUI.addParentsScene1(currentPerson));
-
-					/* add relation window */
-
 				}
-				
 			}
 		}
 	}
-
-
 	public void showMessageForAddPerson(boolean isSuccess) {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 		if (isSuccess) {
