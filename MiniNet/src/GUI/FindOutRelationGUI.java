@@ -55,54 +55,9 @@ public class FindOutRelationGUI {
 		// events
 
 		btSubmit.setOnAction(e -> {
+			
+			setSubmitAction(comboBox1, comboBox2, result);
 
-			if (comboBox1.getValue().equals("selectPerson1") || comboBox2.getValue().equals("selectPerson2")) {
-
-				result.setText("Warning! Please choose 2 people!");
-				result.setStyle("-fx-text-fill: #E33539");
-				
-
-			} else {
-				Person person1 = MainMenuGUI.dc.getMemberObj(comboBox1.getValue());
-				Person person2 = MainMenuGUI.dc.getMemberObj(comboBox2.getValue());
-
-				if (person1.equals(person2)) {
-
-					result.setStyle("-fx-text-fill: #E33539");
-					result.setText("Warning! They are the same person. Please select again!");
-				} else {
-					String relation = findOutRelationAction(person1, person2);
-
-					result.setStyle("-fx-text-fill: #000000");
-
-					if (relation == null) {
-
-						result.setText("No relation between: " + person1.getName() + " and "
-								+ person2.getName());
-					} else {
-						if (relation.equals("parent")) {
-							if (person1 instanceof Adult) {
-								result.setText(person1.getName() + " is a parent of "
-										+ person2.getName());
-							} else {
-								result.setText(person2.getName() + " is a parent of "
-										+ person1.getName());
-							}
-						}else if(relation.equals("child")) {
-							if (person1 instanceof Adult) {
-								result.setText(person1.getName() + " is a parent of "
-										+ person2.getName());
-							} else {
-								result.setText(person2.getName() + " is a parent of "
-										+ person1.getName());
-						}
-						}else {
-							result.setText(person1.getName() + " and " + person2.getName()
-							+ " are " + relation);
-					}
-				}
-				}
-			}
 		});
 
 		btBack.setOnAction(e -> {
@@ -112,6 +67,56 @@ public class FindOutRelationGUI {
 		Scene scene = new Scene(pane, 700, 500);
 		scene.getStylesheets().add("GUI2.css");
 		return scene;
+	}
+	
+	public void setSubmitAction(ComboBox comboBox1, ComboBox comboBox2, Label result) {
+		
+		if (comboBox1.getValue().equals("selectPerson1") || comboBox2.getValue().equals("selectPerson2")) {
+
+			result.setText("Warning! Please choose 2 people!");
+			result.setStyle("-fx-text-fill: #E33539");
+			
+		} else {
+			Person person1 = MainMenuGUI.dc.getMemberObj((String) comboBox1.getValue());
+			Person person2 = MainMenuGUI.dc.getMemberObj((String) comboBox2.getValue());
+
+			if (person1.equals(person2)) {
+
+				result.setStyle("-fx-text-fill: #E33539");
+				result.setText("Warning! They are the same person. Please select again!");
+			} else {
+				String relation = findOutRelationAction(person1, person2);
+
+				result.setStyle("-fx-text-fill: #000000");
+
+				if (relation == null) {
+
+					result.setText("No relation between: " + person1.getName() + " and "
+							+ person2.getName());
+				} else {
+					if (relation.equals("parent")) {
+						if (person1 instanceof Adult) {
+							result.setText(person1.getName() + " is a parent of "
+									+ person2.getName());
+						} else {
+							result.setText(person2.getName() + " is a parent of "
+									+ person1.getName());
+						}
+					}else if(relation.equals("child")) {
+						if (person1 instanceof Adult) {
+							result.setText(person1.getName() + " is a parent of "
+									+ person2.getName());
+						} else {
+							result.setText(person2.getName() + " is a parent of "
+									+ person1.getName());
+					}
+					}else {
+						result.setText(person1.getName() + " and " + person2.getName()
+						+ " are " + relation);
+				}
+			}
+			}
+		}	
 	}
 
 	public String findOutRelationAction(Person person1, Person person2) {

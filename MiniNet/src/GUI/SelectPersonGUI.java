@@ -76,7 +76,7 @@ public class SelectPersonGUI {
 	public Scene viewPersonScene(Person selectedPerson) {
 
 		Label label = new Label(
-				"You have selected" + " " + selectedPerson.getName() + " " + "please select one option below");
+				"You have selected" + " " + selectedPerson.getName() + ", " + "please select one option below");
 		Button btDisplayP = new Button("Display the profile");
 		Button btModifyP = new Button("Modify the profile");
 		Button btDisplayR = new Button("Display relations");

@@ -57,6 +57,7 @@ public class AddPersonGUI {
 		pane.add(comboBox, 1, 4);
 		pane.add(new Label("Photo"), 0, 5);
 		Label personPhoto = new Label();
+		personPhoto.setMaxWidth(160);
 		pane.add(personPhoto, 1, 5);
 		Button upload = new Button("Upload");
 		pane.add(upload, 2, 5);
