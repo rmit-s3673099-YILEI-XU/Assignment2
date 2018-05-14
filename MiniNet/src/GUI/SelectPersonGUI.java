@@ -121,7 +121,7 @@ public class SelectPersonGUI {
 			MainMenuGUI.window.setScene(selectPersonScene());
 		});
 		Scene scene = new Scene(pane, 700, 500);
-		scene.getStylesheets().add("GUI2.css");
+		scene.getStylesheets().add("GUI.css");
 		return scene;
 	}
 
