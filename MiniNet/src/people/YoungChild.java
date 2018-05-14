@@ -61,17 +61,6 @@ public class YoungChild extends Person{
 				this.setRelationManipulator(new Parents(parent[0],parent[1],this));
 				this.relationManipulator.remove();
 			}
-				
-//			if(parent[0].getName()==null) {
-//				parent[0]= relatedPerson;
-//			}
-//			else if (parent[1].getName()==null){
-//				parent[1]= relatedPerson;
-//			}
-//			if(parent[0].getName()!=null&&parent[1].getName()!=null) {
-////				this.setRelationManipulator(new Parents(parent[0],parent[1],this));
-//				this.relationManipulator.remove();
-////			}
 			break;
 		case "sibling":
 			if(relatedPerson!=null) {

@@ -28,7 +28,6 @@ public class Child extends Person{
 		// TODO Auto-generated method stub
 		switch(relationType){
 		case "friends":
-//			System.out.println("kkkkkkk");
 			this.setRelationManipulator(new ChildFriend(this, relation));
 			this.relationManipulator.add();
 			break;
@@ -44,45 +43,18 @@ public class Child extends Person{
 			else {
 				parent[1]= relation;
 			}
-//			System.out.println(parent[0].getName()+" "+parent[1].getName());
 			if(parent[0].getName()!=null&&parent[1].getName()!=null) {
 				System.out.println(parent[0].getName()+" "+parent[1].getName());
 				addParent(parent[0],parent[1]);
-			}
-			
+			}	
 			break;
 		default:
 			break;
 		}
 		
-		
-//		if(relationType.equals("friends"))
-//		{
-//		
-//			this.setRelationManipulator(new ChildFriend(this, relation));
-//			this.relationManipulator.add();
-//		}else if(relationType.equals("classmates"))
-//		{
-//			this.setRelationManipulator(new Classmate(this, relation));
-//		}
-//		else if(relationType.equals("parent"))
-//		{
-//			
-//			if(parent[0].getName()==null) {
-//				parent[0]= relation;
-//			}
-//			else {
-//				parent[1]= relation;
-//			}
-//			
-//			if(parent[0].getName()!=null&&parent[1].getName()!=null)
-//				addParent(parent[0],parent[1]);
-//		}
-		
 	}
 	
 	private void addParent(Person parent1, Person parent2) throws Exception {
-		
 	
 		this.setRelationManipulator(new Parents(parent1,parent2,this));
 		this.getRelationManipulator().add();
@@ -91,12 +63,9 @@ public class Child extends Person{
 
 	@Override
 	public void removeRelationship(String relationType, Person relatedPerson) {
-		// TODO Auto-generated method stub
-		System.out.println("hhhhhhhhhhhhhhhhhhhhh");
-		
+		// TODO Auto-generated method stub	
 		switch(relationType){
 		case "friends":
-//			System.out.println("kkkkkkk");
 			this.setRelationManipulator(new ChildFriend(this, relatedPerson));
 			this.relationManipulator.remove();
 			break;

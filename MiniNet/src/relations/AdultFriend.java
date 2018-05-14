@@ -38,7 +38,6 @@ public class AdultFriend implements RelationManipulator{
 			}
 			friend.getRelationship().get("friends").add(selectPerson);
 		}
-		//this.selectPerson.setRelationship(relationship)
 	}
 
 	@Override

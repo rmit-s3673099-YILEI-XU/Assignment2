@@ -15,7 +15,6 @@ public abstract class Person {
 	private String state;
 	
 	private TreeMap<String, ArrayList<Person>> relationship;
-//	private ArrayList<RelationManipulator> relationManipulator; 
 	RelationManipulator relationManipulator;
 	public Person() {
 		

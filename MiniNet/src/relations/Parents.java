@@ -17,13 +17,10 @@ public class Parents implements RelationManipulator{
 		this.child = child;
 		
 	}
-
-	
 	
 	@Override
 	public void add() throws Exception {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 		if(!parent1.getRelationship().containsKey("couple")) {
 			parent1.setRelationManipulator(new Couple(parent1, parent2));	
 			parent1.getRelationManipulator().add();
@@ -43,7 +40,6 @@ public class Parents implements RelationManipulator{
 				child.getRelationManipulator().add();
 			}
 		}
-//		System.out.println(parent1.getName()+" "+parent2.getName()+" "+child.getName());
 		child.getRelationship().get("parent").add(parent1);
 		child.getRelationship().get("parent").add(parent2);
 		parent1.getRelationship().get("child").add(child);
@@ -54,13 +50,9 @@ public class Parents implements RelationManipulator{
 	@Override
 	public void remove() {
 		// TODO Auto-generated method stub
-		
 		parent1.getRelationship().get("child").remove(child);
 		parent2.getRelationship().get("child").remove(child);
-//		if(parent1.getRelationship().get("child").isEmpty())
-//			parent1.getRelationship().remove("child");
-//		if(parent2.getRelationship().get("child").isEmpty())
-//			parent2.getRelationship().remove("child");
+
 	}
 
 }
