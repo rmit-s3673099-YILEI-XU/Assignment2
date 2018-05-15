@@ -56,7 +56,7 @@ public class ChildFriend implements RelationManipulator{
 	@Override
 	public void remove() {
 		// TODO Auto-generated method stub
-		selectPerson.getRelationship().get("friends").remove(friend);
+		friend.getRelationship().get("friends").remove(selectPerson);
 	}
 
 }

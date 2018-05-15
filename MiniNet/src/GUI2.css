@@ -1,7 +1,5 @@
 .root{
 
-	//-fx-background-color: #BDBDBD;
-	//-fx-background-color: linear-gradient(#FFFFFF, #848484);
 	-fx-background-image:url("../image/background4.jpg");
 	-fx-background-size: cover;
 }
@@ -9,13 +7,22 @@
 
 .label{
 
- //-fx-text-fill: #FFFFFF;
+ -fx-text-fill: #FFFFFF;
+ -fx-text-stroke: black;
  -fx-font-size: 17px;
  -fx-font-weight: bold;
 }
 
+.label{
+
+ -fx-text-fill: #ffffff;
+ -fx-font-size: 15px;
+ -fx-stroke: black;
+
+}
+
+
 .button{
- //-fx-pref-width: 200px;
-  //-fx-pref-height: 20px;
+
 
 }

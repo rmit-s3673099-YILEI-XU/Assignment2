@@ -261,7 +261,7 @@ public class ModifyRelationGUI {
 
 		ComboBox<String> comboBox2 = new ComboBox<String>();
 		if (tempParent1.getRelationship().containsKey("couple")) {
-			pane.add(new Label(tempParent1.getName() + " has a partter. Therefore, the second parent is:"), 0, 0);
+			pane.add(new Label(tempParent1.getName() + " has a partner. Therefore, the second parent is:"), 0, 0);
 			comboBox2.setValue(tempParent1.getRelationship().get("couple").get(0).getName());
 
 		} else {
@@ -323,6 +323,7 @@ public class ModifyRelationGUI {
 					&& !(parent1.getRelationship().get("couple").get(0).equals(parent2))) {
 				throw new NoAvailableException(parent2);
 			} else {
+				
 				child.addRelationship("parent", parent1);
 				child.addRelationship("parent", parent2);
 			}
