@@ -85,16 +85,18 @@ public class DriverClassTest {
 		Person adult3 = dc.addPerson("Adult3", "", "", "F", 20, "VIC");
 		Person adult4 = dc.addPerson("Adult4", "", "", "F", 20, "VIC");
 		
-		dc.getMember().put("Adult1", adult1);
+		dc.getMember().put("Adult", adult);
 		
-		adult.addRelationship("friends", adult1);	
-		adult.addRelationship("classmates", adult2);	
+		adult.addRelationship("friends", adult1);
+		adult.addRelationship("classmates", adult2);
 		adult.addRelationship("colleagues", adult3);	
 		adult.addRelationship("couple", adult4);	
-
-		dc.deletePerson(adult);
 		
-		//assertTure(dc.getMe);
+		dc.deletePerson(adult);
+		assertFalse(adult1.getRelationship().containsKey("friends"));
+		assertFalse(adult2.getRelationship().containsKey("classmates"));
+		assertFalse(adult2.getRelationship().containsKey("colleagues"));
+		assertFalse(adult4.getRelationship().containsKey("couple"));
 	}
 	
 //the relationship is not exist in the related person
@@ -107,7 +109,8 @@ public class DriverClassTest {
 		dc.getMember().put("Adult1", adult1);
 		dc.getMember().put("Adult2", adult2);
 		
-		adult1.addRelationship("friends", adult2);	
+		adult1.addRelationship("friends", adult2);
+		
 		dc.deletePerson(adult1);
 		assertTrue(adult2.getRelationship().isEmpty());
 		

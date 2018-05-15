@@ -54,7 +54,8 @@ public class Classmate implements RelationManipulator{
 		// TODO Auto-generated method stub
 //		this.selectPerson.getRelationship().get("classmates").remove(classmate);
 		this.classmate.getRelationship().get("classmates").remove(selectPerson);
-		
+		if(classmate.getRelationship().get("classmates").isEmpty())
+			classmate.getRelationship().remove("classmates");
 	}
 
 }

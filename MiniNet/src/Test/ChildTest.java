@@ -211,7 +211,7 @@ public class ChildTest {
 		child.addRelationship("friends", sherry);
 		child.removeRelationship("friends", sherry);
 
-		assertTrue(sherry.getRelationship().get("friends").size() == 0);
+		assertFalse(sherry.getRelationship().containsKey("friends"));
 
 	}
 
@@ -222,7 +222,7 @@ public class ChildTest {
 		child.addRelationship("classmates", sherry);
 		child.removeRelationship("classmates", sherry);
 
-		assertTrue(sherry.getRelationship().get("classmates").size() == 0);
+		assertFalse(sherry.getRelationship().containsKey("classmates"));
 
 	}
 

@@ -16,6 +16,7 @@ public class AdultTest {
 		adult = new Adult("Emma", "", "", "F", 20, "VIC");
 	}
 
+
 	@Test
 	public void addRelationshipFriendTest1_1() throws Exception {
 
@@ -262,7 +263,7 @@ public class AdultTest {
 		Person sherry = new Adult("Sherry", "", "", "F", 20, "VIC");
 		adult.addRelationship("colleagues", sherry);
 		adult.removeRelationship("colleagues", sherry);
-		assertTrue(sherry.getRelationship().get("colleagues").size() == 0);
+		assertFalse(sherry.getRelationship().containsKey("colleagues"));
 
 	}
 
@@ -272,7 +273,7 @@ public class AdultTest {
 		Person sherry = new Adult("Sherry", "", "", "F", 20, "VIC");
 		adult.addRelationship("classmates", sherry);
 		adult.removeRelationship("classmates", sherry);
-		assertTrue(sherry.getRelationship().get("classmates").size() == 0);
+		assertFalse(sherry.getRelationship().containsKey("classmates"));
 
 	}
 

@@ -53,8 +53,9 @@ public class Colleague implements RelationManipulator{
 	@Override
 	public void remove() {
 		// TODO Auto-generated method stub
-		selectPerson.getRelationship().get("colleagues").remove(colleague);
 		colleague.getRelationship().get("colleagues").remove(selectPerson);
+		if(colleague.getRelationship().get("colleagues").isEmpty())
+			colleague.getRelationship().remove("colleagues");
 	}
 
 }
