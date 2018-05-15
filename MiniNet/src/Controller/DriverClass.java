@@ -20,7 +20,7 @@ import people.*;
  */
 public class DriverClass {
 
-	private TreeMap<String, Person> member;
+	private TreeMap<String, Person> member = new TreeMap<String, Person>();
 	private ArrayList<String[]> relationData;
 	private DatabaseController databaseController = new DatabaseController();
 /**
@@ -30,7 +30,6 @@ public class DriverClass {
  */
 	public void initialData() throws IOException, NoParentsException {
 
-		member = new TreeMap<String, Person>();
 		databaseController.initialDatabase();
 		BufferedReader peopleFileReader = null;
 		String[] pTextData = null;	
