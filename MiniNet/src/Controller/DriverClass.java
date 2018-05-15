@@ -21,6 +21,7 @@ import people.*;
 public class DriverClass {
 
 	private TreeMap<String, Person> member = new TreeMap<String, Person>();
+	private ArrayList<String[]> personData;
 	private ArrayList<String[]> relationData;
 	private DatabaseController databaseController = new DatabaseController();
 /**
@@ -33,40 +34,66 @@ public class DriverClass {
 		databaseController.initialDatabase();
 		BufferedReader peopleFileReader = null;
 		String[] pTextData = null;	
-		relationData = new ArrayList<String[]>();
-		Person currentPerson;
+		personData = new ArrayList<String[]>();
+		
 		try {
-			peopleFileReader = new BufferedReader(new FileReader("db/people.txt"));
+			peopleFileReader = new BufferedReader(new FileReader("b/people.txt"));
 			String currentLine;
 			while ((currentLine = peopleFileReader.readLine()) != null) {
 				pTextData = currentLine.split(",");
 				for (int i = 0; i < pTextData.length; i++) {
 					pTextData[i] = pTextData[i].replace("\"", "");
 				}
-				int age = Integer.parseInt(pTextData[4].trim());
-				if (age < 3) {
-					currentPerson = new YoungChild(pTextData[0].trim(), pTextData[1].trim(), pTextData[2].trim(),
-							pTextData[3].trim(), age, pTextData[5].trim());
-				} else if (age <= 16) {
-					currentPerson = new Child(pTextData[0].trim(), pTextData[1].trim(), pTextData[2].trim(),
-							pTextData[3].trim(), age, pTextData[5].trim());
-				} else {
-					currentPerson = new Adult(pTextData[0].trim(), pTextData[1].trim(), pTextData[2].trim(),
-							pTextData[3].trim(), age, pTextData[5].trim());
-				}
-				member.put(pTextData[0].trim(), currentPerson);
+				personData.add(pTextData);
+//				int age = Integer.parseInt(pTextData[4].trim());
+//				if (age < 3) {
+//					currentPerson = new YoungChild(pTextData[0].trim(), pTextData[1].trim(), pTextData[2].trim(),
+//							pTextData[3].trim(), age, pTextData[5].trim());
+//				} else if (age <= 16) {
+//					currentPerson = new Child(pTextData[0].trim(), pTextData[1].trim(), pTextData[2].trim(),
+//							pTextData[3].trim(), age, pTextData[5].trim());
+//				} else {
+//					currentPerson = new Adult(pTextData[0].trim(), pTextData[1].trim(), pTextData[2].trim(),
+//							pTextData[3].trim(), age, pTextData[5].trim());
+//				}
+//				member.put(pTextData[0].trim(), currentPerson);
 			}
 			peopleFileReader.close();
+			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			cannotFoundFileMessage();
+			
+//			e.printStackTrace();
+//			cannotFoundFileMessage();
+			InitialDatabaseData initialDBData = new InitialDatabaseData();
+			initialDBData.initalDBData(databaseController.getConnection());
+			personData=databaseController.getDataInDB();
+			
 		}
-		if (!member.isEmpty()) {
+		
+		if (addPersonData(personData)!=null) {
 			 getRelationData();
+		}else {
+			cannotFoundFileMessage();
 		}
 
 	}
+	
+	private TreeMap<String, Person> addPersonData(ArrayList<String[]> tempPersonData)
+	{
+		if(!tempPersonData.isEmpty()) {
+		for(String[] personInfo: tempPersonData)
+		{
+			int age = Integer.parseInt(personInfo[4].trim());
+			member.put(personInfo[0].trim(), addPerson(personInfo[0].trim(), personInfo[1].trim(), personInfo[2].trim(),
+					personInfo[3].trim(), age, personInfo[5].trim()));
+		}
+		return member;
+		}else {
+			return null;
+		}
+	}
+	
 /**
  * This method get the relation data from the file
  * @throws IOException if file is not found
@@ -76,6 +103,7 @@ public class DriverClass {
 	{
 		BufferedReader relationsFileReader = null;
 		String[] rTextData = null;
+		relationData = new ArrayList<String[]>();
 		try {
 			relationsFileReader = new BufferedReader(new FileReader("db/relations.txt"));
 			String currentLine;
@@ -258,7 +286,7 @@ public class DriverClass {
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.setTitle("MESSAGES");
 		alert.setHeaderText("ERROR!");
-		alert.setContentText("people.txt file cannot be found! Fail to initial network.");
+		alert.setContentText("people.txt file cannot be found/Fail to connect with database! Fail to initial network.");
 		alert.show();
 	}
 

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.TreeMap;
 
 import org.hsqldb.Server;
@@ -116,6 +118,70 @@ public class DatabaseController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public ArrayList<String[]> getDataInDB()
+	{
+		ResultSet rs = null;
+		
+
+		ArrayList<String[]> personData = new ArrayList<String[]>();
+		
+		try {
+		rs = connection.prepareStatement("select * from people;").executeQuery();
+		
+		while (rs.next()) {
+			String[] personInfo = new String[6];
+			for(int i=0;i<personInfo.length;i++)
+			{
+				personInfo[i]=rs.getString(i+1).trim();
+			
+			}
+			personData.add(personInfo);
+			
+//			for(int j=0; j<personInfo.length;j++)
+//			{
+//				System.out.println(list.get(0)[j]);
+//				
+//			}
+//			System.out.println();
+//			personInfo[0]=  rs.getString(1);
+//			personInfo[1]=  rs.getString(2);
+//			personInfo[2]=  rs.getString(3);
+//			personInfo[3]=  rs.getString(4);
+//			personInfo[4]= rs.getString(5);
+//			personInfo[5]=  rs.getString(6);
+//			personData.add(personInfo);
+		}
+		
+
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return personData;
+	}
+	
+	public void display() {
+		ArrayList<String[]> data = getDataInDB();
+		for(int i=0;i<data.size();i++)
+		{
+			for(int j=0; j<data.get(i).length;j++)
+			{
+				System.out.println(data.get(i)[j]);
+				
+			}
+			System.out.println();
+		}
+	}
+	
+	/**
+	 * get connection
+	 * @return connection
+	 */
+	public Connection getConnection() {
+		return connection;
 	}
 	
 	/**
