@@ -9,12 +9,18 @@ import java.util.TreeMap;
 import org.hsqldb.Server;
 
 import people.Person;
-
+/**
+ * This class is for controlling the database
+ * @author YILEI XU
+ *
+ */
 public class DatabaseController {
 
 	Server hsqlServer = null;
 	Connection connection = null;
-
+/**
+ * This method sets up the connection to database
+ */
 	public void initialDatabase() {
 
 		hsqlServer = new Server();
@@ -38,7 +44,10 @@ public class DatabaseController {
 			e2.printStackTrace();
 		}
 	}
-
+/**
+ * This method input the initial data to the database
+ * @param member the collection of members in this network
+ */
 	public void initialDataInDB(TreeMap<String, Person> member) {
 		
 		try {
@@ -56,7 +65,11 @@ public class DatabaseController {
 			e.printStackTrace();
 		}
 	}
-
+/**
+ * This method modify the data in the database
+ * @param person the person be modified
+ * @param operation different modify types
+ */
 	public void modifyDatabase(Person person,String operation) {
 		try {
 			switch (operation) {
@@ -81,7 +94,9 @@ public class DatabaseController {
 		displayDataInDB();
 
 	}
-	
+	/**
+	 * This method is going to be deleted :)
+	 */
 	public void displayDataInDB()
 	{
 		ResultSet rs = null;
@@ -103,7 +118,9 @@ public class DatabaseController {
 		}
 	}
 	
-	
+	/**
+	 * This method break the connection to the database
+	 */
 	public  void disconnectDB()
 	{
 		hsqlServer.shutdown();

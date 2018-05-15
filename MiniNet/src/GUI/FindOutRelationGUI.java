@@ -14,9 +14,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import people.Adult;
 import people.Person;
-
+/**
+ * This class is for the user interface of find out relation between two people
+ * @author CIFANG ZHANG
+ *
+ */
 public class FindOutRelationGUI {
-
+/**
+ * This method is set up the scene of find out relation
+ * @return Scene
+ */
 	public Scene findOutRelationScene() {
 
 		Label description = new Label("Please select two people to find out the relation with them.");
@@ -68,7 +75,12 @@ public class FindOutRelationGUI {
 		scene.getStylesheets().add("GUI2.css");
 		return scene;
 	}
-	
+	/**
+	 * This method is set up the submit button action
+	 * @param comboBox1 the first selection comboBox
+	 * @param comboBox2 the second selection comboBox
+	 * @param result the find out result
+	 */
 	public void setSubmitAction(ComboBox comboBox1, ComboBox comboBox2, Label result) {
 		
 		if (comboBox1.getValue().equals("selectPerson1") || comboBox2.getValue().equals("selectPerson2")) {
@@ -118,7 +130,12 @@ public class FindOutRelationGUI {
 			}
 		}	
 	}
-
+/**
+ * This method is to get the result of find out relation
+ * @param person1 the first person
+ * @param person2 the second person
+ * @return String the result
+ */
 	public String findOutRelationAction(Person person1, Person person2) {
 		for (String relation : person1.getRelationship().keySet()) {
 			for (Person reletedPerson : person1.getRelationship().get(relation)) {

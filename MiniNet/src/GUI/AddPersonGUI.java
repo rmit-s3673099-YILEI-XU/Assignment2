@@ -28,9 +28,16 @@ import javafx.stage.Stage;
 import people.Adult;
 import people.Child;
 import people.Person;
-
+/**
+ * This class is the add person user interface
+ * @author CIFANG ZHANG
+ *
+ */
 public class AddPersonGUI {
-
+/**
+ * This method is set up the add person scene
+ * @return Scene
+ */
 	public Scene addPersonScene() {
 
 		GridPane pane = MainMenuGUI.setUpPane();
@@ -75,7 +82,7 @@ public class AddPersonGUI {
 		});
 		upload.setOnAction(e -> {
 			File photoFile;
-			photoFile = uploadPhoto(personName.getText().trim(), personPhoto);
+			photoFile = uploadPhoto();
 			if(photoFile!=null)
 				personPhoto.setText(photoFile.getAbsolutePath());
 		});
@@ -83,7 +90,11 @@ public class AddPersonGUI {
 		scene.getStylesheets().add("GUI2.css");
 		return scene;
 	}
-
+/**
+ * This method is set up the select gender radioButton
+ * @param group is the radioButton of female/male
+ * @return HBox which is the container of the two buttons
+ */
 	public HBox setGenderButton(ToggleGroup group) {
 		
 		HBox root = new HBox();
@@ -99,7 +110,15 @@ public class AddPersonGUI {
 		root.getChildren().add(male);
 		return root;
 	}
-
+/**
+ * This method is set on the action of the add button
+ * @param personName the input name
+ * @param personPhoto the upload photo
+ * @param personStatus the input status
+ * @param personGender the selected gender
+ * @param personAge the input age
+ * @param personState the selected state
+ */
 	public void addButtonAction(
 			
 		TextField personName, Label personPhoto, TextField personStatus, ToggleGroup personGender, TextField personAge, ComboBox personState) {
@@ -124,8 +143,11 @@ public class AddPersonGUI {
 		}
 		
 	}
-
-	public File uploadPhoto(String name, Label personPhoto) {
+/**
+ * This method is the function of upload photo 
+ * @return the file has been uploaded
+ */
+	public File uploadPhoto() {
 
 		FileChooser fileChooser = new FileChooser();
 		FileChooser.ExtensionFilter photoFilter = new FileChooser.ExtensionFilter("PNG files, JPG files, JPEG files",
@@ -137,7 +159,12 @@ public class AddPersonGUI {
 		return file;
 
 	}
-
+/**
+ * This method is saving the image to the file
+ * @param name the image name
+ * @param path the image path
+ * @return the type of the image
+ */
 	public String saveImage(String name, String path) {
 
 		String fileType;
@@ -148,7 +175,6 @@ public class AddPersonGUI {
 			try {
 				BufferedImage bufferedImage = ImageIO.read(file);
 				File output = new File("image/" + name.trim() + "Photo." + fileType);
-				System.out.println(output.getPath());
 				ImageIO.write(bufferedImage, fileType, output);
 				return output.getName();
 			} catch (IOException e) {
@@ -157,7 +183,19 @@ public class AddPersonGUI {
 		}
 		return path;
 	}
-
+/**
+ * This method is the action of add a person
+ * @param name person's name
+ * @param photo person's photo
+ * @param status person's status
+ * @param gender person's gender
+ * @param ageText person's age
+ * @param state the state that the person from
+ * @throws NotFillAllNecessInfo if not all the necessary information has been input
+ * @throws NotNumberFormatException if the age number is not invalid
+ * @throws NoSuchAgeException if the age is not for human
+ * @throws AlreadyExistPersonException is the person is already in the network
+ */
 	private void addPersonAction(String name, String photo, String status, String gender, String ageText, String state)
 			throws NotFillAllNecessInfo, NotNumberFormatException, NoSuchAgeException, AlreadyExistPersonException {
 
@@ -190,7 +228,11 @@ public class AddPersonGUI {
 			}
 		}
 	}
-	public void showMessageForAddPerson(boolean isSuccess) {
+	/**
+	 * This method shows the alert when add person successful or fail
+	 * @param isSuccess if the add person successful or not 
+	 */
+public void showMessageForAddPerson(boolean isSuccess) {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 		if (isSuccess) {
 			alert.setTitle("MESSAGES");

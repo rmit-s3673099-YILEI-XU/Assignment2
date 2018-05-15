@@ -18,11 +18,19 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import people.*;
-
+/**
+ * This class is about modify profile of the person
+ * @author CIFANG ZHANG
+ *
+ */
 public class ModifyProfileGUI {
 	
 	AddPersonGUI addPersonGUI = new AddPersonGUI();
-	
+/**
+ * This method is set up the scene of modify person's profile	
+ * @param selectedPerson the person has been selected
+ * @return Scene
+ */
 	public Scene modifyProfileScene(Person selectedPerson) {
 		
 		GridPane pane = setUpModifyPane();
@@ -64,10 +72,10 @@ public class ModifyProfileGUI {
 		setOriginalData(selectedPerson, personName, personAge, female,male, personStatus, comboBox, personPhoto); 
 				
 		upload.setOnAction(e -> {		
-			setUploadAction(personName, personPhoto);
+			setUploadAction(personPhoto);
 		});		
 		btSubmit.setOnAction(e->{	
-			setSubmitAction(selectedPerson, personName, personAge, group, personStatus, comboBox, personPhoto);
+			setSubmitAction(selectedPerson, personAge, group, personStatus, comboBox, personPhoto);
 		});				
 		btBack.setOnAction(e -> {
 			MainMenuGUI.window.setScene(new SelectPersonGUI().viewPersonScene(selectedPerson));// check where should it go back
@@ -78,8 +86,8 @@ public class ModifyProfileGUI {
 	}
 	
 	/**
-	 * This method is for setting the fixed part of the pane
-	 * @return
+	 * This method is for setting up the fixed part of the pane
+	 * @return GridPane
 	 */
 		public GridPane setUpModifyPane() {
 			
@@ -96,15 +104,28 @@ public class ModifyProfileGUI {
 			return pane;
 			
 		}
-		public void setUploadAction(Label personName, Label personPhoto) {
+		/**
+		 * This method is for set up the action of the upload button
+		 * @param personPhoto the URL of the image
+		 */
+		public void setUploadAction(Label personPhoto) {
 			
 			File photoFile;
-			photoFile = addPersonGUI.uploadPhoto(personName.getText().trim(), personPhoto);
+			photoFile = addPersonGUI.uploadPhoto();
 			if(photoFile!=null)
 				personPhoto.setText(photoFile.getAbsolutePath());
 			
 		}
-		public void setSubmitAction(Person selectedPerson, Label personName, TextField personAge, ToggleGroup personGender, TextField personStatus, ComboBox comboBox, Label personPhoto) {
+		/**
+		 * This method is for set up the submit button action
+		 * @param selectedPerson the person has been selected
+		 * @param personAge the input age
+		 * @param personGender the selected gender
+		 * @param personStatus the input status
+		 * @param comboBox the select state comboBox
+		 * @param personPhoto the url of the photo
+		 */
+		public void setSubmitAction(Person selectedPerson, TextField personAge, ToggleGroup personGender, TextField personStatus, ComboBox comboBox, Label personPhoto) {
 			
 			String photo = personPhoto.getText().trim();
 			String status = personStatus.getText().trim();
@@ -123,6 +144,17 @@ public class ModifyProfileGUI {
 			}
 			
 		}
+		/**
+		 * This method is for set the original data of the person to the scene
+		 * @param selectedPerson the person has been selected
+		 * @param personName the name of the person
+		 * @param personAge the age of the person
+		 * @param female the gender selection
+		 * @param male the gender selection
+		 * @param personStatus the status of the person
+		 * @param comboBox the state selection 
+		 * @param personPhoto the URL of the person's photo
+		 */
 		public void setOriginalData(Person selectedPerson, Label personName, TextField personAge, RadioButton female, RadioButton male, TextField personStatus, ComboBox comboBox, Label personPhoto) {
 			
 			personName.setText(selectedPerson.getName());
@@ -136,6 +168,18 @@ public class ModifyProfileGUI {
 			personPhoto.setText(selectedPerson.getPhoto());
 			
 		}
+		/**
+		 * This method is for modify the profile action
+		 * @param currentPerson the person has been selected
+		 * @param photo the update photo of the person	
+		 * @param status the update status of the person
+		 * @param gender the update gender of the person
+		 * @param ageText the update age of the person
+		 * @param state the selected state 
+		 * @throws NotFillAllNecessInfo if cannot fill up all the necessary information
+		 * @throws NotNumberFormatException is the number is invalid
+		 * @throws NoSuchAgeException if the age is not human age
+		 */
 		public void ModifyProfileAction(Person currentPerson, String photo, String status, String gender, String ageText, String state) throws NotFillAllNecessInfo, NotNumberFormatException, NoSuchAgeException
 		{
 			if (ageText.trim().equals("")) {
@@ -152,7 +196,7 @@ public class ModifyProfileGUI {
 						{
 							showAgeChangeWarning(currentPerson);
 						}else {
-							modifyProfileDetails(currentPerson,photo,status,gender,age,state);
+							updateProfileInfo(currentPerson,photo,status,gender,age,state);
 						}
 					}
 					else if(currentPerson instanceof Child)
@@ -161,7 +205,7 @@ public class ModifyProfileGUI {
 						{
 							showAgeChangeWarning(currentPerson);
 						}else {
-							modifyProfileDetails(currentPerson,photo,status,gender,age,state);
+							updateProfileInfo(currentPerson,photo,status,gender,age,state);
 						}
 						
 					}
@@ -169,14 +213,23 @@ public class ModifyProfileGUI {
 						if(age>2)
 							showAgeChangeWarning(currentPerson);
 						else
-							modifyProfileDetails(currentPerson,photo,status,gender,age,state);
+							updateProfileInfo(currentPerson,photo,status,gender,age,state);
 					}
 				}
 			}
 
 		}
 		
-		private void modifyProfileDetails(Person currentPerson,String photo, String status, String gender, int age, String state)
+		/**
+		 * This method is to update the profile information
+		 * @param currentPerson the person has been selected
+		 * @param photo the update photo
+		 * @param status the update status
+		 * @param gender the update gender
+		 * @param age the update age
+		 * @param state the update state
+		 */
+		private void updateProfileInfo(Person currentPerson,String photo, String status, String gender, int age, String state)
 		{
 			currentPerson.setAge(age);
 			currentPerson.setGender(gender);
@@ -188,8 +241,11 @@ public class ModifyProfileGUI {
 			showSuccessMessage();
 			MainMenuGUI.window.setScene(new SelectPersonGUI().viewPersonScene(currentPerson));
 		}
-			
 		
+	/**
+	 * 	This method is to show the message when the user change the age out of range	
+	 * @param currentPerson the selected person
+	 */		
 		private void showAgeChangeWarning(Person currentPerson)
 		{
 			Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -205,7 +261,9 @@ public class ModifyProfileGUI {
 			}
 			alert.show();
 		}
-		
+	/**
+	 * This method shows the message of modify profile successful	
+	 */
 		private void showSuccessMessage()
 		{
 			Alert alert = new Alert(Alert.AlertType.WARNING);

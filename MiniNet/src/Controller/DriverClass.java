@@ -13,13 +13,20 @@ import java.util.TreeMap;
 import Exceptions.*;
 import javafx.scene.control.Alert;
 import people.*;
-
+/**
+ * This class implements main features in MiniNet System. It uses other classes to manage whole social network;
+ * @author YILEI XU
+ *
+ */
 public class DriverClass {
 
 	private TreeMap<String, Person> member;
 	private ArrayList<String[]> relationData;
 	private DatabaseController databaseController = new DatabaseController();
-
+/**
+ * This method insert the initial data of members 
+ * @throws IOException if file cannot be found
+ */
 	public void initialData() throws IOException {
 
 		member = new TreeMap<String, Person>();
@@ -58,13 +65,12 @@ public class DriverClass {
 		if (!member.isEmpty()) {
 			 getRelationData();
 		}
-		// for(String sr: member.keySet() )
-		// {
-		// member.get(sr).displayProfile();
-		// }
 
 	}
-
+/**
+ * This method get the relation data from the file
+ * @throws IOException if file is not found
+ */
 	private void getRelationData() throws IOException
 	{
 		BufferedReader relationsFileReader = null;
@@ -83,7 +89,7 @@ public class DriverClass {
 		}
 		if (!relationData.isEmpty()) {
 			try {
-				addRelationData();
+				addInitialRelationData();
 			} catch (NoParentsException e) {
 				// TODO Auto-generated catch block
 				e.noParentsWarning();
@@ -91,8 +97,11 @@ public class DriverClass {
 		}
 		databaseController.initialDataInDB(member);
 	}
-	
-	private void addRelationData() throws NoParentsException {
+/**
+ * 	This method add the relation data from the file to the list
+ * @throws NoParentsException if a child does not have parents
+ */
+	private void addInitialRelationData() throws NoParentsException {
 
 		ArrayList<Person> noParentsChildList = new ArrayList();
 		for (String[] st : relationData) {
@@ -133,7 +142,16 @@ public class DriverClass {
 			throw new NoParentsException(noParentsChildList);
 		}
 	}
-
+/**
+ * This method is the for adding person to the member map
+ * @param name the name of the person
+ * @param photo the photo of the person
+ * @param status the status of the person
+ * @param gender the gender of the person
+ * @param age the age of the person
+ * @param state the state this person is from
+ * @return Person the person is being added
+ */
 	public Person addPerson(String name, String photo, String status, String gender, int age, String state) {
 		Person currentPerson;
 
@@ -152,9 +170,11 @@ public class DriverClass {
 			currentPerson = new Adult(name, photo, status, gender, age, state);
 			return currentPerson;
 		}
-		// member.put(name, currentPerson);
 	}
-
+/**
+ * This method delete the person from the map
+ * @param currentPerson the person who is being deleted
+ */
 	public void deletePerson(Person currentPerson) {
 		ArrayList<Person> childList = new ArrayList<Person>();
 
@@ -191,21 +211,36 @@ public class DriverClass {
 		}
 
 	}
-
+/**
+ * This method get the person with the name from the member map
+ * @return the person map which contains person and the name of the person
+ */
 	public TreeMap<String, Person> getMember() {
 		return member;
 	}
-
+/**
+ * This method get the member object which is a person
+ * @param key the name of the person
+ * @return the person object
+ */
 	public Person getMemberObj(String key) {
 
 		return member.get(key);
 	}
-
+/**
+ * This method get the DatabaseController object
+ * @return databaseController
+ */
 	public DatabaseController getDatabaseController() {
 		return databaseController;
 	}
-
-	public void checkAlreadyExitRelation(Person selectedPerson, Person relatedPerson)
+/**
+ * This method check the relation which already exsit 
+ * @param selectedPerson the current person 
+ * @param relatedPerson the person related to the current person
+ * @throws AlreadyHaveRelationException if already have relationship
+ */
+	public void checkAlreadyExistRelation(Person selectedPerson, Person relatedPerson)
 			throws AlreadyHaveRelationException {
 
 		for (String relation : selectedPerson.getRelationship().keySet()) {
@@ -216,7 +251,9 @@ public class DriverClass {
 		}
 
 	}
-
+/**
+ * This method shows the alert when the file cannot be found
+ */
 	private void cannotFoundFileMessage() {
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.setTitle("MESSAGES");

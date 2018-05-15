@@ -3,13 +3,22 @@ package relations;
 import java.util.ArrayList;
 
 import people.*;
-
+/**
+ * This is the Parents relation class for modify Parents relationship
+ * @author YILEI XU 
+ *
+ */
 public class Parents implements RelationManipulator{
 	
 	private Person parent1;
 	private Person parent2;
 	private Person child;
-	
+	/**
+	 * This is the constructor for create Parents object
+	 * @param selectPerson the person be selected
+	 * @param parent1 the first person be added as parent
+	 * @param parent2 the second person be added as parent
+	 */	
 	public Parents(Person parent1, Person parent2, Person child) 
 	{
 		this.parent1 = parent1;
@@ -17,7 +26,9 @@ public class Parents implements RelationManipulator{
 		this.child = child;
 		
 	}
-	
+	/**
+	 * This method is the override method which implements add parents relation 
+	 */
 	@Override
 	public void add() throws Exception {
 		// TODO Auto-generated method stub	
@@ -46,7 +57,9 @@ public class Parents implements RelationManipulator{
 		parent2.getRelationship().get("child").add(child);
 	
 	}
-
+	/**
+	 * This method is the override method which implements remove parents relation 
+	 */
 	@Override
 	public void remove() {
 		// TODO Auto-generated method stub

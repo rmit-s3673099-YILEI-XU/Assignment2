@@ -25,9 +25,16 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import people.Person;
 import people.YoungChild;
-
+/**
+ * This class is the select person user interface
+ * @author CIFANG ZHANG
+ *
+ */
 public class SelectPersonGUI {
-
+/**
+ * This method is the scene of select person
+ * @return Scene
+ */
 	public Scene selectPersonScene() {
 
 		// set up layout
@@ -72,7 +79,11 @@ public class SelectPersonGUI {
 		scene.getStylesheets().add("GUI2.css");
 		return scene;
 	}
-
+/**
+ * This method is the scene of view person menu
+ * @param selectedPerson the person has been selected
+ * @return Scene
+ */
 	public Scene viewPersonScene(Person selectedPerson) {
 
 		Label label = new Label(
@@ -124,7 +135,11 @@ public class SelectPersonGUI {
 		scene.getStylesheets().add("GUI.css");
 		return scene;
 	}
-
+/**
+ * This method is for display the profile of the person
+ * @param selectedPerson the person has been selected
+ * @throws FileNotFoundException if the file cannot be found
+ */
 	public void displayProfileAction(Person selectedPerson) throws FileNotFoundException {
 
 		String name = selectedPerson.getName();
@@ -179,7 +194,11 @@ public class SelectPersonGUI {
 		MainMenuGUI.window.show();
 
 	}
-
+/**
+ * This method is for display the relations of the person
+ * @param person the selected person
+ * @return GridPane
+ */
 	public GridPane displayRelationsAction(Person person) {
 
 		GridPane GPane = MainMenuGUI.setUpPane();
@@ -217,7 +236,10 @@ public class SelectPersonGUI {
 		MainMenuGUI.window.setScene(scene);
 		return GPane;
 	}
-
+/**
+ * This method is for delete the person
+ * @param selectedPerson the selected person
+ */
 	public void deletePersonAction(Person selectedPerson) {
 
 		if (showDeletePersonMessage()) {
@@ -234,7 +256,10 @@ public class SelectPersonGUI {
 			}
 		}
 	}
-
+/**
+ * This method shows the message when delete the person will also delete the relation
+ * @return boolean, true if click OK, false if cancel or close the window
+ */
 	public boolean showDeletePersonMessage() {
 
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -251,7 +276,10 @@ public class SelectPersonGUI {
 		}
 		return false;
 	}
-
+/**
+ * This method is for show the message when delete the person has a child
+ * @return boolean, true if click OK, false if cancel or close the window
+ */
 	public boolean showDeleteChildMessage() {
 
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -267,7 +295,9 @@ public class SelectPersonGUI {
 		}
 		return false;
 	}
-
+/**
+ * This method is showing the message when delete person successful
+ */
 	public void showMessageForDeletePerson() {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 		alert.setTitle("MESSAGES");
@@ -275,7 +305,9 @@ public class SelectPersonGUI {
 		alert.setContentText("Congratulations! Delete person successfully!");
 		alert.show();
 	}
-	
+	/**
+	 * This method is show the warning when modify the young child relation
+	 */
 	public void youngChildModifyRwarning() {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 

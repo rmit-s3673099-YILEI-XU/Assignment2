@@ -4,12 +4,20 @@ import java.util.ArrayList;
 
 import Exceptions.*;
 import people.*;
-
+/**
+ * This is the Couple relation class for modify couple relationship
+ * @author YILEI XU 
+ *
+ */
 public class Couple implements RelationManipulator{
 	
 	private Person selectPerson;
 	private Person partner;
-	
+	/**
+	 * This is the constructor for create couple object
+	 * @param selectPerson the person be selected
+	 * @param partner the person be added as partner
+	 */
 	public Couple(Person selectPerson, Person partner)
 	{
 		this.selectPerson = selectPerson;
@@ -18,7 +26,9 @@ public class Couple implements RelationManipulator{
 		if(!this.selectPerson.getRelationship().containsKey("couple"))
 			this.selectPerson.getRelationship().put("couple", new ArrayList<Person>());
 	}
-
+	/**
+	 * This method is the override method which implements add couple relation 
+	 */
 	@Override
 	public void add() throws NoAvailableException, NotToBeCoupledException {
 		
@@ -32,6 +42,7 @@ public class Couple implements RelationManipulator{
 			throw new NoAvailableException(selectPerson);
 		}
 		else if(this.partner.getRelationship().containsKey("couple")) {
+			if(this.partner.getRelationship().get("couple").size()>0)
 			throw new NoAvailableException(partner);
 		}
 		else {
@@ -41,13 +52,15 @@ public class Couple implements RelationManipulator{
 			partner.getRelationship().get("couple").add(selectPerson);
 		}
 	}
-
+	/**
+	 * This method is the override method which implements remove colleague relation 
+	 */
 	@Override
 	public void remove() {
 		// TODO Auto-generated method stub
 
-		if(selectPerson.getRelationship().containsKey("couple"))
-			selectPerson.getRelationship().remove("couple");
+//		if(selectPerson.getRelationship().containsKey("couple"))
+//			selectPerson.getRelationship().remove("couple");
 		
 		partner.getRelationship().remove("couple");
 

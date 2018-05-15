@@ -4,20 +4,40 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 import relations.*;
-
+/**
+ * This class is the subclass of Person, it creates Adult type of person
+ * @author YILEI XU
+ *
+ */
 public class Adult extends Person{
 
+	/**
+	 * This is the constructor for creating the Adult object
+	 * @param name Adult name
+	 * @param photo Adult profile photo
+	 * @param status Adult status
+	 * @param gender Adult gender
+	 * @param age Adult age
+	 * @param state the state the Adult from
+	 */
 	public Adult(String name, String photo, String status, String gender,int age, String state){
 		
 		super(name, photo,status,gender,age,state);
 		
 	}
-	
+	/**
+	 * This is the constructor create parents for child and young child
+	 */
 	public Adult()
 	{
 		
 	}
 	
+	/**
+	 * This method is for add the relationship for adult by create relation object
+	 * @param relationType the type of the relation
+	 * @param relatedPerson the related person in the relationship
+	 */
 	@Override
 	public void addRelationship(String relationType, Person relatedPerson) throws Exception{
 		
@@ -45,6 +65,11 @@ public class Adult extends Person{
 		
 	}
 
+	/**
+	 * This method is for remove relationship for Adult 
+	 * @param relationType the type of the relation
+	 * @param relatedPerson the related person in the relationship
+	 */
 	@Override
 	public void removeRelationship(String relationType, Person relatedPerson)  {
 		
@@ -65,12 +90,7 @@ public class Adult extends Person{
 		case "couple":
 			this.setRelationManipulator(new Couple(this, relatedPerson));
 			this.relationManipulator.remove();
-		break;
-//		case "child":
-//			this.setRelationManipulator(new Parents(relatedPerson.getRelationship().get("parent").get(0),relatedPerson.getRelationship().get("parent").get(1),relatedPerson));
-//			this.getRelationManipulator().remove();
-//			break;
-			
+		break;			
 		
 		}
 		

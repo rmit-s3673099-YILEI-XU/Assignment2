@@ -4,12 +4,20 @@ import java.util.ArrayList;
 
 import Exceptions.NotToBeClassmatesException;
 import people.*;
-
+/**
+ * This is the Classmate relation class for modify classmate relationship
+ * @author YILEI XU 
+ *
+ */
 public class Classmate implements RelationManipulator{
 
 	Person selectPerson;
 	Person classmate;
-	
+	/**
+	 * This is the constructor for create Classmate object
+	 * @param selectPerson the person be selected
+	 * @param classmate the person be added as classmate
+	 */	
 	public Classmate(Person selectPerson, Person classmate)
 	{
 		this.selectPerson = selectPerson;
@@ -19,7 +27,9 @@ public class Classmate implements RelationManipulator{
 			this.selectPerson.getRelationship().put("classmates",new ArrayList<Person>());
 		}
 	}
-	
+	/**
+	 * This method is the override method which implements add classmate relation 
+	 */
 	@Override
 	public void add() throws NotToBeClassmatesException {
 		// TODO Auto-generated method stub
@@ -36,7 +46,9 @@ public class Classmate implements RelationManipulator{
 		}
 		
 	}
-
+	/**
+	 * This method is the override method which implements remove classmate relation 
+	 */
 	@Override
 	public void remove() {
 		// TODO Auto-generated method stub

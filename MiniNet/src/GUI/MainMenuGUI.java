@@ -15,19 +15,30 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
+/**
+ * This class is the main menu of the GUI, connect with driverClass and other GUI classes
+ * @author CIFANG ZHANG
+ *
+ */
 public  class MainMenuGUI {
 
     static public Stage window;
     static public DriverClass dc;
-
+    
+/**
+ * This is the constructor
+ * @param window the primary stage
+ * @param dc the driverClass object
+ */
     public MainMenuGUI(Stage window, DriverClass dc){
         this.window = window;
         this.dc = dc;
-
     }
 
-
+/**
+ * This method is to set up the basic layout of the GridPane for other pane to reuse
+ * @return GridPane
+ */
     static public GridPane setUpPane() {
 
         GridPane primaryPane = new GridPane();
@@ -38,7 +49,15 @@ public  class MainMenuGUI {
 
         return primaryPane;
     }
-    
+  /**
+   * This method is to set up the basic layout of the BorderPane for most of the scenes to reuse
+   * @param top the top part
+   * @param center the center part
+   * @param bottom the bottom part
+   * @param left the left part
+   * @param right the right part
+   * @return BorderPane
+   */
     static public BorderPane setUpBorderPane(Node top, Node center, Node bottom, Node left, Node right) {
     	
      	BorderPane pane = new BorderPane();
@@ -52,7 +71,10 @@ public  class MainMenuGUI {
      	return pane;
     
     }
-
+/**
+ * This method is the main menu start scene
+ * @return Scene
+ */
     static public Scene startScene() {
 
         // set up layout

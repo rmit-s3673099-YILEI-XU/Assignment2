@@ -6,11 +6,23 @@ import relations.ChildFriend;
 import relations.Classmate;
 import relations.Parents;
 import relations.Sibling;
-
+/**
+ * This class is the subclass of Person, it creates Young Child type of person
+ * @author YILEI XU
+ *
+ */
 public class YoungChild extends Person{
 	
 	Person[] parent;
-	
+	/**
+	 * This is the constructor for creating the YoungChild object
+	 * @param name YoungChild name
+	 * @param photo YoungChild profile photo
+	 * @param status YoungChild status
+	 * @param gender YoungChild gender
+	 * @param age YoungChild age
+	 * @param state the state the YoungChild from
+	 */
 	public YoungChild(String name, String photo, String status, String gender,int age, String state)
 	{
 		super(name, photo,status,gender,age,state);
@@ -21,7 +33,11 @@ public class YoungChild extends Person{
 		parent[1]= new Adult();
 		
 	}
-
+	/**
+	 * This method is for add the relationship for Young Child by create relation object
+	 * @param relationType the type of the relation
+	 * @param relatedPerson the related person in the relationship
+	 */
 	@Override
 	public void addRelationship(String relationType, Person relation) throws Exception {
 		
@@ -42,14 +58,23 @@ public class YoungChild extends Person{
 			}
 		}
 	}
-	
+	/**
+	 * This method add parents for the young child
+	 * @param parent1 the first parent
+	 * @param parent2 the second parent
+	 * @throws Exception if there is any exception
+	 */
 	private void addParent(Person parent1, Person parent2) throws Exception  {
 	
 		this.setRelationManipulator(new Parents(parent1,parent2,this));
 		this.getRelationManipulator().add();
 		
 	}
-
+	/**
+	 * This method is for remove the relationship for Young Child
+	 * @param relationType the type of the relation
+	 * @param relatedPerson the related person in the relationship
+	 */
 	@Override
 	public void removeRelationship(String relationType, Person relatedPerson) {
 		// TODO Auto-generated method stub
