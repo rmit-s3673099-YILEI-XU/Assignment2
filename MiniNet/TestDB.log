@@ -1,0 +1,30 @@
+/*C12*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C13*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C14*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C15*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C16*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C17*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C18*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C19*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C20*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C21*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )

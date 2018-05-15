@@ -250,7 +250,6 @@ public class DriverClass {
 					throw new AlreadyHaveRelationException(selectedPerson, relatedPerson);
 			}
 		}
-
 	}
 /**
  * This method shows the alert when the file cannot be found
@@ -259,7 +258,7 @@ public class DriverClass {
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.setTitle("MESSAGES");
 		alert.setHeaderText("ERROR!");
-		alert.setContentText("people.txt file cannot be found! Fail to initail network.");
+		alert.setContentText("people.txt file cannot be found! Fail to initial network.");
 		alert.show();
 	}
 

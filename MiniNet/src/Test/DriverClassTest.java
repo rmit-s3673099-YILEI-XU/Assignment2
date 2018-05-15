@@ -16,6 +16,7 @@ public class DriverClassTest {
 	public void setUp() throws IOException{
 		
 		  dc = new DriverClass();
+		  dc.getDatabaseController().initialDatabase();
 	}
 	
 	@Test(expected = NoParentsException.class)
@@ -86,9 +87,9 @@ public class DriverClassTest {
 		
 		dc.getMember().put("Adult1", adult1);
 		
-		adult.addRelationship("friend", adult1);	
-		adult.addRelationship("classmate", adult2);	
-		adult.addRelationship("colleague", adult3);	
+		adult.addRelationship("friends", adult1);	
+		adult.addRelationship("classmates", adult2);	
+		adult.addRelationship("colleagues", adult3);	
 		adult.addRelationship("couple", adult4);	
 
 		dc.deletePerson(adult);
@@ -106,7 +107,7 @@ public class DriverClassTest {
 		dc.getMember().put("Adult1", adult1);
 		dc.getMember().put("Adult2", adult2);
 		
-		adult1.addRelationship("friend", adult2);	
+		adult1.addRelationship("friends", adult2);	
 		dc.deletePerson(adult1);
 		assertTrue(adult2.getRelationship().isEmpty());
 		
@@ -120,7 +121,7 @@ public class DriverClassTest {
 		dc.getMember().put("Adult1", adult1);
 		dc.getMember().put("Adult2", adult2);
 		
-		adult1.addRelationship("classmate", adult2);	
+		adult1.addRelationship("classmates", adult2);	
 		dc.deletePerson(adult1);
 		assertTrue(adult2.getRelationship().isEmpty());
 	}
@@ -136,7 +137,7 @@ public class DriverClassTest {
 		
 		adult1.addRelationship("colleagues", adult2);	
 		dc.deletePerson(adult1);
-		assertTrue(adult2.getRelationship().isEmpty());
+		assertTrue(adult2.getRelationship().get("colleagues").isEmpty());
 	}
 	
 	
@@ -163,7 +164,6 @@ public class DriverClassTest {
 	
 	//test the child be deleted
 	//test child relation be deleted
-	
 	//test youngChild relation be deleted
 	
 	
