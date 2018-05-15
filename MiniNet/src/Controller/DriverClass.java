@@ -26,8 +26,9 @@ public class DriverClass {
 /**
  * This method insert the initial data of members 
  * @throws IOException if file cannot be found
+ * @throws NoParentsException 
  */
-	public void initialData() throws IOException {
+	public void initialData() throws IOException, NoParentsException {
 
 		member = new TreeMap<String, Person>();
 		databaseController.initialDatabase();
@@ -70,8 +71,9 @@ public class DriverClass {
 /**
  * This method get the relation data from the file
  * @throws IOException if file is not found
+ * @throws NoParentsException 
  */
-	private void getRelationData() throws IOException
+	private void getRelationData() throws IOException, NoParentsException
 	{
 		BufferedReader relationsFileReader = null;
 		String[] rTextData = null;
@@ -88,12 +90,12 @@ public class DriverClass {
 			e.printStackTrace();
 		}
 		if (!relationData.isEmpty()) {
-			try {
+//			try {
 				addInitialRelationData();
-			} catch (NoParentsException e) {
-				// TODO Auto-generated catch block
-				e.noParentsWarning();
-			}
+//			} catch (NoParentsException e) {
+//				// TODO Auto-generated catch block
+//				e.noParentsWarning();
+//			}
 		}
 		databaseController.initialDataInDB(member);
 	}

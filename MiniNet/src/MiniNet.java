@@ -1,6 +1,7 @@
 import java.io.IOException;
 
 import Controller.*;
+import Exceptions.NoParentsException;
 import GUI.MainMenuGUI;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
@@ -12,6 +13,7 @@ import javafx.stage.StageStyle;
  *
  */
 public class MiniNet extends Application{
+	
 	
 	@Override
 	/**
@@ -31,7 +33,9 @@ public class MiniNet extends Application{
 	        } catch (IOException e) {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();
-	        }  
+	        }  catch(NoParentsException e) {
+	        	e.noParentsWarning();
+	        }
 	        
     } 
 	/**
