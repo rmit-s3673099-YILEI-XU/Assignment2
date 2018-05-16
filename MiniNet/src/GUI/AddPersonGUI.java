@@ -38,7 +38,7 @@ public class AddPersonGUI {
  * This method is set up the add person scene
  * @return Scene
  */
-	public Scene addPersonScene() {
+	public Scene addPersonScene() { 
 
 		GridPane pane = MainMenuGUI.setUpPane();
 
@@ -200,7 +200,7 @@ public class AddPersonGUI {
 			throws NotFillAllNecessInfo, NotNumberFormatException, NoSuchAgeException, AlreadyExistPersonException {
 
 		Person currentPerson;
-		ModifyRelationGUI addRelationGUI = new ModifyRelationGUI();
+		ModifyRelationGUI modifyRelationGUI = new ModifyRelationGUI();
 
 		if (name.equals("") || ageText.equals("") || state.equals("Select State")) {
 			throw new NotFillAllNecessInfo();
@@ -220,10 +220,11 @@ public class AddPersonGUI {
 					MainMenuGUI.dc.getMember().put(name, currentPerson);
 					MainMenuGUI.dc.getDatabaseController().modifyDatabase(currentPerson, "addPerson");
 					showMessageForAddPerson(true);
-					MainMenuGUI.window.setScene(addRelationGUI.addRelationScene(currentPerson));
+					MainMenuGUI.window.setScene(MainMenuGUI.startScene());
+					//MainMenuGUI.window.setScene(addRelationGUI.addRelationScene(currentPerson));
 
 				} else {
-					MainMenuGUI.window.setScene(addRelationGUI.addParentsScene1(currentPerson));
+					MainMenuGUI.window.setScene(modifyRelationGUI.addParentsScene1(currentPerson));
 				}
 			}
 		}

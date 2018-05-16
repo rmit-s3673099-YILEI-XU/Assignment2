@@ -31,7 +31,7 @@ public class ChildTest {
 		child.addRelationship("friends", sherry);
 		assertEquals(child.getRelationship().get("friends").get(0), sherry);
 		
-	}
+	} 
 	
 	public void addRelationshipFriendTest1_3() throws Exception {
 

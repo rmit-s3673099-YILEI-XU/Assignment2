@@ -38,7 +38,7 @@ public class ModifyRelationGUI {
  * This method is set up the add relation scene
  * @param person the person has been selected
  * @return Scene
- */
+ */ 
 	public Scene addRelationScene(Person person) {
 
 		Label label = new Label("Modify relation for" + " " + person.getName());
@@ -334,11 +334,13 @@ public class ModifyRelationGUI {
 		MainMenuGUI.dc.getMember().put(child.getName(), child);
 		showMessageForAddParents(true);
 
-		if (child instanceof Child) {
-			MainMenuGUI.window.setScene(addRelationScene(child));
-		} else {
-			MainMenuGUI.window.setScene(MainMenuGUI.startScene());
-		}
+		MainMenuGUI.window.setScene(MainMenuGUI.startScene());
+//		if (child instanceof Child) {
+//			
+//			MainMenuGUI.window.setScene(addRelationScene(child));
+//		} else {
+//			MainMenuGUI.window.setScene(MainMenuGUI.startScene());
+//		}
 
 	}
 /**

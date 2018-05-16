@@ -1,4 +1,43 @@
-/*C3*/SET SCHEMA PUBLIC
+/*C21*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C22*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C23*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C24*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C25*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C26*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C27*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C28*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C29*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C30*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C31*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C32*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C33*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C34*/SET SCHEMA PUBLIC
 drop table people if exists
 create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
 INSERT INTO PEOPLE VALUES('Alex Smith','','student at RMIT','M',21,'WA')
@@ -13,3 +52,18 @@ INSERT INTO PEOPLE VALUES('Mark Turner','Mark.jpeg','','M',2,'VIC')
 COMMIT
 DELETE FROM PEOPLE WHERE NAME='Hannah White' AND PHOTO='Hannah.png' AND STATUS='student at PLC' AND GENDER='F' AND AGE=14 AND STATE='VIC'
 COMMIT
+/*C35*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C36*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C37*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C38*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
+/*C39*/SET SCHEMA PUBLIC
+drop table people if exists
+create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )

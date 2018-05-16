@@ -46,7 +46,7 @@ public class Child extends Person{
 			break;
 		case "classmates":
 			this.setRelationManipulator(new Classmate(this, relation));
-			this.relationManipulator.add();
+			this.relationManipulator.add(); 
 			break;
 		case "parent":
 			
@@ -76,7 +76,7 @@ public class Child extends Person{
 	
 		this.setRelationManipulator(new Parents(parent1,parent2,this));
 		this.getRelationManipulator().add();
-		
+		 
 	}
 	/**
 	 * This method is for remove the relationship for Child 
