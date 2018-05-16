@@ -39,7 +39,7 @@ public class AdultFriend implements RelationManipulator{
 		if(friend instanceof Child)
 			throw new NotToBeFriendsException(selectPerson,friend);
 		else if(friend instanceof YoungChild) {
-			throw new TooYoungException(selectPerson);
+			throw new TooYoungException(friend);
 		}else {
 			selectPerson.getRelationship().get("friends").add(friend);
 			if(!friend.getRelationship().containsKey("friends"))

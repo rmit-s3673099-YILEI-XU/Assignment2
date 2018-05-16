@@ -21,7 +21,7 @@ public class AlreadyHaveRelationException extends Exception{
 	{
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 		alert.setTitle("MESSAGES");
-		alert.setHeaderText("UNCCESSFUL!");
+		alert.setHeaderText("UNSUCCESSFUL!");
 		alert.setContentText("Sorry, "+selectedPerson.getName()+" and "+relatedPerson.getName()+" already have relation. CANNOT add a new relation for them ! ");
 		alert.show();
 		

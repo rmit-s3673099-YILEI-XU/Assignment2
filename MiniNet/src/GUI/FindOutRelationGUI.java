@@ -99,7 +99,7 @@ public class FindOutRelationGUI {
 			} else {
 				String relation = findOutRelationAction(person1, person2);
 
-				result.setStyle("-fx-text-fill: #000000");
+				result.setStyle("-fx-text-fill: #FFFFFF");
 
 				if (relation == null) {
 
