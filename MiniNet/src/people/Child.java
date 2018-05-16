@@ -3,6 +3,7 @@ package people;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import Exceptions.*;
 import relations.*;
 /**
  * This class is the subclass of Person, it creates Child type of person
@@ -49,7 +50,6 @@ public class Child extends Person{
 			this.relationManipulator.add(); 
 			break;
 		case "parent":
-			
 			if(parent[0].getName()==null) {
 				parent[0]= relation;
 			}
@@ -61,6 +61,10 @@ public class Child extends Person{
 				addParent(parent[0],parent[1]);
 			}	
 			break;
+		case "couple":
+			throw new NotToBeCoupledException(this);
+		case "colleagues":
+			throw new NotToBeColleaguesException(this);
 		default:
 			break;
 		}
@@ -110,6 +114,7 @@ public class Child extends Person{
 			this.relationManipulator.remove();
 			}
 			break;
+		
 		}
 	}
 

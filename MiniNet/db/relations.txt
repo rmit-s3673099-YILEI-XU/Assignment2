@@ -8,3 +8,5 @@ Andy, Emma, parent
 Rihanna, Andy, parent
 Rihanna, Jason, siblings
 Rihanna, Jason, friends
+Rihanna, Jason, classmates
+Emma, Alex Smith, couple

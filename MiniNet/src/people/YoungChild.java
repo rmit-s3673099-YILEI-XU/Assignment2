@@ -2,6 +2,8 @@ package people;
 
 import java.util.ArrayList;
 import java.util.TreeMap;
+
+import Exceptions.*;
 import relations.ChildFriend;
 import relations.Classmate;
 import relations.Parents;
@@ -42,9 +44,9 @@ public class YoungChild extends Person{
 	public void addRelationship(String relationType, Person relation) throws Exception {
 		
 		// TODO Auto-generated method stub
-		if(relationType.equals("parent"))
-		{
-			
+		switch(relationType) {
+		case "parent":
+
 			if(parent[0].getName()==null) {
 				parent[0]= relation;
 			}
@@ -54,9 +56,32 @@ public class YoungChild extends Person{
 		
 			if(parent[0].getName()!=null&&parent[1].getName()!=null) {
 				addParent(parent[0],parent[1]);
-		
 			}
+			break;
+		case "friends":
+			throw new TooYoungException(this);
+		case "classmates":
+			throw new NotToBeClassmatesException(this);
+		case "couple":
+			throw new NotToBeCoupledException(this);
+		case "colleagues":
+			throw new NotToBeColleaguesException(this);
 		}
+//		if(relationType.equals("parent"))
+//		{
+//			
+//			if(parent[0].getName()==null) {
+//				parent[0]= relation;
+//			}
+//			else {
+//				parent[1]= relation;
+//			}
+//		
+//			if(parent[0].getName()!=null&&parent[1].getName()!=null) {
+//				addParent(parent[0],parent[1]);
+//		
+//			}
+//		}
 	}
 	/**
 	 * This method add parents for the young child

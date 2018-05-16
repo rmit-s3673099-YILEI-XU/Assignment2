@@ -44,7 +44,7 @@ public class NoParentsException extends Exception{
 		{
 			childName+=child.getName()+", ";
 		}
-		alert.setContentText("Childen: "+childName+" don't have their parents/only have one parent. Therefore, they can't be added into network.");
+		alert.setContentText("Childen: "+childName+"'s parents information is missing. Therefore, they can't be added into network.");
 		}
 		alert.show();
 	}

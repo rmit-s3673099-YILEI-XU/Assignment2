@@ -24,11 +24,11 @@ public class DriverClass {
 	private ArrayList<String[]> personData;
 	private ArrayList<String[]> relationData;
 	private DatabaseController databaseController = new DatabaseController();
-/**
- * This method insert the initial data of members 
- * @throws IOException if file cannot be found
- * @throws NoParentsException 
- */
+	/**
+	 * This method insert the initial data of members 
+	 * @throws IOException if file cannot be found
+	 * @throws NoParentsException 
+	 */
 	public void initialData() throws IOException, NoParentsException {
 
 		databaseController.initialDatabase();
@@ -65,6 +65,11 @@ public class DriverClass {
 
 	}
 	
+	/**
+	 * initial people and add them into member list 
+	 * @param tempPersonData the person information from the file
+	 * @return member list
+	 */
 	private TreeMap<String, Person> addPersonData(ArrayList<String[]> tempPersonData)
 	{
 		if(!tempPersonData.isEmpty()) {
@@ -80,11 +85,11 @@ public class DriverClass {
 		}
 	}
 	
-/**
- * This method get the relation data from the file
- * @throws IOException if file is not found
- * @throws NoParentsException 
- */
+	/**
+	 * This method get the relation data from the file
+	 * @throws IOException if file is not found
+	 * @throws NoParentsException 
+	 */
 	private void getRelationData() throws IOException, NoParentsException
 	{
 		BufferedReader relationsFileReader = null;
@@ -107,10 +112,11 @@ public class DriverClass {
 		}
 		databaseController.initialDataInDB(member);
 	}
-/**
- * 	This method add the relation data from the file to the list
- * @throws NoParentsException if a child does not have parents
- */
+	
+	/**
+	 * 	This method add the relation data from the file to the list
+	 * @throws NoParentsException if a child does not have parents
+	 */
 	private void addInitialRelationData() throws NoParentsException {
 
 		ArrayList<Person> noParentsChildList = new ArrayList();
@@ -144,13 +150,6 @@ public class DriverClass {
 				}
 			}
 		}
-//		for(String[] relation: childRelationList)
-//		{
-//			for(int i = 0;i<relation.length;i++)
-//			{
-//				System.out.println(relation[i]);
-//			}
-//		}
 		addNotAdultRelation(childRelationList);
 		// warning message for the child doesn't have the parents relation
 		for (Person pr : member.values()) {
@@ -167,22 +166,27 @@ public class DriverClass {
 		}
 	}
 	
+	/**
+	 * add relationship for Child and YoungChild which is from file
+	 * handle if parents are not couple
+	 * @param childRelationList child relationship data from file
+	 */
 	private void addNotAdultRelation(ArrayList<String[]> childRelationList)
 	{
 		for (String[] childRelation : childRelationList) {
 			for (String name : member.keySet()) {
 				if (name.equals(childRelation[0].trim())) {
+					try {
+						checkAlreadyExistRelation(member.get(childRelation[0].trim()),member.get(childRelation[1].trim()));
+					} catch (AlreadyHaveRelationException e1) {
+						// TODO Auto-generated catch block
+						e1.alreadyHaveRelationWarning();
+					}
 					if (childRelation[2].trim().equals("parent")) {
 						if (member.get(childRelation[1].trim()).getRelationship().containsKey("couple")) {
-
 							try {
 								member.get(name).addRelationship(childRelation[2].trim(),
 										member.get(childRelation[1].trim()));
-							} catch (NotToBeFriendsException e) {
-								// TODO Auto-generated catch block
-								e.notToBeFriendsException();
-							} catch (TooYoungException e) {
-								e.tooYoungException();
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -198,7 +202,13 @@ public class DriverClass {
 							e.notToBeFriendsException();
 						} catch (TooYoungException e) {
 							e.tooYoungException();
-						} catch (Exception e) {
+						}catch(NotToBeCoupledException e) {
+							e.notToBeCoupleWarning();
+						} catch(NotToBeColleaguesException e) {
+							e.notToBeColleaguesWarning();
+						}catch(NotToBeClassmatesException e) {
+							e.notToBeClassmatesWarning();
+						}catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
@@ -208,16 +218,17 @@ public class DriverClass {
 			}
 		}
 	}
-/**
- * This method is the for adding person to the member map
- * @param name the name of the person
- * @param photo the photo of the person
- * @param status the status of the person
- * @param gender the gender of the person
- * @param age the age of the person
- * @param state the state this person is from
- * @return Person the person is being added
- */
+	
+	/**
+	 * This method is the for adding person to the member map
+	 * @param name the name of the person
+	 * @param photo the photo of the person
+	 * @param status the status of the person
+	 * @param gender the gender of the person
+	 * @param age the age of the person
+	 * @param state the state this person is from
+	 * @return Person the person is being added
+	 */
 	public Person addPerson(String name, String photo, String status, String gender, int age, String state) {
 		Person currentPerson;
 
@@ -237,10 +248,11 @@ public class DriverClass {
 			return currentPerson;
 		}
 	}
-/**
- * This method delete the person from the map
- * @param currentPerson the person who is being deleted
- */
+	
+	/**
+	 * This method delete the person from the map
+	 * @param currentPerson the person who is being deleted
+	 */
 	public void deletePerson(Person currentPerson) {
 //		ArrayList<Person> childList = new ArrayList<Person>();
 
@@ -277,35 +289,39 @@ public class DriverClass {
 //		}
 
 	}
-/**
- * This method get the person with the name from the member map
- * @return the person map which contains person and the name of the person
- */
+	
+	/**
+	 * This method get the person with the name from the member map
+	 * @return the person map which contains person and the name of the person
+	 */
 	public TreeMap<String, Person> getMember() {
 		return member;
 	}
-/**
- * This method get the member object which is a person
- * @param key the name of the person
- * @return the person object
- */
+	
+	/**
+	 * This method get the member object which is a person
+	 * @param key the name of the person
+	 * @return the person object
+	 */
 	public Person getMemberObj(String key) {
 
 		return member.get(key);
 	}
-/**
- * This method get the DatabaseController object
- * @return databaseController
- */
+	
+	/**
+	 * This method get the DatabaseController object
+	 * @return databaseController
+	 */
 	public DatabaseController getDatabaseController() {
 		return databaseController;
 	}
-/**
- * This method check the relation which already exsit 
- * @param selectedPerson the current person 
- * @param relatedPerson the person related to the current person
- * @throws AlreadyHaveRelationException if already have relationship
- */
+	
+	/**
+	 * This method check the relation which already exsit 
+	 * @param selectedPerson the current person 
+	 * @param relatedPerson the person related to the current person
+	 * @throws AlreadyHaveRelationException if already have relationship
+	 */
 	public void checkAlreadyExistRelation(Person selectedPerson, Person relatedPerson)
 			throws AlreadyHaveRelationException {
 
@@ -316,9 +332,10 @@ public class DriverClass {
 			}
 		}
 	}
-/**
- * This method shows the alert when the file cannot be found
- */
+	
+	/**
+	 * This method shows the alert when the file cannot be found
+	 */
 	private void cannotFoundFileMessage() {
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.setTitle("MESSAGES");

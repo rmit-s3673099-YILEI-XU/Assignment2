@@ -29,7 +29,6 @@ public class NotToBeCoupledException extends Exception{
 		alert.setHeaderText("WARNING!");
 		alert.setContentText(partner.getName()+" is not Adult. He/She cannot have a COUPLE relationship.");
 		alert.show();
-		
-		
+
 	}
 }
