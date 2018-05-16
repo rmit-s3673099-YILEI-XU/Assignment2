@@ -178,7 +178,7 @@ public class SelectPersonGUI {
 
 		if (photo.equals("")) {
 
-			Image defaultImage = new Image(new FileInputStream("image/default.png"));
+			Image defaultImage = new Image(new FileInputStream("image/default.jpeg"));
 			imageView.setImage(defaultImage);
 		} else {
 
@@ -195,7 +195,6 @@ public class SelectPersonGUI {
 		GPane.add(new Label(gender), 4, 6);
 		GPane.add(new Label(state), 4, 7);
 
-		
 		BorderPane pane = MainMenuGUI.setUpBorderPane(imageView, GPane, btBack, null, null);
 		pane.setAlignment(btBack, Pos.CENTER);
 		Scene scene = new Scene(pane, 700, 500);
