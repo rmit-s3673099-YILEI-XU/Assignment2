@@ -37,7 +37,7 @@ public class DriverClass {
 		personData = new ArrayList<String[]>();
 		
 		try {
-			peopleFileReader = new BufferedReader(new FileReader("b/people.txt"));
+			peopleFileReader = new BufferedReader(new FileReader("db/people.txt"));
 			String currentLine;
 			while ((currentLine = peopleFileReader.readLine()) != null) {
 				pTextData = currentLine.split(",");
@@ -45,26 +45,12 @@ public class DriverClass {
 					pTextData[i] = pTextData[i].replace("\"", "");
 				}
 				personData.add(pTextData);
-//				int age = Integer.parseInt(pTextData[4].trim());
-//				if (age < 3) {
-//					currentPerson = new YoungChild(pTextData[0].trim(), pTextData[1].trim(), pTextData[2].trim(),
-//							pTextData[3].trim(), age, pTextData[5].trim());
-//				} else if (age <= 16) {
-//					currentPerson = new Child(pTextData[0].trim(), pTextData[1].trim(), pTextData[2].trim(),
-//							pTextData[3].trim(), age, pTextData[5].trim());
-//				} else {
-//					currentPerson = new Adult(pTextData[0].trim(), pTextData[1].trim(), pTextData[2].trim(),
-//							pTextData[3].trim(), age, pTextData[5].trim());
-//				}
-//				member.put(pTextData[0].trim(), currentPerson);
 			}
 			peopleFileReader.close();
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			
-//			e.printStackTrace();
-//			cannotFoundFileMessage();
 			InitialDatabaseData initialDBData = new InitialDatabaseData();
 			initialDBData.initalDBData(databaseController.getConnection());
 			personData=databaseController.getDataInDB();

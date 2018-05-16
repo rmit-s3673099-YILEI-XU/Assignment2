@@ -41,7 +41,6 @@ public class AddPersonGUI {
 	public Scene addPersonScene() { 
 
 		GridPane pane = MainMenuGUI.setUpPane();
-
 		pane.add(new Label("Name*:"), 0, 0);
 		TextField personName = new TextField();
 		pane.add(personName, 1, 0);
@@ -100,10 +99,12 @@ public class AddPersonGUI {
 		HBox root = new HBox();
 
 		RadioButton female = new RadioButton("Female");
+		female.setStyle("-fx-text-fill: #FFFFFF");
 		female.setToggleGroup(group);
 		female.setSelected(true);
 		female.setUserData("F");
 		RadioButton male = new RadioButton("Male");
+		male.setStyle("-fx-text-fill: #FFFFFF");
 		male.setToggleGroup(group);
 		male.setUserData("M");
 		root.getChildren().add(female);

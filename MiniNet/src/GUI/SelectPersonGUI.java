@@ -3,6 +3,7 @@ package GUI;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -207,17 +208,34 @@ public class SelectPersonGUI {
 		if (!person.getRelationship().isEmpty()) {
 			label = new Label("People who have relationship with" + " " + person.getName() + " " + "is/are:");
 
+			
 			int i = 2;
-			for (String type : person.getRelationship().keySet()) {
+			   for (String type : person.getRelationship().keySet()) {
+			    
+			    ArrayList<String> tempPersonName = new ArrayList<String>();
+			    for(Person relatedPerson:person.getRelationship().get(type)) {
+			     tempPersonName.add(relatedPerson.getName());
+			    } 
+			   // Collections.sort(tempPersonName);
+			    Collections.sort(tempPersonName,String.CASE_INSENSITIVE_ORDER);
 
-				ArrayList<Person> relatedPerson = person.getRelationship().get(type);
-
-				for (Person r : relatedPerson) {
-					GPane.add(new Label(r.getName()), 0, i);
-					GPane.add(new Label(type), 3, i);
-					i++;
-				}
-			}
+			    for (String relatedName : tempPersonName) {
+			     GPane.add(new Label(relatedName), 0, i);
+			     GPane.add(new Label(type), 3, i);
+			     i++;
+			    }
+			   }
+//			int i = 2;
+//			for (String type : person.getRelationship().keySet()) {
+//
+//				ArrayList<Person> relatedPerson = person.getRelationship().get(type);
+//
+//				for (Person r : relatedPerson) {
+//					GPane.add(new Label(r.getName()), 0, i);
+//					GPane.add(new Label(type), 3, i);
+//					i++;
+//				}
+//			}
 		} else {
 			label = new Label(person.getName() + " " + "does not have relationship with anyone.");
 		}
