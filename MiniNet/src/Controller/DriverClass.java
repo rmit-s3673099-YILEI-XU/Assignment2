@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -50,10 +51,13 @@ public class DriverClass {
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			
-			InitialDatabaseData initialDBData = new InitialDatabaseData();
-			initialDBData.initalDBData(databaseController.getConnection());
-			personData=databaseController.getDataInDB();
+
+				if(databaseController.getConnection()!=null) {
+				InitialDatabaseData initialDBData = new InitialDatabaseData();
+				initialDBData.initalDBData(databaseController.getConnection());
+				personData=databaseController.getDataInDB();
+				}
+		
 			
 		}
 		
@@ -100,7 +104,10 @@ public class DriverClass {
 			String currentLine;
 			while ((currentLine = relationsFileReader.readLine()) != null) {
 				rTextData = currentLine.split(",");
+				if(rTextData.length==3) {
+					if(rTextData[0].trim()!=null&&rTextData[1].trim()!=null&&rTextData[2].trim()!=null)
 				relationData.add(rTextData);
+				}
 			}
 			relationsFileReader.close();
 	

@@ -163,11 +163,4 @@ public class DatabaseController {
 	public Connection getConnection() {
 		return connection;
 	}
-
-	/**
-	 * This method break the connection to the database
-	 */
-	public void disconnectDB() {
-		hsqlServer.shutdown();
-	}
 }

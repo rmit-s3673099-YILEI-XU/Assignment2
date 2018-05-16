@@ -110,14 +110,12 @@ public  class MainMenuGUI {
         });
 
         exitBt.setOnAction(event -> {
-        		MainMenuGUI.dc.getDatabaseController().disconnectDB();
-            window.close();
+        	System.exit(0);
         });
         
         // define the close button event on the stage
         window.setOnCloseRequest(e ->{
-        	MainMenuGUI.dc.getDatabaseController().disconnectDB();
-        window.close();     
+        	System.exit(0);   
         });
         Scene scene = new Scene(pane, 700, 500);
         scene.getStylesheets().add("GUI.css");
