@@ -64,7 +64,6 @@ public class ModifyRelationGUI {
 			personBox.setDisable(true);
 			btAdd.setDisable(true);
 			btRemove.setDisable(true);
-			relationList.setDisable(true);
 		}
 
 		for (String personName : MainMenuGUI.dc.getMember().keySet()) {

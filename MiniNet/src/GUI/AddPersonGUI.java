@@ -111,6 +111,7 @@ public class AddPersonGUI {
 		root.getChildren().add(male);
 		return root;
 	}
+	
 /**
  * This method is set on the action of the add button
  * @param personName the input name
