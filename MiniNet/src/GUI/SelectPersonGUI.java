@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Optional;
 
 import Controller.DriverClass;
+import Exceptions.NoParentsException;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -54,7 +55,10 @@ public class SelectPersonGUI {
 
 		memberList.getItems().addAll(MainMenuGUI.dc.getMember().keySet());
 		memberList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		Collections.sort(memberList.getItems(),String.CASE_INSENSITIVE_ORDER);
 		memberList.getSelectionModel().select(0);
+		if(memberList.getItems().size()==0)
+			submit.setDisable(true);
 
 		vBox.setMaxWidth(250);
 		vBox.setMaxHeight(350);
@@ -126,7 +130,12 @@ public class SelectPersonGUI {
 		});
 
 		btDelete.setOnAction(e -> {
+			try {
 			deletePersonAction(selectedPerson);
+			}catch (NoParentsException e1)
+			{
+				e1.noParentsWarning();
+			}
 		});
 
 		btBack.setOnAction(e -> {
@@ -208,7 +217,6 @@ public class SelectPersonGUI {
 		if (!person.getRelationship().isEmpty()) {
 			label = new Label("People who have relationship with" + " " + person.getName() + " " + "is/are:");
 
-			
 			int i = 2;
 			   for (String type : person.getRelationship().keySet()) {
 			    
@@ -216,7 +224,6 @@ public class SelectPersonGUI {
 			    for(Person relatedPerson:person.getRelationship().get(type)) {
 			     tempPersonName.add(relatedPerson.getName());
 			    } 
-			   // Collections.sort(tempPersonName);
 			    Collections.sort(tempPersonName,String.CASE_INSENSITIVE_ORDER);
 
 			    for (String relatedName : tempPersonName) {
@@ -225,17 +232,6 @@ public class SelectPersonGUI {
 			     i++;
 			    }
 			   }
-//			int i = 2;
-//			for (String type : person.getRelationship().keySet()) {
-//
-//				ArrayList<Person> relatedPerson = person.getRelationship().get(type);
-//
-//				for (Person r : relatedPerson) {
-//					GPane.add(new Label(r.getName()), 0, i);
-//					GPane.add(new Label(type), 3, i);
-//					i++;
-//				}
-//			}
 		} else {
 			label = new Label(person.getName() + " " + "does not have relationship with anyone.");
 		}
@@ -257,16 +253,18 @@ public class SelectPersonGUI {
 /**
  * This method is for delete the person
  * @param selectedPerson the selected person
+ * @throws NoParentsException 
  */
-	public void deletePersonAction(Person selectedPerson) {
+	public void deletePersonAction(Person selectedPerson) throws NoParentsException {
 
 		if (showDeletePersonMessage()) {
-			if (selectedPerson.getRelationship().containsKey("child")) {
-				if (showDeleteChildMessage()) {
-					MainMenuGUI.dc.deletePerson(selectedPerson);
-					MainMenuGUI.window.setScene(selectPersonScene());
-					showMessageForDeletePerson();
-				}
+			if (selectedPerson.getRelationship().containsKey("child") ) {
+					throw new NoParentsException(selectedPerson);
+//				if (showDeleteChildMessage()) {
+//					MainMenuGUI.dc.deletePerson(selectedPerson);
+//					MainMenuGUI.window.setScene(selectPersonScene());
+//					showMessageForDeletePerson();
+//				}
 			} else {
 				MainMenuGUI.dc.deletePerson(selectedPerson);
 				MainMenuGUI.window.setScene(selectPersonScene());

@@ -77,6 +77,7 @@ public class YoungChild extends Person{
 	 */
 	@Override
 	public void removeRelationship(String relationType, Person relatedPerson) {
+		
 		// TODO Auto-generated method stub
 		switch(relationType){
 		

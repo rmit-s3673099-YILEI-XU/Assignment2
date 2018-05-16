@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Optional;
 
 import Exceptions.*;
@@ -34,11 +35,11 @@ import people.*;
  *
  */
 public class ModifyRelationGUI {
-/**
- * This method is set up the add relation scene
- * @param person the person has been selected
- * @return Scene
- */ 
+	/**
+	 * This method is set up the add relation scene
+	 * @param person the person has been selected
+	 * @return Scene
+	 */ 
 	public Scene addRelationScene(Person person) {
 
 		Label label = new Label("Modify relation for" + " " + person.getName());
@@ -49,6 +50,53 @@ public class ModifyRelationGUI {
 		ComboBox<String> relationBox = new ComboBox<String>();
 		ComboBox<String> personBox = new ComboBox<String>();
 
+		intialRelationElement(relationBox,personBox,relationList,btAdd,btRemove,person);
+
+		HBox hBoxAddRelation = new HBox();
+		hBoxAddRelation.getChildren().addAll(relationBox, personBox, btAdd);
+		hBoxAddRelation.setSpacing(50);
+
+		VBox vBoxModifyRelation = new VBox(10);
+
+		vBoxModifyRelation.setPadding(new Insets(20, 20, 20, 20));
+		Label labelRemoveMessage = new Label("EXIST RELATION LIST");
+		vBoxModifyRelation.getChildren().addAll(hBoxAddRelation, labelRemoveMessage, relationList);
+
+		HBox hBoxBotton = new HBox();
+		hBoxBotton.getChildren().addAll(btBack, btRemove);
+		hBoxBotton.setSpacing(300);
+
+		BorderPane pane = MainMenuGUI.setUpBorderPane(label, vBoxModifyRelation, hBoxBotton, null, null);
+
+		hBoxBotton.setAlignment(Pos.TOP_CENTER);
+		vBoxModifyRelation.setAlignment(Pos.TOP_CENTER);
+		hBoxAddRelation.setAlignment(Pos.TOP_CENTER);
+		
+		btRemove.setOnAction(e -> {			
+			setRemoveAction(relationList, person,btRemove);
+		});
+		btAdd.setOnAction(e -> {
+			setAddAction(relationBox, personBox, person, relationList);
+		});
+		btBack.setOnAction(e -> {
+			MainMenuGUI.window.setScene(new SelectPersonGUI().viewPersonScene(person));// check where should it go back
+		});
+
+		Scene scene = new Scene(pane, 700, 500);
+		scene.getStylesheets().add("GUI2.css");
+		return scene;
+	}
+	
+	/**
+	 * initialize relation element especially for relationBox, personBox, relationList
+	 * @param relationBox is a comboBox to store relations
+	 * @param personBox is a comboBox to store all people except selected person
+	 * @param relationList is a viewList to store already exist related people
+	 * @param btAdd is a button to add relation and related person
+	 * @param btRemove is a button to remove related person from selected person's relation list
+	 * @param person is selected person 
+	 */
+	private void intialRelationElement(ComboBox<String> relationBox,ComboBox<String> personBox, ListView<String> relationList,Button btAdd,Button btRemove,Person person) {
 		String[] adultRelation = { "friends", "classmates", "colleagues", "couple" };
 		String[] childRelation = { "friends", "classmates" };
 
@@ -70,13 +118,7 @@ public class ModifyRelationGUI {
 			if (!personName.equals(person.getName()))
 				personBox.getItems().add(personName);
 		}
-
-		HBox hBoxAddRelation = new HBox();
-		hBoxAddRelation.getChildren().addAll(relationBox, personBox, btAdd);
-		hBoxAddRelation.setSpacing(50);
-
-		VBox vBoxModifyRelation = new VBox(10);
-
+		
 		for (String relation : person.getRelationship().keySet()) {
 			for (Person relatedPerson : person.getRelationship().get(relation)) {
 				relationList.getItems().add(relatedPerson.getName() + "      " + relation);
@@ -86,40 +128,19 @@ public class ModifyRelationGUI {
 		relationList.getSelectionModel().select(0);
 		relationList.setMaxWidth(250);
 		relationList.setMaxHeight(350);
-		vBoxModifyRelation.setPadding(new Insets(20, 20, 20, 20));
-		Label labelRemoveMessage = new Label("EXIST RELATION LIST");
-		vBoxModifyRelation.getChildren().addAll(hBoxAddRelation, labelRemoveMessage, relationList);
-
-		HBox hBoxBotton = new HBox();
-		hBoxBotton.getChildren().addAll(btBack, btRemove);
-		hBoxBotton.setSpacing(300);
-
-		BorderPane pane = MainMenuGUI.setUpBorderPane(label, vBoxModifyRelation, hBoxBotton, null, null);
-
-		hBoxBotton.setAlignment(Pos.TOP_CENTER);
-		vBoxModifyRelation.setAlignment(Pos.TOP_CENTER);
-		hBoxAddRelation.setAlignment(Pos.TOP_CENTER);
 		
-		btRemove.setOnAction(e -> {			
-			setRemoveAction(relationList, person);
-		});
-		btAdd.setOnAction(e -> {
-			setAddAction(relationBox, personBox, person, relationList);
-		});
-		btBack.setOnAction(e -> {
-			MainMenuGUI.window.setScene(new SelectPersonGUI().viewPersonScene(person));// check where should it go back
-		});
-
-		Scene scene = new Scene(pane, 700, 500);
-		scene.getStylesheets().add("GUI2.css");
-		return scene;
+		if(relationList.getItems().size()==0)
+		{
+			btRemove.setDisable(true);
+		}
 	}
-/**
- * This method is to set on the action to the remove button
- * @param relationList the list of relation
- * @param person the selected person
- */
-	public void setRemoveAction(ListView<String> relationList, Person person) {
+	
+	/**
+	 * This method is to set on the action to the remove button
+	 * @param relationList the list of relation
+	 * @param person the selected person
+	 */
+	private void setRemoveAction(ListView<String> relationList, Person person,Button btRemove) {
 		
 		String name, relation;
 		String[] data = relationList.getSelectionModel().getSelectedItem().split("      ");
@@ -134,26 +155,30 @@ public class ModifyRelationGUI {
 						relationList.getItems().add(relatedPerson.getName() + "      " + relation1);
 					}
 				}
+				if(relationList.getItems().size()>0) {
+					relationList.getSelectionModel().select(0);
+				}else {
+					btRemove.setDisable(true);
+				}
 			}
 		}
 	}
-/**
- * This method is set on the action of add button	
- * @param relationBox the comboBox of relation
- * @param personBox the comboBox of person
- * @param person the person has been selected
- * @param relationList the list of the relation
- */
-	public void setAddAction(ComboBox<String> relationBox, ComboBox<String> personBox, Person person, ListView<String> relationList) {
+	
+	/**
+	 * This method is set on the action of add button	
+	 * @param relationBox the comboBox of relation
+	 * @param personBox the comboBox of person
+	 * @param person the person has been selected
+	 * @param relationList the list of the relation
+	 */
+	private void setAddAction(ComboBox<String> relationBox, ComboBox<String> personBox, Person person, ListView<String> relationList) {
 		
 		if (relationBox.getSelectionModel().getSelectedItem().equals("selectRelation")
 				|| personBox.getSelectionModel().getSelectedItem().equals("selectPerson")) {
 			showMessageForAddRelation(false);
 		} else {
 			String relation = relationBox.getSelectionModel().getSelectedItem();
-
 			Person relatedPerson = MainMenuGUI.dc.getMemberObj(personBox.getSelectionModel().getSelectedItem());
-
 			try {
 				MainMenuGUI.dc.checkAlreadyExistRelation(person, relatedPerson);
 				try {
@@ -165,9 +190,9 @@ public class ModifyRelationGUI {
 							relationList.getItems().add(newRelatedPerson.getName() + "      " + relation1);
 						}
 					}
-					if(relationList.getItems().size()>0)
+					if(relationList.getItems().size()>0) {
 						relationList.getSelectionModel().select(0);
-
+					}
 					showMessageForAddRelation(true);
 				} catch (NotToBeFriendsException e1) {
 					// TODO Auto-generated catch block
@@ -190,30 +215,24 @@ public class ModifyRelationGUI {
 				e2.alreadyHaveRelationWarning();
 			}
 		}
-		
 	}
-/**
- * This method is set up the scene of add the first parent
- * @param person the selected person
- * @return Scene
- */
+	
+	/**
+	 * This method is set up the scene of add the first parent
+	 * @param person the selected person
+	 * @return Scene the scene for add first parent
+	 */
 	public Scene addParentsScene1(Person person) {
 
 		GridPane pane = MainMenuGUI.setUpPane();
-
 		pane.add(new Label("The person is under 18 years old, please add the first parent"), 0, 0);
-
 		Button btNext = new Button("Next");
 		Button btBack = new Button("Back");
-
 		ComboBox<String> comboBox1 = new ComboBox<String>();
-
 		comboBox1.setValue("selectParent1");
 
 		for (String name : MainMenuGUI.dc.getMember().keySet()) {
-
 			comboBox1.getItems().add(name);
-
 		}
 
 		pane.add(btBack, 0, 4);
@@ -246,10 +265,11 @@ public class ModifyRelationGUI {
 		scene.getStylesheets().add("GUI2.css");
 		return scene;
 	}
+	
 	/**
 	 * This method is set up the scene of add the second parent
 	 * @param person the selected person
-	 * @return Scene
+	 * @return Scene the scene for add second person
 	 */
 	public Scene addParentsScene2(Person person, Person tempParent1) {
 
@@ -262,21 +282,16 @@ public class ModifyRelationGUI {
 		if (tempParent1.getRelationship().containsKey("couple")) {
 			pane.add(new Label(tempParent1.getName() + " has a partner. Therefore, the second parent is:"), 0, 0);
 			comboBox2.setValue(tempParent1.getRelationship().get("couple").get(0).getName());
-
 		} else {
-
 			pane.add(new Label("The first parent is " + tempParent1.getName() + ". Please select the second parent for "
 					+ person.getName()), 0, 0);
 			comboBox2.setValue("selectParent2");
-
+			
 			for (String name : MainMenuGUI.dc.getMember().keySet()) {
-
 				if (!name.equals(tempParent1.getName()))
 					comboBox2.getItems().add(name);
-
 			}
 		}
-
 		pane.add(btBack, 0, 4);
 		pane.add(btAdd, 4, 4);
 		pane.add(comboBox2, 0, 1);
@@ -292,27 +307,26 @@ public class ModifyRelationGUI {
 				} catch (NoAvailableException exception) {
 					exception.noAvailableWarning();
 				} catch (Exception exception) {
-
+					
 				}
 			}
-
 		});
 
 		btBack.setOnAction(e -> {
 			MainMenuGUI.window.setScene(addParentsScene1(person));
-
 		});
 		Scene scene = new Scene(pane, 700, 500);
 		scene.getStylesheets().add("GUI2.css");
 		return scene;
 	}
-/**
- * This method is about add parents action
- * @param parent1 the first parent
- * @param name2 the name of the second person
- * @param child the child has been selected
- * @throws Exception if the two parents cannot be couple
- */
+	
+	/**
+	 * This method is about add parents action
+	 * @param parent1 the first parent
+	 * @param name2 the name of the second person
+	 * @param child the child has been selected
+	 * @throws Exception if the two parents cannot be couple
+	 */
 	public void addParentsAction(Person parent1, String name2, Person child) throws Exception {
 		Person parent2;
 		parent2 = MainMenuGUI.dc.getMemberObj(name2);
@@ -332,23 +346,17 @@ public class ModifyRelationGUI {
 
 		MainMenuGUI.dc.getMember().put(child.getName(), child);
 		showMessageForAddParents(true);
-
 		MainMenuGUI.window.setScene(MainMenuGUI.startScene());
-//		if (child instanceof Child) {
-//			
-//			MainMenuGUI.window.setScene(addRelationScene(child));
-//		} else {
-//			MainMenuGUI.window.setScene(MainMenuGUI.startScene());
-//		}
 
 	}
-/**
- * This method is about remove the relation action
- * @param selectedPerson the person has been selected
- * @param name the related person's name
- * @param relation the relation of them
- * @return true if removed, false if cannot be removed
- */
+	
+	/**
+	 * This method is about remove the relation action
+	 * @param selectedPerson the person has been selected
+	 * @param name the related person's name
+	 * @param relation the relation of them
+	 * @return true if removed, false if cannot be removed
+	 */
 	public boolean removeRelationAction(Person selectedPerson, String name, String relation) {
 		Person relatedPerson = MainMenuGUI.dc.getMemberObj(name);
 		if (relation.equals("couple")) {
@@ -377,12 +385,12 @@ public class ModifyRelationGUI {
 			relatedPerson.removeRelationship(relation, selectedPerson);
 			return true;
 		}
-
 	}
-/**
- * This method shows the message of successful for add parents
- * @param isSuccess if the process is successful
- */
+	
+	/**
+	 * This method shows the message of successful for add parents
+	 * @param isSuccess if the process is successful
+	 */
 	public void showMessageForAddParents(boolean isSuccess) {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 		if (isSuccess) {
@@ -396,9 +404,10 @@ public class ModifyRelationGUI {
 		}
 		alert.showAndWait();
 	}
-/**
- * This method is to show the message of show the message after add relation
- */
+		
+	/**
+	 * This method is to show the message of show the message after add relation
+	 */
 	public void showMessageForAddRelation(boolean isSuccess) {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 
@@ -414,9 +423,10 @@ public class ModifyRelationGUI {
 
 		alert.showAndWait();
 	}
-/**
- * This method is about show the message of empty selection
- */
+	
+	/**
+	 * This method is about show the message of empty selection
+	 */
 	public void showMessageForEmpty() {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 
@@ -426,12 +436,13 @@ public class ModifyRelationGUI {
 
 		alert.show();
 	}
-/**
- * This method is show the warning message when the remove button has been clicked
- * @param name the name of the person
- * @param relation the relation of the two people
- * @return true if click OK, false if do not choose remove
- */
+	
+	/**
+	 * This method is show the warning message when the remove button has been clicked
+	 * @param name the name of the person
+	 * @param relation the relation of the two people
+	 * @return true if click OK, false if do not choose remove
+	 */
 	public boolean showRemoveRelationMessage(String name, String relation) {
 
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -446,11 +457,12 @@ public class ModifyRelationGUI {
 		}
 		return false;
 	}
-/**
- * This method is showing the message when a person has a child and the person going to be deleted
- * @param name the child's name
- * @return true if click OK, false if cancel or close the stage
- */
+	
+	/**
+	 * This method is showing the message when a person has a child and the person going to be deleted
+	 * @param name the child's name
+	 * @return true if click OK, false if cancel or close the stage
+	 */
 	public boolean showRemoveChildRelationMessage(String name) {
 
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -466,6 +478,7 @@ public class ModifyRelationGUI {
 		}
 		return false;
 	}
+	
 /**
  * This method is showing the message if the remove relation successful
  */
@@ -478,6 +491,7 @@ public class ModifyRelationGUI {
 
 		alert.showAndWait();
 	}
+	
 /**
  * This method is showing the message if the remove relation is not working 
  * @param relation the relation going to be removed
@@ -497,5 +511,4 @@ public class ModifyRelationGUI {
 
 		alert.show();
 	}
-
 }

@@ -236,7 +236,7 @@ public class ChildTest {
 		child.removeRelationship("parent", sherry1);
 		child.removeRelationship("parent", sherry2);
 
-		assertTrue(sherry1.getRelationship().get("child").size() == 0);
+		assertFalse(sherry1.getRelationship().containsKey("child"));
 
 	}
 	
@@ -250,7 +250,7 @@ public class ChildTest {
 		child.removeRelationship("parent", sherry1);
 		child.removeRelationship("parent", sherry2);
 
-		assertTrue(sherry2.getRelationship().get("child").size() == 0);
+		assertFalse(sherry2.getRelationship().containsKey("child"));
 
 	}
 
@@ -263,7 +263,7 @@ public class ChildTest {
 		child.addRelationship("parent", sherry2);
 		child.removeRelationship("parent", sherry1);
 
-		assertTrue(sherry1.getRelationship().get("child").size() == 0);
+		assertFalse(sherry1.getRelationship().containsKey("child"));
 
 	}
 	
@@ -276,7 +276,7 @@ public class ChildTest {
 		child.addRelationship("parent", sherry2);
 		child.removeRelationship("parent", sherry1);
 
-		assertTrue(sherry1.getRelationship().get("child").size() == 0);
+		assertFalse(sherry2.getRelationship().containsKey("child"));
 	}
 
 	@Test
@@ -288,7 +288,7 @@ public class ChildTest {
 		child.addRelationship("parent", sherry2);
 		child.removeRelationship("parent", sherry2);
 
-		assertTrue(sherry1.getRelationship().get("child").size() == 0);
+		assertFalse(sherry1.getRelationship().containsKey("child"));
 		
 	}
 	
@@ -301,7 +301,7 @@ public class ChildTest {
 		child.addRelationship("parent", sherry2);
 		child.removeRelationship("parent", sherry2);
 
-		assertTrue(sherry2.getRelationship().get("child").size() == 0);
+		assertFalse(sherry2.getRelationship().containsKey("child"));
 
 	}
 	

@@ -89,12 +89,13 @@ public class AddPersonGUI {
 		scene.getStylesheets().add("GUI2.css");
 		return scene;
 	}
+	
 /**
  * This method is set up the select gender radioButton
  * @param group is the radioButton of female/male
  * @return HBox which is the container of the two buttons
  */
-	public HBox setGenderButton(ToggleGroup group) {
+	private HBox setGenderButton(ToggleGroup group) {
 		
 		HBox root = new HBox();
 
@@ -121,7 +122,7 @@ public class AddPersonGUI {
  * @param personAge the input age
  * @param personState the selected state
  */
-	public void addButtonAction(
+	private void addButtonAction(
 			
 		TextField personName, Label personPhoto, TextField personStatus, ToggleGroup personGender, TextField personAge, ComboBox personState) {
 		
@@ -145,6 +146,7 @@ public class AddPersonGUI {
 		}
 		
 	}
+	
 /**
  * This method is the function of upload photo 
  * @return the file has been uploaded
@@ -161,6 +163,7 @@ public class AddPersonGUI {
 		return file;
 
 	}
+	
 /**
  * This method is saving the image to the file
  * @param name the image name
@@ -170,7 +173,6 @@ public class AddPersonGUI {
 	public String saveImage(String name, String path) {
 
 		String fileType;
-
 		if (!path.equals("")) {
 			File file = new File(path);
 			fileType = file.getName().substring(file.getName().lastIndexOf(".") + 1, file.getName().length());
@@ -185,6 +187,7 @@ public class AddPersonGUI {
 		}
 		return path;
 	}
+	
 /**
  * This method is the action of add a person
  * @param name person's name
@@ -217,13 +220,12 @@ public class AddPersonGUI {
 				if (currentPerson == null)
 					throw new AlreadyExistPersonException();
 				else if (currentPerson instanceof Adult) {
-					
+
 					currentPerson.setPhoto(saveImage(name, photo));
 					MainMenuGUI.dc.getMember().put(name, currentPerson);
 					MainMenuGUI.dc.getDatabaseController().modifyDatabase(currentPerson, "addPerson");
 					showMessageForAddPerson(true);
 					MainMenuGUI.window.setScene(MainMenuGUI.startScene());
-					//MainMenuGUI.window.setScene(addRelationGUI.addRelationScene(currentPerson));
 
 				} else {
 					MainMenuGUI.window.setScene(modifyRelationGUI.addParentsScene1(currentPerson));
@@ -231,11 +233,12 @@ public class AddPersonGUI {
 			}
 		}
 	}
+	
 	/**
 	 * This method shows the alert when add person successful or fail
 	 * @param isSuccess if the add person successful or not 
 	 */
-public void showMessageForAddPerson(boolean isSuccess) {
+	private void showMessageForAddPerson(boolean isSuccess) {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 		if (isSuccess) {
 			alert.setTitle("MESSAGES");

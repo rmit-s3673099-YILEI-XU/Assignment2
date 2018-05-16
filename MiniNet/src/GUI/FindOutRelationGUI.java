@@ -60,7 +60,6 @@ public class FindOutRelationGUI {
 		functionBox.setAlignment(Pos.CENTER);
 
 		// events
-
 		btSubmit.setOnAction(e -> {
 			
 			setSubmitAction(comboBox1, comboBox2, result);
@@ -75,19 +74,20 @@ public class FindOutRelationGUI {
 		scene.getStylesheets().add("GUI2.css");
 		return scene;
 	}
+	
 	/**
 	 * This method is set up the submit button action
 	 * @param comboBox1 the first selection comboBox
 	 * @param comboBox2 the second selection comboBox
 	 * @param result the find out result
 	 */
-	public void setSubmitAction(ComboBox comboBox1, ComboBox comboBox2, Label result) {
-		
+	private void setSubmitAction(ComboBox<String> comboBox1, ComboBox<String> comboBox2, Label result) {
+
 		if (comboBox1.getValue().equals("selectPerson1") || comboBox2.getValue().equals("selectPerson2")) {
 
 			result.setText("Warning! Please choose 2 people!");
 			result.setStyle("-fx-text-fill: #E33539");
-			
+
 		} else {
 			Person person1 = MainMenuGUI.dc.getMemberObj((String) comboBox1.getValue());
 			Person person2 = MainMenuGUI.dc.getMemberObj((String) comboBox2.getValue());
@@ -103,40 +103,35 @@ public class FindOutRelationGUI {
 
 				if (relation == null) {
 
-					result.setText("No relation between: " + person1.getName() + " and "
-							+ person2.getName());
+					result.setText("No relation between: " + person1.getName() + " and " + person2.getName());
 				} else {
 					if (relation.equals("parent")) {
 						if (person1 instanceof Adult) {
-							result.setText(person1.getName() + " is a parent of "
-									+ person2.getName());
+							result.setText(person1.getName() + " is a parent of " + person2.getName());
 						} else {
-							result.setText(person2.getName() + " is a parent of "
-									+ person1.getName());
+							result.setText(person2.getName() + " is a parent of " + person1.getName());
 						}
-					}else if(relation.equals("child")) {
+					} else if (relation.equals("child")) {
 						if (person1 instanceof Adult) {
-							result.setText(person1.getName() + " is a parent of "
-									+ person2.getName());
+							result.setText(person1.getName() + " is a parent of " + person2.getName());
 						} else {
-							result.setText(person2.getName() + " is a parent of "
-									+ person1.getName());
+							result.setText(person2.getName() + " is a parent of " + person1.getName());
+						}
+					} else {
+						result.setText(person1.getName() + " and " + person2.getName() + " are " + relation);
 					}
-					}else {
-						result.setText(person1.getName() + " and " + person2.getName()
-						+ " are " + relation);
 				}
 			}
-			}
-		}	
+		}
 	}
+	
 /**
  * This method is to get the result of find out relation
  * @param person1 the first person
  * @param person2 the second person
  * @return String the result
  */
-	public String findOutRelationAction(Person person1, Person person2) {
+	private String findOutRelationAction(Person person1, Person person2) {
 		for (String relation : person1.getRelationship().keySet()) {
 			for (Person reletedPerson : person1.getRelationship().get(relation)) {
 				if (reletedPerson.equals(person2))

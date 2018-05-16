@@ -49,6 +49,7 @@ public  class MainMenuGUI {
 
         return primaryPane;
     }
+    
   /**
    * This method is to set up the basic layout of the BorderPane for most of the scenes to reuse
    * @param top the top part
@@ -71,6 +72,7 @@ public  class MainMenuGUI {
      	return pane;
     
     }
+    
 /**
  * This method is the main menu start scene
  * @return Scene
@@ -83,9 +85,7 @@ public  class MainMenuGUI {
 	    	Button addPersonBt = new Button("Add person");
 	    	Button selectPersonBt = new Button("Select a Person");	
 	    	Button findOutBt = new Button("Find out relationship");
-	    //ImageView imageView = new ImageView(new Image("image/background.jpg") );
 	    	Button exitBt = new Button("Exit");
-	    	//exitBt.setStyle("-fx-background-image: url('/image/background1.jpg')");
 
 	    	GridPane GPane = setUpPane();
 	    	GPane.add(addPersonBt, 0, 0);

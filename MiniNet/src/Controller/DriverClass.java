@@ -103,12 +103,7 @@ public class DriverClass {
 			e.printStackTrace();
 		}
 		if (!relationData.isEmpty()) {
-//			try {
-				addInitialRelationData();
-//			} catch (NoParentsException e) {
-//				// TODO Auto-generated catch block
-//				e.noParentsWarning();
-//			}
+			addInitialRelationData();
 		}
 		databaseController.initialDataInDB(member);
 	}
@@ -119,30 +114,44 @@ public class DriverClass {
 	private void addInitialRelationData() throws NoParentsException {
 
 		ArrayList<Person> noParentsChildList = new ArrayList();
+		ArrayList<String[]> childRelationList = new ArrayList<String[]>();
 		for (String[] st : relationData) {
 			for (String name : member.keySet()) {
 				if (name.equals(st[0].trim())) {
-					if (st[2].trim().equals("parent") && (member.get(st[0].trim()) instanceof Adult)) {
-						String temp = st[0];
-						st[0] = st[1].trim();
-						st[1] = temp.trim();
-						name = st[0];
+					if (!(member.get(st[0].trim()) instanceof Adult) || !(member.get(st[1].trim()) instanceof Adult)) {
+						if (st[2].trim().equals("parent") && (member.get(st[0].trim()) instanceof Adult)) {
+							String temp = st[0];
+							st[0] = st[1].trim();
+							st[1] = temp.trim();
+							name = st[0];
+						}
+						childRelationList.add(st);
+						break;
+					} else {
+						try {
+							member.get(name).addRelationship(st[2].trim(), member.get(st[1].trim()));
+						} catch (NotToBeFriendsException e) {
+							// TODO Auto-generated catch block
+							e.notToBeFriendsException();
+						} catch (TooYoungException e) {
+							e.tooYoungException();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						break;
 					}
-					try {
-						member.get(name).addRelationship(st[2].trim(), member.get(st[1].trim()));
-					} catch (NotToBeFriendsException e) {
-						// TODO Auto-generated catch block
-						e.notToBeFriendsException();
-					} catch (TooYoungException e) {
-						e.tooYoungException();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					break;
 				}
 			}
 		}
+//		for(String[] relation: childRelationList)
+//		{
+//			for(int i = 0;i<relation.length;i++)
+//			{
+//				System.out.println(relation[i]);
+//			}
+//		}
+		addNotAdultRelation(childRelationList);
 		// warning message for the child doesn't have the parents relation
 		for (Person pr : member.values()) {
 			if (!(pr instanceof Adult))
@@ -155,6 +164,48 @@ public class DriverClass {
 				deletePerson(child);
 			}
 			throw new NoParentsException(noParentsChildList);
+		}
+	}
+	
+	private void addNotAdultRelation(ArrayList<String[]> childRelationList)
+	{
+		for (String[] childRelation : childRelationList) {
+			for (String name : member.keySet()) {
+				if (name.equals(childRelation[0].trim())) {
+					if (childRelation[2].trim().equals("parent")) {
+						if (member.get(childRelation[1].trim()).getRelationship().containsKey("couple")) {
+
+							try {
+								member.get(name).addRelationship(childRelation[2].trim(),
+										member.get(childRelation[1].trim()));
+							} catch (NotToBeFriendsException e) {
+								// TODO Auto-generated catch block
+								e.notToBeFriendsException();
+							} catch (TooYoungException e) {
+								e.tooYoungException();
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							break;
+						}
+					} else {
+						try {
+							member.get(name).addRelationship(childRelation[2].trim(),
+									member.get(childRelation[1].trim()));
+						} catch (NotToBeFriendsException e) {
+							// TODO Auto-generated catch block
+							e.notToBeFriendsException();
+						} catch (TooYoungException e) {
+							e.tooYoungException();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						break;
+					}
+				}
+			}
 		}
 	}
 /**
@@ -191,39 +242,39 @@ public class DriverClass {
  * @param currentPerson the person who is being deleted
  */
 	public void deletePerson(Person currentPerson) {
-		ArrayList<Person> childList = new ArrayList<Person>();
+//		ArrayList<Person> childList = new ArrayList<Person>();
 
 		for (String relationType : currentPerson.getRelationship().keySet()) {
 
 			for (Person relatedPerson : currentPerson.getRelationship().get(relationType)) {
 
 				currentPerson.removeRelationship(relationType, relatedPerson);
-				if (relationType == "child") {
-					childList.add(relatedPerson);
-					// relatedPerson.removeRelationship(relationType, relatedPerson);
-					// member.remove(relatedPerson.getName());
-				}
+//				if (relationType == "child") {
+//					childList.add(relatedPerson);
+//					// relatedPerson.removeRelationship(relationType, relatedPerson);
+//					// member.remove(relatedPerson.getName());
+//				}
 			}
 
 		}
 		member.remove(currentPerson.getName());
 		databaseController.modifyDatabase(currentPerson, "deletePerson");
 
-		if (childList.size() > 0) {
-			for (Person child : childList) {
-				for (String relationType : child.getRelationship().keySet()) {
+//		if (childList.size() > 0) {
+//			for (Person child : childList) {
+//				for (String relationType : child.getRelationship().keySet()) {
+//
+//					for (Person relatedPerson : child.getRelationship().get(relationType)) {
+//
+//						child.removeRelationship(relationType, relatedPerson);
+//
+//					}
+//				}
+//				member.remove(child.getName());
+//				databaseController.modifyDatabase(child, "deletePerson");
 
-					for (Person relatedPerson : child.getRelationship().get(relationType)) {
-
-						child.removeRelationship(relationType, relatedPerson);
-
-					}
-				}
-				member.remove(child.getName());
-				databaseController.modifyDatabase(child, "deletePerson");
-
-			}
-		}
+//			}
+//		}
 
 	}
 /**
