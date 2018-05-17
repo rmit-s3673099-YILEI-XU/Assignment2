@@ -2,8 +2,8 @@ package people;
 
 import java.util.ArrayList;
 import java.util.TreeMap;
-
 import relations.*;
+
 /**
  * This class is the subclass of Person, it creates Adult type of person
  * @author YILEI XU
@@ -60,9 +60,7 @@ public class Adult extends Person{
 			break;
 		default:
 			break;
-		}
-		
-		
+		}	
 	}
 
 	/**
@@ -72,8 +70,7 @@ public class Adult extends Person{
 	 */
 	@Override
 	public void removeRelationship(String relationType, Person relatedPerson)  {
-		
-		// TODO Auto-generated method stub
+
 		switch(relationType){	
 		case "friends":
 			this.setRelationManipulator(new AdultFriend(this,relatedPerson));
@@ -92,7 +89,6 @@ public class Adult extends Person{
 			this.relationManipulator.remove();
 		break;			
 		
-		}
-		
+		}	
 	}
 }

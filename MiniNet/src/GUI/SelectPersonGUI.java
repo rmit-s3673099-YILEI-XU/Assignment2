@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Optional;
-
 import Controller.DriverClass;
 import Exceptions.NoParentsException;
 import javafx.geometry.Insets;
@@ -27,19 +26,19 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import people.Person;
 import people.YoungChild;
+
 /**
  * This class is the select person user interface
  * @author CIFANG ZHANG
  *
  */
 public class SelectPersonGUI {
+	
 /**
  * This method is the scene of select person
  * @return Scene
  */
 	public Scene selectPersonScene() {
-
-		// set up layout
 
 		GridPane GPane = MainMenuGUI.setUpPane();
 
@@ -67,8 +66,6 @@ public class SelectPersonGUI {
 		BorderPane pane = MainMenuGUI.setUpBorderPane(label, vBox, hBox, null, null);
 		hBox.setAlignment(Pos.CENTER);
 
-		// create events
-
 		submit.setOnAction(e -> {
 			String personName = memberList.getSelectionModel().getSelectedItem();
 			System.out.print(personName);
@@ -84,6 +81,7 @@ public class SelectPersonGUI {
 		scene.getStylesheets().add("GUI2.css");
 		return scene;
 	}
+	
 /**
  * This method is the scene of view person menu
  * @param selectedPerson the person has been selected
@@ -114,37 +112,33 @@ public class SelectPersonGUI {
 				e1.printStackTrace();
 			}
 		});
-
 		btModifyP.setOnAction(e->{
 			MainMenuGUI.window.setScene(new ModifyProfileGUI().modifyProfileScene(selectedPerson));
-		});
-			
+		});			
 		btDisplayR.setOnAction(e -> {
 			displayRelationsAction(selectedPerson);
 		});
-
 		btModifyR.setOnAction(e -> {
 			MainMenuGUI.window.setScene(new ModifyRelationGUI().addRelationScene(selectedPerson));
 			if(selectedPerson instanceof YoungChild)
 				youngChildModifyRwarning();
 		});
-
 		btDelete.setOnAction(e -> {
 			try {
 			deletePersonAction(selectedPerson);
-			}catch (NoParentsException e1)
-			{
+			}catch (NoParentsException e1){
 				e1.noParentsWarning();
 			}
 		});
-
 		btBack.setOnAction(e -> {
 			MainMenuGUI.window.setScene(selectPersonScene());
 		});
+		
 		Scene scene = new Scene(pane, 700, 500);
 		scene.getStylesheets().add("GUI.css");
 		return scene;
 	}
+	
 /**
  * This method is for display the profile of the person
  * @param selectedPerson the person has been selected
@@ -169,7 +163,7 @@ public class SelectPersonGUI {
 		GPane.add(new Label("Gender: "), 1, 6);
 		GPane.add(new Label("State: "), 1, 7);
 		GPane.add(btBack, 7, 10);
-		// btBack action, put it in the right position after
+
 		btBack.setOnAction(e -> {
 			MainMenuGUI.window.setScene(viewPersonScene(selectedPerson));
 		});
@@ -201,8 +195,8 @@ public class SelectPersonGUI {
 		scene.getStylesheets().add("GUI2.css");
 		MainMenuGUI.window.setScene(scene);
 		MainMenuGUI.window.show();
-
 	}
+	
 /**
  * This method is for display the relations of the person
  * @param person the selected person
@@ -249,6 +243,7 @@ public class SelectPersonGUI {
 		MainMenuGUI.window.setScene(scene);
 		return GPane;
 	}
+	
 /**
  * This method is for delete the person
  * @param selectedPerson the selected person
@@ -259,11 +254,6 @@ public class SelectPersonGUI {
 		if (showDeletePersonMessage()) {
 			if (selectedPerson.getRelationship().containsKey("child") ) {
 					throw new NoParentsException(selectedPerson);
-//				if (showDeleteChildMessage()) {
-//					MainMenuGUI.dc.deletePerson(selectedPerson);
-//					MainMenuGUI.window.setScene(selectPersonScene());
-//					showMessageForDeletePerson();
-//				}
 			} else {
 				MainMenuGUI.dc.deletePerson(selectedPerson);
 				MainMenuGUI.window.setScene(selectPersonScene());
@@ -271,6 +261,7 @@ public class SelectPersonGUI {
 			}
 		}
 	}
+	
 /**
  * This method shows the message when delete the person will also delete the relation
  * @return boolean, true if click OK, false if cancel or close the window
@@ -291,6 +282,7 @@ public class SelectPersonGUI {
 		}
 		return false;
 	}
+	
 /**
  * This method is for show the message when delete the person has a child
  * @return boolean, true if click OK, false if cancel or close the window
@@ -332,5 +324,4 @@ public class SelectPersonGUI {
 
 		alert.show();
 	}
-
 }

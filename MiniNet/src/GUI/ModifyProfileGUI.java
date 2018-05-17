@@ -18,6 +18,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import people.*;
+
 /**
  * This class is about modify profile of the person
  * @author CIFANG ZHANG
@@ -26,6 +27,7 @@ import people.*;
 public class ModifyProfileGUI {
 	
 	AddPersonGUI addPersonGUI = new AddPersonGUI();
+	
 /**
  * This method is set up the scene of modify person's profile	
  * @param selectedPerson the person has been selected
@@ -34,7 +36,6 @@ public class ModifyProfileGUI {
 	public Scene modifyProfileScene(Person selectedPerson) {
 		
 		GridPane pane = setUpModifyPane();
-
 		Label personName = new Label();
 		pane.add(personName, 1, 0);
 		TextField personAge = new TextField();
@@ -101,7 +102,6 @@ public class ModifyProfileGUI {
 		pane.add(new Label("Photo"), 0, 5);
 
 		return pane;
-
 	}
 
 	/**
@@ -114,7 +114,6 @@ public class ModifyProfileGUI {
 		photoFile = addPersonGUI.uploadPhoto();
 		if (photoFile != null)
 			personPhoto.setText(photoFile.getAbsolutePath());
-
 	}
 	
 	/**
@@ -144,7 +143,6 @@ public class ModifyProfileGUI {
 		} catch (NoSuchAgeException exception) {
 			exception.noSuchAgeWarning();
 		}
-
 	}
 
 	/**
@@ -217,7 +215,6 @@ public class ModifyProfileGUI {
 				}
 			}
 		}
-
 	}
 
 	/**

@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 /**
  * This class is about the exception when input the invalid number of the age
  * @author YILEI XU
- *
  */
 public class NotNumberFormatException extends Exception{
 

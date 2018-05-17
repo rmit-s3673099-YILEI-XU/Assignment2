@@ -15,6 +15,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 /**
  * This class is the main menu of the GUI, connect with driverClass and other GUI classes
  * @author CIFANG ZHANG
@@ -30,9 +31,9 @@ public  class MainMenuGUI {
  * @param window the primary stage
  * @param dc the driverClass object
  */
-    public MainMenuGUI(Stage window, DriverClass dc){
+    public MainMenuGUI(Stage window){
         this.window = window;
-        this.dc = dc;
+        this.dc = new DriverClass();
     }
 
 /**
@@ -69,8 +70,7 @@ public  class MainMenuGUI {
      	pane.setLeft(left);
      	pane.setRight(right);
      	pane.setPadding(new Insets(20, 20, 20, 20));
-     	return pane;
-    
+     	return pane;   
     }
     
 /**

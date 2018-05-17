@@ -9,7 +9,6 @@ import people.*;
  */
 public class NoAvailableException extends Exception{
 
-
 	private Person person;
 	/**
 	 * This is the constructor of NoAvailableException

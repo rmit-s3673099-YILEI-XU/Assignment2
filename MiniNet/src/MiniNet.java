@@ -14,7 +14,6 @@ import javafx.stage.StageStyle;
  */
 public class MiniNet extends Application{
 	
-	
 	@Override
 	/**
 	 * This is the GUI override start method, which provide the primary stage
@@ -22,22 +21,19 @@ public class MiniNet extends Application{
 	 */
     public void start(Stage primaryStage) throws IOException{
 		
-		  DriverClass dc = new DriverClass();
-
 		  primaryStage.setTitle("MiniNet");
-		  primaryStage.setScene(new MainMenuGUI(primaryStage, dc).startScene());
+		  primaryStage.setScene(new MainMenuGUI(primaryStage).startScene());
 		  primaryStage.setResizable(false);
 		  primaryStage.show();	        
 	        try {
-	            dc.initialData();
+	            MainMenuGUI.dc.initialData();
 	        } catch (IOException e) {
-	            // TODO Auto-generated catch block
 	            e.printStackTrace();
 	        }  catch(NoParentsException e) {
 	        	e.noParentsWarning();
-	        }
-	        
+	        }	        
     } 
+	
 	/**
 	 * This is the main method
 	 * @param args

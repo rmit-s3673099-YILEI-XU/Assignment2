@@ -8,6 +8,7 @@ import relations.ChildFriend;
 import relations.Classmate;
 import relations.Parents;
 import relations.Sibling;
+
 /**
  * This class is the subclass of Person, it creates Young Child type of person
  * @author YILEI XU
@@ -16,6 +17,7 @@ import relations.Sibling;
 public class YoungChild extends Person{
 	
 	Person[] parent;
+	
 	/**
 	 * This is the constructor for creating the YoungChild object
 	 * @param name YoungChild name
@@ -35,6 +37,7 @@ public class YoungChild extends Person{
 		parent[1]= new Adult();
 		
 	}
+	
 	/**
 	 * This method is for add the relationship for Young Child by create relation object
 	 * @param relationType the type of the relation
@@ -42,8 +45,7 @@ public class YoungChild extends Person{
 	 */
 	@Override
 	public void addRelationship(String relationType, Person relation) throws Exception {
-		
-		// TODO Auto-generated method stub
+
 		switch(relationType) {
 		case "parent":
 
@@ -67,22 +69,8 @@ public class YoungChild extends Person{
 		case "colleagues":
 			throw new NotToBeColleaguesException(this);
 		}
-//		if(relationType.equals("parent"))
-//		{
-//			
-//			if(parent[0].getName()==null) {
-//				parent[0]= relation;
-//			}
-//			else {
-//				parent[1]= relation;
-//			}
-//		
-//			if(parent[0].getName()!=null&&parent[1].getName()!=null) {
-//				addParent(parent[0],parent[1]);
-//		
-//			}
-//		}
 	}
+	
 	/**
 	 * This method add parents for the young child
 	 * @param parent1 the first parent
@@ -92,9 +80,9 @@ public class YoungChild extends Person{
 	private void addParent(Person parent1, Person parent2) throws Exception  {
 	
 		this.setRelationManipulator(new Parents(parent1,parent2,this));
-		this.getRelationManipulator().add();
-		
+		this.getRelationManipulator().add();		
 	}
+	
 	/**
 	 * This method is for remove the relationship for Young Child
 	 * @param relationType the type of the relation
@@ -102,8 +90,7 @@ public class YoungChild extends Person{
 	 */
 	@Override
 	public void removeRelationship(String relationType, Person relatedPerson) {
-		
-		// TODO Auto-generated method stub
+
 		switch(relationType){
 		
 		case"parent":
@@ -119,8 +106,6 @@ public class YoungChild extends Person{
 			this.relationManipulator.remove();
 			}
 			break;
-		}
-		
+		}		
 	}
-
 }

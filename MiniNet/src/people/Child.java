@@ -5,6 +5,7 @@ import java.util.TreeMap;
 
 import Exceptions.*;
 import relations.*;
+
 /**
  * This class is the subclass of Person, it creates Child type of person
  * @author YILEI XU
@@ -28,9 +29,9 @@ public class Child extends Person{
 		this.getRelationship().put("parent",new ArrayList<Person>());
 		parent= new Adult[2];
 		parent[0]= new Adult();
-		parent[1]= new Adult();
-			
+		parent[1]= new Adult();			
 	}
+	
 	/**
 	 * This method is for add the relationship for Child by create relation object
 	 * @param relationType the type of the relation
@@ -38,8 +39,7 @@ public class Child extends Person{
 	 */
 	@Override
 	public void addRelationship(String relationType, Person relation) throws Exception {
-	
-		// TODO Auto-generated method stub
+
 		switch(relationType){
 		case "friends":
 			this.setRelationManipulator(new ChildFriend(this, relation));
@@ -70,6 +70,7 @@ public class Child extends Person{
 		}
 		
 	}
+	
 /**
  * This method add parents for the child
  * @param parent1 the first parent
@@ -82,6 +83,7 @@ public class Child extends Person{
 		this.getRelationManipulator().add();
 		 
 	}
+	
 	/**
 	 * This method is for remove the relationship for Child 
 	 * @param relationType the type of the relation
@@ -89,7 +91,7 @@ public class Child extends Person{
 	 */
 	@Override
 	public void removeRelationship(String relationType, Person relatedPerson) {
-		// TODO Auto-generated method stub	
+
 		switch(relationType){
 		case "friends":
 			this.setRelationManipulator(new ChildFriend(this, relatedPerson));
@@ -113,9 +115,7 @@ public class Child extends Person{
 			this.setRelationManipulator(new Sibling(this, relatedPerson));
 			this.relationManipulator.remove();
 			}
-			break;
-		
+			break;		
 		}
 	}
-
 }

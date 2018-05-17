@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 import relations.RelationManipulator;
+
 /**
  * This is the abstract class which contains a general person's information and function
  * @author YILEI XU
@@ -51,8 +52,7 @@ public abstract class Person {
 	 * @param relationManipulator the manipulator relation interface
 	 */
 	public void setRelationManipulator(RelationManipulator relationManipulator) {
-		this.relationManipulator = relationManipulator;
-	
+		this.relationManipulator = relationManipulator;	
 	}
 
 	/**
@@ -97,7 +97,7 @@ public abstract class Person {
 
 /**
  * This method get the profile photo of the person
- * @return the url of the photo
+ * @return the path of the photo
  */
 	public String getPhoto() {
 		return photo;
@@ -105,7 +105,7 @@ public abstract class Person {
 
 /**
  * This method set the photo for the person
- * @param photo the url of the photo
+ * @param photo the path of the photo
  */
 	public void setPhoto(String photo) {
 		this.photo = photo;
@@ -197,9 +197,9 @@ public abstract class Person {
 			System.out.println();
 		}
 		
-		System.out.println();
-		
+		System.out.println();		
 	}
+	
 	/**
 	 * This is the abstract method which is doing the add relationship function
 	 * @param relationType the relationship type
@@ -207,6 +207,7 @@ public abstract class Person {
 	 * @throws Exception if there is any exception
 	 */
 	abstract public void addRelationship(String relationType, Person relatedPerson) throws Exception;
+	
 	/**
 	 * This method is the abstract method which is doing remove relationship function
 	 * @param relationType the relationship type

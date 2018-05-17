@@ -4,7 +4,6 @@
 	-fx-background-size: cover;
 }
 
-
 .label{
 
  -fx-text-fill: #FFFFFF;
@@ -18,11 +17,5 @@
  -fx-text-fill: #ffffff;
  -fx-font-size: 15px;
  -fx-stroke: black;
-
-}
-
-
-.button{
-
 
 }

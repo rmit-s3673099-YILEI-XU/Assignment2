@@ -23,6 +23,10 @@ public class NoParentsException extends Exception{
 		this.noParentsChildList = noParentsChildList;
 	}
 	
+	/**
+	 * This is the constructor
+	 * @param parent the parent
+	 */
 	public NoParentsException(Person parent) {
 		this.parent = parent;
 	}

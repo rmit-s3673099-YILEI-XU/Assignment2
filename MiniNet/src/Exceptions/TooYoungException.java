@@ -19,6 +19,7 @@ public class TooYoungException extends Exception{
 	public TooYoungException(Person person) {
 		this.person = person;
 	}
+	
 	/**
 	 * This method is the action when the person is too young to have that type of relation
 	 */

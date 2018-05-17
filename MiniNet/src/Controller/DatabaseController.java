@@ -59,7 +59,6 @@ public class DatabaseController {
 	public void initialDataInDB(TreeMap<String, Person> member) {
 
 		try {
-			// query from the db
 			for (String name : member.keySet()) {
 
 				connection.prepareStatement("insert into people " + "values ('" + member.get(name).getName() + "','"
@@ -69,7 +68,6 @@ public class DatabaseController {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -77,10 +75,8 @@ public class DatabaseController {
 	/**
 	 * This method modify the data in the database
 	 * 
-	 * @param person
-	 *            the person be modified
-	 * @param operation
-	 *            different modify types
+	 * @param person  the person be modified       
+	 * @param operation  different modify types     
 	 */
 	public void modifyDatabase(Person person, String operation) {
 		try {
@@ -100,7 +96,6 @@ public class DatabaseController {
 				break;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		displayDataInDB();
@@ -108,7 +103,7 @@ public class DatabaseController {
 	}
 
 	/**
-	 * This method is going to be deleted :)
+//	 * This method is printing the person profile in the Console
 	 */
 	public void displayDataInDB() {
 		ResultSet rs = null;
@@ -123,9 +118,7 @@ public class DatabaseController {
 				System.out.println("State: " + rs.getString(6));
 				System.out.println();
 			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} catch (SQLException e) {		
 			e.printStackTrace();
 		}
 	}
@@ -148,7 +141,6 @@ public class DatabaseController {
 
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

@@ -11,6 +11,7 @@ import people.*;
 public class NotToBeFriendsException extends Exception{
 
 	Person currentPerson,friend;
+	
 /**
  * This is the constructor
  * @param currentPerson the current person
@@ -20,6 +21,7 @@ public NotToBeFriendsException(Person currentPerson,Person friend) {
 	this.currentPerson = currentPerson;
 	this.friend= friend;	
 	}
+
 /**
  * This method is the action of user adding friend relationship to different type of person
  */

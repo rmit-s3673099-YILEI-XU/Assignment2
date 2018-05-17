@@ -3,9 +3,18 @@ package Controller;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * This class is for initialize the data in database
+ * @author YILEI XU
+ *
+ */
 public class InitialDatabaseData {
 
-	public void initalDBData(Connection connection) {
+	/**
+	 * This method initialize the data in database
+	 * @param connection
+	 */
+	public void initialDBData(Connection connection) {
 		
 		try {
 			 // query from the db
@@ -27,7 +36,6 @@ public class InitialDatabaseData {
 			.execute();
 		
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

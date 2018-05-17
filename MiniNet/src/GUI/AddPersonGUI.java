@@ -143,8 +143,7 @@ public class AddPersonGUI {
 			exception.noSuchAgeWarning();
 		} catch (AlreadyExistPersonException exception) {
 			exception.alreadyExistPersonWarning();
-		}
-		
+		}		
 	}
 	
 /**

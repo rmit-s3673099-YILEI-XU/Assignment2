@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Exceptions.NotToBeColleaguesException;
 import people.*;
+
 /**
  * This is the colleague relation class for modify colleague relationship
  * @author YILEI XU 
@@ -11,9 +12,9 @@ import people.*;
  */
 public class Colleague implements RelationManipulator{
 
-	
 	private Person selectPerson;
 	private Person colleague;
+	
 	/**
 	 * This is the constructor for create Colleague object
 	 * @param selectPerson the person be selected
@@ -28,12 +29,12 @@ public class Colleague implements RelationManipulator{
 			selectPerson.getRelationship().put("colleagues", new ArrayList<Person>());
 		}				
 	}
+	
 	/**
 	 * This method is the override method which implements add colleague relation 
 	 */
 	@Override
 	public void add() throws NotToBeColleaguesException {
-		// TODO Auto-generated method stub
 		
 		if(colleague instanceof Adult) {
 			selectPerson.getRelationship().get("colleagues").add(colleague);
@@ -47,12 +48,12 @@ public class Colleague implements RelationManipulator{
 			throw new NotToBeColleaguesException(colleague);
 		}
 	}
+	
 	/**
 	 * This method is the override method which implements remove colleague relation 
 	 */
 	@Override
 	public void remove() {
-		// TODO Auto-generated method stub
 		colleague.getRelationship().get("colleagues").remove(selectPerson);
 		if(colleague.getRelationship().get("colleagues").isEmpty())
 			colleague.getRelationship().remove("colleagues");

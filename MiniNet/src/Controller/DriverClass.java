@@ -25,6 +25,7 @@ public class DriverClass {
 	private ArrayList<String[]> personData;
 	private ArrayList<String[]> relationData;
 	private DatabaseController databaseController = new DatabaseController();
+	
 	/**
 	 * This method insert the initial data of members 
 	 * @throws IOException if file cannot be found
@@ -47,18 +48,13 @@ public class DriverClass {
 				}
 				personData.add(pTextData);
 			}
-			peopleFileReader.close();
-			
+			peopleFileReader.close();		
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-
 				if(databaseController.getConnection()!=null) {
 				InitialDatabaseData initialDBData = new InitialDatabaseData();
-				initialDBData.initalDBData(databaseController.getConnection());
+				initialDBData.initialDBData(databaseController.getConnection());
 				personData=databaseController.getDataInDB();
 				}
-		
-			
 		}
 		
 		if (addPersonData(personData)!=null) {
@@ -66,7 +62,6 @@ public class DriverClass {
 		}else {
 			cannotFoundFileMessage();
 		}
-
 	}
 	
 	/**
@@ -144,12 +139,10 @@ public class DriverClass {
 						try {
 							member.get(name).addRelationship(st[2].trim(), member.get(st[1].trim()));
 						} catch (NotToBeFriendsException e) {
-							// TODO Auto-generated catch block
 							e.notToBeFriendsException();
 						} catch (TooYoungException e) {
 							e.tooYoungException();
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						break;
@@ -186,7 +179,6 @@ public class DriverClass {
 					try {
 						checkAlreadyExistRelation(member.get(childRelation[0].trim()),member.get(childRelation[1].trim()));
 					} catch (AlreadyHaveRelationException e1) {
-						// TODO Auto-generated catch block
 						e1.alreadyHaveRelationWarning();
 					}
 					if (childRelation[2].trim().equals("parent")) {
@@ -195,7 +187,6 @@ public class DriverClass {
 								member.get(name).addRelationship(childRelation[2].trim(),
 										member.get(childRelation[1].trim()));
 							} catch (Exception e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 							break;
@@ -205,7 +196,6 @@ public class DriverClass {
 							member.get(name).addRelationship(childRelation[2].trim(),
 									member.get(childRelation[1].trim()));
 						} catch (NotToBeFriendsException e) {
-							// TODO Auto-generated catch block
 							e.notToBeFriendsException();
 						} catch (TooYoungException e) {
 							e.tooYoungException();
@@ -216,7 +206,6 @@ public class DriverClass {
 						}catch(NotToBeClassmatesException e) {
 							e.notToBeClassmatesWarning();
 						}catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						break;
@@ -243,7 +232,6 @@ public class DriverClass {
 			if (name.equals(memberName))
 				return null;
 		}
-
 		if (age < 3) {
 			currentPerson = new YoungChild(name, photo, status, gender, age, state);
 			return currentPerson;
@@ -261,40 +249,15 @@ public class DriverClass {
 	 * @param currentPerson the person who is being deleted
 	 */
 	public void deletePerson(Person currentPerson) {
-//		ArrayList<Person> childList = new ArrayList<Person>();
 
 		for (String relationType : currentPerson.getRelationship().keySet()) {
-
 			for (Person relatedPerson : currentPerson.getRelationship().get(relationType)) {
-
 				currentPerson.removeRelationship(relationType, relatedPerson);
-//				if (relationType == "child") {
-//					childList.add(relatedPerson);
-//					// relatedPerson.removeRelationship(relationType, relatedPerson);
-//					// member.remove(relatedPerson.getName());
-//				}
 			}
 
 		}
 		member.remove(currentPerson.getName());
 		databaseController.modifyDatabase(currentPerson, "deletePerson");
-
-//		if (childList.size() > 0) {
-//			for (Person child : childList) {
-//				for (String relationType : child.getRelationship().keySet()) {
-//
-//					for (Person relatedPerson : child.getRelationship().get(relationType)) {
-//
-//						child.removeRelationship(relationType, relatedPerson);
-//
-//					}
-//				}
-//				member.remove(child.getName());
-//				databaseController.modifyDatabase(child, "deletePerson");
-
-//			}
-//		}
-
 	}
 	
 	/**
@@ -311,7 +274,6 @@ public class DriverClass {
 	 * @return the person object
 	 */
 	public Person getMemberObj(String key) {
-
 		return member.get(key);
 	}
 	

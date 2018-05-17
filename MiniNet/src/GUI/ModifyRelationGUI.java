@@ -29,12 +29,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import people.*;
+
 /**
  * This class is the modify relation user interface
  * @author CIFANG ZHANG
  *
  */
 public class ModifyRelationGUI {
+	
 	/**
 	 * This method is set up the add relation scene
 	 * @param person the person has been selected
@@ -195,7 +197,6 @@ public class ModifyRelationGUI {
 					}
 					showMessageForAddRelation(true);
 				} catch (NotToBeFriendsException e1) {
-					// TODO Auto-generated catch block
 					e1.notToBeFriendsException();
 				} catch (TooYoungException e1) {
 					e1.tooYoungException();
@@ -211,7 +212,6 @@ public class ModifyRelationGUI {
 
 				}
 			} catch (AlreadyHaveRelationException e2) {
-				// TODO Auto-generated catch block
 				e2.alreadyHaveRelationWarning();
 			}
 		}
@@ -250,16 +250,13 @@ public class ModifyRelationGUI {
 				try {
 					throw new NotToBeCoupledException(tempParent1);
 				} catch (NotToBeCoupledException e1) {
-					// TODO Auto-generated catch block
 					e1.notToBeCoupleWarning();
 				}
 			}
-
 		});
 
 		btBack.setOnAction(e -> {
 			MainMenuGUI.window.setScene(MainMenuGUI.startScene());
-
 		});
 		Scene scene = new Scene(pane, 700, 500);
 		scene.getStylesheets().add("GUI2.css");
@@ -347,7 +344,6 @@ public class ModifyRelationGUI {
 		MainMenuGUI.dc.getMember().put(child.getName(), child);
 		showMessageForAddParents(true);
 		MainMenuGUI.window.setScene(MainMenuGUI.startScene());
-
 	}
 	
 	/**
@@ -369,7 +365,6 @@ public class ModifyRelationGUI {
 				relatedPerson.removeRelationship(relation, selectedPerson);
 				return true;
 			}
-
 		} else if (relation.equals("parent") || relation.equals("sibling")) {
 			showUnsuccessWarning(relation);
 			return false;
@@ -420,7 +415,6 @@ public class ModifyRelationGUI {
 			alert.setHeaderText("WARNING!");
 			alert.setContentText("Please select RELATION/PERSON!");
 		}
-
 		alert.showAndWait();
 	}
 	
