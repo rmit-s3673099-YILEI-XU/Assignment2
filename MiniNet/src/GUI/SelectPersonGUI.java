@@ -68,7 +68,7 @@ public class SelectPersonGUI {
 
 		submit.setOnAction(e -> {
 			String personName = memberList.getSelectionModel().getSelectedItem();
-			System.out.print(personName);
+			System.out.println(personName +" is selected.");
 			Person selectedPerson = MainMenuGUI.dc.getMemberObj(personName);
 			MainMenuGUI.window.setScene(viewPersonScene(selectedPerson));
 		});
@@ -79,6 +79,7 @@ public class SelectPersonGUI {
 		
 		Scene scene = new Scene(pane, 700, 500);
 		scene.getStylesheets().add("GUI2.css");
+		System.out.println("Select person");
 		return scene;
 	}
 	
@@ -193,6 +194,7 @@ public class SelectPersonGUI {
 		pane.setAlignment(btBack, Pos.CENTER);
 		Scene scene = new Scene(pane, 700, 500);
 		scene.getStylesheets().add("GUI2.css");
+		System.out.println("Display profile for "+selectedPerson.getName());
 		MainMenuGUI.window.setScene(scene);
 		MainMenuGUI.window.show();
 	}
@@ -240,6 +242,7 @@ public class SelectPersonGUI {
 
 		Scene scene = new Scene(pane, 700, 500);
 		scene.getStylesheets().add("GUI2.css");
+		System.out.println("Display relations for "+person.getName());
 		MainMenuGUI.window.setScene(scene);
 		return GPane;
 	}
@@ -255,9 +258,10 @@ public class SelectPersonGUI {
 			if (selectedPerson.getRelationship().containsKey("child") ) {
 					throw new NoParentsException(selectedPerson);
 			} else {
+				System.out.println("Delete "+selectedPerson.getName());
 				MainMenuGUI.dc.deletePerson(selectedPerson);
 				MainMenuGUI.window.setScene(selectPersonScene());
-				showMessageForDeletePerson();
+				showMessageForDeletePerson();		
 			}
 		}
 	}

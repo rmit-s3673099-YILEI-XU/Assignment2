@@ -59,8 +59,7 @@ public class ModifyProfileGUI {
 		ComboBox<String> comboBox = new ComboBox<String>();
 		String[] allState = { "ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC", "WA" };
 		for (String s : allState) {
-			comboBox.getItems().add(s);
-		}
+			comboBox.getItems().add(s);}
 		pane.add(comboBox, 1, 4);
 		Label personPhoto = new Label();
 		personPhoto.setMaxWidth(200);
@@ -83,6 +82,7 @@ public class ModifyProfileGUI {
 		});	
 		Scene scene = new Scene(pane, 700, 500);
 		scene.getStylesheets().add("GUI2.css");
+		System.out.println("Modify profile");
 		return scene;		
 	}
 	
@@ -135,7 +135,7 @@ public class ModifyProfileGUI {
 		String state = (String) comboBox.getValue();
 
 		try {
-			ModifyProfileAction(selectedPerson, photo, status, gender, ageText, state);
+			modifyProfileAction(selectedPerson, photo, status, gender, ageText, state);
 		} catch (NotFillAllNecessInfo exception) {
 			exception.lackNecessInforWarning();
 		} catch (NotNumberFormatException exception) {
@@ -183,7 +183,7 @@ public class ModifyProfileGUI {
 	 * @throws NotNumberFormatException is the number is invalid
 	 * @throws NoSuchAgeException if the age is not human age
 	 */
-	private void ModifyProfileAction(Person currentPerson, String photo, String status, String gender, String ageText,
+	private void modifyProfileAction(Person currentPerson, String photo, String status, String gender, String ageText,
 			String state) throws NotFillAllNecessInfo, NotNumberFormatException, NoSuchAgeException {
 		if (ageText.trim().equals("")) {
 			throw new NotFillAllNecessInfo();
@@ -236,6 +236,7 @@ public class ModifyProfileGUI {
 		currentPerson.setPhoto(addPersonGUI.saveImage(currentPerson.getName(), photo));
 		MainMenuGUI.dc.getDatabaseController().modifyDatabase(currentPerson, "modifyProfile");
 		showSuccessMessage();
+		System.out.println("Modify profile success");
 		MainMenuGUI.window.setScene(new SelectPersonGUI().viewPersonScene(currentPerson));
 	}
 		

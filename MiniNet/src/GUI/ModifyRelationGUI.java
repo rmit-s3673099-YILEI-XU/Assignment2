@@ -86,6 +86,7 @@ public class ModifyRelationGUI {
 
 		Scene scene = new Scene(pane, 700, 500);
 		scene.getStylesheets().add("GUI2.css");
+		System.out.println("Modify relation");
 		return scene;
 	}
 	
@@ -151,6 +152,7 @@ public class ModifyRelationGUI {
 		if (showRemoveRelationMessage(name, relation)) {
 			if (removeRelationAction(person, name, relation)) {
 				removeRelationSuccessfulMessage();
+				System.out.println("Remove relation");
 				relationList.getItems().clear();
 				for (String relation1 : person.getRelationship().keySet()) {
 					for (Person relatedPerson : person.getRelationship().get(relation1)) {
@@ -195,6 +197,7 @@ public class ModifyRelationGUI {
 					if(relationList.getItems().size()>0) {
 						relationList.getSelectionModel().select(0);
 					}
+					System.out.println("Add relation");
 					showMessageForAddRelation(true);
 				} catch (NotToBeFriendsException e1) {
 					e1.notToBeFriendsException();
@@ -260,6 +263,7 @@ public class ModifyRelationGUI {
 		});
 		Scene scene = new Scene(pane, 700, 500);
 		scene.getStylesheets().add("GUI2.css");
+		System.out.println("Add parent1");
 		return scene;
 	}
 	
@@ -314,6 +318,7 @@ public class ModifyRelationGUI {
 		});
 		Scene scene = new Scene(pane, 700, 500);
 		scene.getStylesheets().add("GUI2.css");
+		System.out.println("Add parent2");
 		return scene;
 	}
 	
@@ -342,7 +347,8 @@ public class ModifyRelationGUI {
 		}
 
 		MainMenuGUI.dc.getMember().put(child.getName(), child);
-		showMessageForAddParents(true);
+		System.out.println(child.getName()+" has been added");
+		showMessageForAddChild(true);
 		MainMenuGUI.window.setScene(MainMenuGUI.startScene());
 	}
 	
@@ -386,12 +392,12 @@ public class ModifyRelationGUI {
 	 * This method shows the message of successful for add parents
 	 * @param isSuccess if the process is successful
 	 */
-	private void showMessageForAddParents(boolean isSuccess) {
+	private void showMessageForAddChild(boolean isSuccess) {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 		if (isSuccess) {
 			alert.setTitle("MESSAGES");
 			alert.setHeaderText("SUCCESS!");
-			alert.setContentText("Congratulations! Add parents successfully!");
+			alert.setContentText("Congratulations! Add person successfully!");
 		} else {
 			alert.setTitle("MESSAGES");
 			alert.setHeaderText("FAIL!");

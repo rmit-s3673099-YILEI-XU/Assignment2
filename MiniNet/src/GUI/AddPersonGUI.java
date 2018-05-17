@@ -58,8 +58,7 @@ public class AddPersonGUI {
 		comboBox.setValue("Select State");
 		String[] allState = { "ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC", "WA" };
 		for (String s : allState) {
-			comboBox.getItems().add(s);
-		}
+			comboBox.getItems().add(s);}
 		pane.add(comboBox, 1, 4);
 		pane.add(new Label("Photo"), 0, 5);
 		Label personPhoto = new Label();
@@ -87,6 +86,7 @@ public class AddPersonGUI {
 		});
 		Scene scene = new Scene(pane, 700, 500);
 		scene.getStylesheets().add("GUI2.css");
+		System.out.println("Add Person");
 		return scene;
 	}
 	
@@ -230,6 +230,7 @@ public class AddPersonGUI {
 					MainMenuGUI.dc.getDatabaseController().modifyDatabase(currentPerson, "addPerson");
 					showMessageForAddPerson(true);
 					MainMenuGUI.window.setScene(MainMenuGUI.startScene());
+					System.out.println(currentPerson.getName() + " has been added.");
 
 				} else {
 					MainMenuGUI.window.setScene(modifyRelationGUI.addParentsScene1(currentPerson));

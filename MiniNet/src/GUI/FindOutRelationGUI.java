@@ -72,6 +72,7 @@ public class FindOutRelationGUI {
 		});
 		Scene scene = new Scene(pane, 700, 500);
 		scene.getStylesheets().add("GUI2.css");
+		System.out.println("Find out relation");
 		return scene;
 	}
 	
