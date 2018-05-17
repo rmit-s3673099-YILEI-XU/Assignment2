@@ -16,7 +16,7 @@ public class AdultTest {
 		adult = new Adult("Emma", "", "", "F", 20, "VIC");
 	}
 
-
+	// test add friend relationship to an adult: the relation type has been added
 	@Test
 	public void addRelationshipFriendTest1_1() throws Exception {
 
@@ -24,7 +24,8 @@ public class AdultTest {
 		adult.addRelationship("friends", sherry);
 		assertTrue(adult.getRelationship().containsKey("friends"));
 	}
-	
+
+	// test add friend relationship to an adult: the related person has been added into this person's relationship
 	@Test
 	public void addRelationshipFriendTest1_2() throws Exception {
 
@@ -32,7 +33,8 @@ public class AdultTest {
 		adult.addRelationship("friends", sherry);
 		assertEquals(adult.getRelationship().get("friends").get(0), sherry);
 	}
-
+	
+	// test add friend relationship to an adult: the related person's relation type has been added
 	@Test
 	public void addRelationshipFriendTest1_3() throws Exception {
 
@@ -41,6 +43,7 @@ public class AdultTest {
 		assertTrue(sherry.getRelationship().containsKey("friends"));
 	}
 	
+	// test add friend relationship to an adult: this person has been added into related person's relationship
 	@Test
 	public void addRelationshipFriendTest1_4() throws Exception {
 
@@ -49,6 +52,7 @@ public class AdultTest {
 		assertEquals(sherry.getRelationship().get("friends").get(0), adult);
 	}
 	
+	// test add a child friend to an adult
 	@Test(expected = NotToBeFriendsException.class)
 	public void addRelationshipFriendTest2() throws Exception {
 
@@ -57,6 +61,7 @@ public class AdultTest {
 
 	}
 
+	// test add a young child friend to an adult
 	@Test(expected = TooYoungException.class)
 	public void addRelationshipFriendTest3() throws Exception {
 
@@ -65,6 +70,7 @@ public class AdultTest {
 
 	}
 
+	// test add colleagues relationship: the relation type has been added
 	@Test
 	public void addRelationshipColleagueTest1_1() throws Exception {
 
@@ -74,6 +80,7 @@ public class AdultTest {
 
 	}
 	
+	//  test add colleagues relationship: the related person has been added to this person's relationship
 	public void addRelationshipColleagueTest1_2() throws Exception {
 
 		Person sherry = new Adult("Sherry", "", "", "F", 20, "VIC");
@@ -82,6 +89,7 @@ public class AdultTest {
 
 	}
 	
+	// test add colleagues relationship: the related person's relationship type has been added
 	public void addRelationshipColleagueTest1_3() throws Exception {
 
 		Person sherry = new Adult("Sherry", "", "", "F", 20, "VIC");
@@ -90,6 +98,7 @@ public class AdultTest {
 
 	}
 	
+	// test add colleagues relationship: this person has been added into related person's relationship
 	public void addRelationshipColleagueTest1_4() throws Exception {
 
 		Person sherry = new Adult("Sherry", "", "", "F", 20, "VIC");
@@ -97,6 +106,7 @@ public class AdultTest {
 		assertEquals(sherry.getRelationship().get("colleagues").get(0), adult);
 	}
 
+	// test add a child as a colleague
 	@Test(expected = NotToBeColleaguesException.class)
 	public void addRelationshipColleagueTest2() throws Exception {
 
@@ -105,6 +115,7 @@ public class AdultTest {
 
 	}
 
+	// add a young child as a colleague
 	@Test(expected = NotToBeColleaguesException.class)
 	public void addRelationshipColleagueTest3() throws Exception {
 
@@ -113,6 +124,7 @@ public class AdultTest {
 
 	}
 
+	// test add adult classmates relationship: the relation type has been added
 	@Test
 	public void addRelationshipClassmateTest1_1() throws Exception {
 
@@ -122,6 +134,7 @@ public class AdultTest {
 
 	}
 	
+	// test add adult classmates relationship: the related person has been added to this person's relationship
 	@Test
 	public void addRelationshipClassmateTest1_2() throws Exception {
 
@@ -131,6 +144,7 @@ public class AdultTest {
 		
 	}
 	
+	// test add adult classmates relationship: the related person's relationship type has been added
 	@Test
 	public void addRelationshipClassmateTest1_3() throws Exception {
 
@@ -139,6 +153,7 @@ public class AdultTest {
 		assertTrue(sherry.getRelationship().containsKey("classmates"));
 	}
 	
+	// test add adult classmates relationship: this person has been added into related person's relationship
 	@Test
 	public void addRelationshipClassmateTest1_4() throws Exception {
 
@@ -147,6 +162,7 @@ public class AdultTest {
 		assertEquals(sherry.getRelationship().get("classmates").get(0), adult);
 	}
 
+	// test add child classmates relation: the relation type has been added
 	@Test
 	public void addRelationshipClassmateTest2_1() throws Exception {
 
@@ -155,6 +171,7 @@ public class AdultTest {
 		assertTrue(adult.getRelationship().containsKey("classmates"));
 	}
 	
+	// test add child classmates relation: the related person has been added
 	@Test
 	public void addRelationshipClassmateTest2_2() throws Exception {
 
@@ -163,6 +180,7 @@ public class AdultTest {
 		assertEquals(adult.getRelationship().get("classmates").get(0), sherry);
 	}
 	
+	// test add child classmates relation: the related person's relation type has been added
 	@Test
 	public void addRelationshipClassmateTest2_3() throws Exception {
 
@@ -171,6 +189,7 @@ public class AdultTest {
 		assertTrue(sherry.getRelationship().containsKey("classmates"));
 	}
 	
+	// test add child classmates relation: the related person's has been added to this person's relationship
 	@Test
 	public void addRelationshipClassmateTest2_4() throws Exception {
 
@@ -179,6 +198,7 @@ public class AdultTest {
 		assertEquals(sherry.getRelationship().get("classmates").get(0), adult);
 	}
 
+	// test add a young child as a classmate
 	@Test(expected = NotToBeClassmatesException.class)
 	public void addRelationshipClassmateTest3() throws Exception {
 
@@ -187,6 +207,7 @@ public class AdultTest {
 
 	}
 
+	// test add couple: relation type added
 	@Test
 	public void addRelationshipCoupleTest1_1() throws Exception {
 
@@ -196,6 +217,7 @@ public class AdultTest {
 
 	}
 
+	// test add couple: related person added
 	@Test
 	public void addRelationshipCoupleTest1_2() throws Exception {
 
@@ -204,6 +226,7 @@ public class AdultTest {
 		assertEquals(adult.getRelationship().get("couple").get(0), sherry);
 	}
 	
+	// test add couple: related person's relation type added
 	@Test
 	public void addRelationshipCoupleTest1_3() throws Exception {
 
@@ -213,6 +236,7 @@ public class AdultTest {
 		
 	}
 	
+	// test add couple: this person has been added to related person's relationship
 	@Test
 	public void addRelationshipCoupleTest1_4() throws Exception {
 
@@ -221,6 +245,7 @@ public class AdultTest {
 		assertEquals(sherry.getRelationship().get("couple").get(0), adult);
 	}
 	
+	// test add child and adult to be couple
 	@Test(expected = NotToBeCoupledException.class)
 	public void addRelationshipCoupleTest2() throws Exception {
 
@@ -229,6 +254,7 @@ public class AdultTest {
 
 	}
 
+	// test add young child and adult to be couple
 	@Test(expected = NotToBeCoupledException.class)
 	public void addRelationshipCoupleTest3() throws Exception {
 
@@ -237,6 +263,7 @@ public class AdultTest {
 
 	}
 
+	// test add a couple relation, but one person already has partner
 	@Test(expected = NoAvailableException.class)
 	public void addRelationshipCoupleTest4() throws Exception {
 
@@ -247,6 +274,7 @@ public class AdultTest {
 
 	}
 
+	// test remove relationship: remove friend
 	@Test
 	public void removeRelationshipFriendTest() throws Exception {
 
@@ -257,6 +285,7 @@ public class AdultTest {
 
 	}
 
+	// test remove relationship: remove colleague
 	@Test
 	public void removeRelationshipColleagueTest() throws Exception {
 
@@ -267,6 +296,7 @@ public class AdultTest {
 
 	}
 
+	// // test remove relationship: remove classmate
 	@Test
 	public void removeRelationshipClassmateTest() throws Exception {
 
@@ -276,7 +306,8 @@ public class AdultTest {
 		assertFalse(sherry.getRelationship().containsKey("classmates"));
 
 	}
-
+	
+	// test remove relationship: remove couple
 	@Test
 	public void removeRelationshipCoupleTest() throws Exception {
 

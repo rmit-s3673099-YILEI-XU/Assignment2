@@ -19,13 +19,14 @@ public class DriverClassTest {
 		  dc.getDatabaseController().initialDatabase();
 	}
 	
+	// test initial data: child has no parents
 	@Test(expected = NoParentsException.class)
 	 public void initialDataTest() throws IOException, NoParentsException{
 	  
 		dc.initialData();
 	 }
 	
-	
+	// test add adult
 	@Test
 	public void addPersonTest1_1() throws IOException {
 		  
@@ -33,18 +34,21 @@ public class DriverClassTest {
 		
 	}
 	
+	// test add child
 	@Test
 	public void addPersonTest1_2() throws IOException {
 		  
 		  assertTrue(dc.addPerson("child", "", "", "F", 10, "VIC") instanceof Child);
 	}
 	
+	// test add youngChild
 	@Test
 	public void addPersonTest1_3() throws IOException {
 		  
 		  assertTrue(dc.addPerson("youngChild", "", "", "F", 2, "VIC") instanceof YoungChild);
 	}
-	//the person has been deleted
+	
+	//test delete person: the adult has been deleted
 	@Test
 	public void deletePersonTest1_1() throws Exception{
 		
@@ -54,10 +58,8 @@ public class DriverClassTest {
 		assertFalse(dc.getMember().containsKey("Adult"));
 			
 	}
-	
 
-
-	//test relationship be deleted from the other person relation list
+	//test delete person: friend relationship be deleted from the other person relation list
 	@Test
 	public void deletePersonTest1_2_1() throws Exception{  
 		
@@ -69,6 +71,7 @@ public class DriverClassTest {
 		assertFalse(adult1.getRelationship().containsKey("friends"));
 	}
 	
+	//test delete person: classmates relationship be deleted from the other person relation list
 	@Test
 	public void deletePersonTest1_2_2() throws Exception{  
 		
@@ -79,6 +82,8 @@ public class DriverClassTest {
 		dc.deletePerson(adult);
 		assertFalse(adult2.getRelationship().containsKey("classmates"));
 	}
+	
+	//test delete person: colleagues relationship be deleted from the other person relation list
 	@Test
 	public void deletePersonTest1_2_3() throws Exception{  
 		
@@ -89,6 +94,8 @@ public class DriverClassTest {
 		dc.deletePerson(adult);
 		assertFalse(adult3.getRelationship().containsKey("colleagues"));
 	}
+	
+	//test delete person: couple relationship be deleted from the other person relation list
 	@Test
 	public void deletePersonTest1_2_4() throws Exception{  
 		
@@ -99,7 +106,8 @@ public class DriverClassTest {
 		dc.deletePerson(adult);
 		assertFalse(adult4.getRelationship().containsKey("couple"));
 	}
-//the children of the person also be deleted
+	
+	//the child of the person also be deleted
 	@Test
 	public void deletePersonTest1_3_1() throws Exception{
 		
@@ -120,6 +128,7 @@ public class DriverClassTest {
 		
 	}
 	
+	// test delete person: the young child of the person also be deleted
 	@Test
 	public void deletePersonTest1_3_2() throws Exception{
 		
@@ -140,7 +149,7 @@ public class DriverClassTest {
 		
 	}
 
-	//test the child be deleted
+	//test delete person: delete child
 	
 	@Test
 	public void deletePersonTest2_1() throws Exception{
@@ -152,7 +161,7 @@ public class DriverClassTest {
 			
 	}
 	
-	//the relation of the child be deleted 
+	//test delete person: the parent relation of the child be deleted 
 	
 	@Test
 	public void deletePersonTest2_2_1_1() throws Exception{
@@ -160,10 +169,6 @@ public class DriverClassTest {
 		Person child = dc.addPerson("Child", "", "", "F", 12, "VIC");
 		Person parent1 = dc.addPerson("parent1", "", "", "F", 20, "VIC");
 		Person parent2 = dc.addPerson("parent2", "", "", "F", 20, "VIC");
-		
-//		dc.getMember().put("Child", child);
-//		dc.getMember().put("parent1", parent1);
-//		dc.getMember().put("parent2", parent2);
 		
 		child.addRelationship("parent", parent1);
 		child.addRelationship("parent", parent2);
@@ -174,6 +179,7 @@ public class DriverClassTest {
 		assertFalse(parent1.getRelationship().containsValue(child));		
 	}
 	
+	//test delete person: the parent relation of the child be deleted 
 	@Test
 	public void deletePersonTest2_2_1_2() throws Exception{
 		
@@ -181,9 +187,6 @@ public class DriverClassTest {
 		Person parent1 = dc.addPerson("parent1", "", "", "F", 20, "VIC");
 		Person parent2 = dc.addPerson("parent2", "", "", "F", 20, "VIC");
 		
-//		dc.getMember().put("Child", child);
-//		dc.getMember().put("parent1", parent1);
-//		dc.getMember().put("parent2", parent2);
 		
 		child.addRelationship("parent", parent1);
 		child.addRelationship("parent", parent2);
@@ -192,14 +195,13 @@ public class DriverClassTest {
 		assertFalse(parent2.getRelationship().containsValue(child));		
 	}
 	
+	//test delete person: the friends relation of the child be deleted 
 	@Test
 	public void deletePersonTest2_2_2() throws Exception{
 		
 		Person child1 = dc.addPerson("child1", "", "", "F", 12, "VIC");
 		Person child2 = dc.addPerson("child2", "", "", "F", 12, "VIC");
-		
-//		dc.getMember().put("child1", child1);
-//		dc.getMember().put("child2", child2);
+
 		child1.addRelationship("friends", child2);	
 		dc.deletePerson(child1);
 		
@@ -207,23 +209,21 @@ public class DriverClassTest {
 			
 	}
 	
-		
+	//test delete person: the classmates relation of the child be deleted 
 	@Test
 	public void deletePersonTest2_2_3() throws Exception{
 		
 		Person child1 = dc.addPerson("child1", "", "", "F", 12, "VIC");
 		Person child2 = dc.addPerson("child2", "", "", "F", 12, "VIC");
-		
-//		dc.getMember().put("child1", child1);
-//		dc.getMember().put("child2", child2);
+
 		child1.addRelationship("classmates", child2);	
 		dc.deletePerson(child1);
 		
 		assertFalse(child2.getRelationship().containsKey("classmates"));
-		
-			
+				
 	}
 	
+	//test delete person: the siblings relation of the child be deleted 
 	@Test
 	public void deletePersonTest2_2_4() throws Exception{
 		
@@ -244,7 +244,7 @@ public class DriverClassTest {
 			
 	}
 	
-	//test the youngChild be deleted
+	//test delete person: delete young child
 	
 	@Test
 	public void deletePersonTest3_1() throws Exception{
@@ -252,11 +252,10 @@ public class DriverClassTest {
 		Person youngChild = dc.addPerson("youngChild", "", "", "F", 2, "VIC");
 		dc.getMember().put("youngChild", youngChild);
 		dc.deletePerson(youngChild);
-		assertFalse(dc.getMember().containsKey("youngChild"));
-			
+		assertFalse(dc.getMember().containsKey("youngChild"));	
 	}
 	
-	//the relation of the youngChild be deleted 
+	//test delete person: the parent relation of the youngChild be deleted 
 	@Test
 	public void deletePersonTest3_2_1_1() throws Exception{
 		
@@ -274,6 +273,7 @@ public class DriverClassTest {
 		assertFalse(parent1.getRelationship().containsValue(youngChild));		
 	}
 	
+	//test delete person: the parent relation of the young child be deleted 
 	@Test
 	public void deletePersonTest3_2_1_2() throws Exception{
 		
@@ -289,7 +289,7 @@ public class DriverClassTest {
 		assertFalse(parent2.getRelationship().containsValue(youngChild));		
 	}
 	
-	
+	//test delete person: the siblings relation of the young child be deleted 
 	@Test
 	public void deletePersonTest3_2_4() throws Exception{
 		
