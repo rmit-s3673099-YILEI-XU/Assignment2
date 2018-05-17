@@ -118,6 +118,7 @@ public  class MainMenuGUI {
         	System.exit(0);   
         });
         Scene scene = new Scene(pane, 700, 500);
+        
         scene.getStylesheets().add("GUI.css");
         return scene;
     }

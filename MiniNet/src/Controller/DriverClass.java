@@ -249,12 +249,11 @@ public class DriverClass {
 	 * @param currentPerson the person who is being deleted
 	 */
 	public void deletePerson(Person currentPerson) {
-
+		
 		for (String relationType : currentPerson.getRelationship().keySet()) {
 			for (Person relatedPerson : currentPerson.getRelationship().get(relationType)) {
 				currentPerson.removeRelationship(relationType, relatedPerson);
 			}
-
 		}
 		member.remove(currentPerson.getName());
 		databaseController.modifyDatabase(currentPerson, "deletePerson");

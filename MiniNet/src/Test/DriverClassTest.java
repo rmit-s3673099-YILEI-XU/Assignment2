@@ -107,47 +107,6 @@ public class DriverClassTest {
 		assertFalse(adult4.getRelationship().containsKey("couple"));
 	}
 	
-	//the child of the person also be deleted
-	@Test
-	public void deletePersonTest1_3_1() throws Exception{
-		
-		Person adult1 = dc.addPerson("Adult1", "", "", "F", 20, "VIC");
-		Person adult2 = dc.addPerson("Adult2", "", "", "F", 20, "VIC");
-		Person child = dc.addPerson("Child", "", "", "F", 12, "VIC");
-		
-		child.addRelationship("parent", adult1);
-		child.addRelationship("parent", adult2);
-		
-		dc.getMember().put("Adult1", adult1);
-		dc.getMember().put("Adult2", adult2);
-		dc.getMember().put("Child", child);
-		
-		dc.deletePerson(adult1);
-	    
-		assertFalse(dc.getMember().containsValue(child));
-		
-	}
-	
-	// test delete person: the young child of the person also be deleted
-	@Test
-	public void deletePersonTest1_3_2() throws Exception{
-		
-		Person adult1 = dc.addPerson("Adult1", "", "", "F", 20, "VIC");
-		Person adult2 = dc.addPerson("Adult2", "", "", "F", 20, "VIC");
-		Person youngChild = dc.addPerson("YoungChild", "", "", "F", 2, "VIC");
-		
-		youngChild.addRelationship("parent", adult1);
-		youngChild.addRelationship("parent", adult2);
-		
-		dc.getMember().put("Adult1", adult1);
-		dc.getMember().put("Adult2", adult2);
-		dc.getMember().put("YoungChild", youngChild);
-		
-		dc.deletePerson(adult1);
-	    
-		assertFalse(dc.getMember().containsValue(youngChild));
-		
-	}
 
 	//test delete person: delete child
 	

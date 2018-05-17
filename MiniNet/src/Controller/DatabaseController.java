@@ -19,8 +19,8 @@ import people.Person;
  */
 public class DatabaseController {
 
-	Server hsqlServer = null;
-	Connection connection = null;
+	private Server hsqlServer = null;
+	private Connection connection = null;
 
 	/**
 	 * This method sets up the connection to database
@@ -121,7 +121,10 @@ public class DatabaseController {
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * get people information data from database 
+	 * @return an arrayList to store the people information data
+	 */
 	public ArrayList<String[]> getDataInDB() {
 		ResultSet rs = null;
 

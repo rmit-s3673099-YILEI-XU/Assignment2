@@ -1,3 +1,3 @@
-/*C3*/SET SCHEMA PUBLIC
+/*C17*/SET SCHEMA PUBLIC
 drop table people if exists
 create table people (name varchar(20) not null, photo varchar(20), status varchar(20), gender varchar(20), age integer, state varchar(20)  )
