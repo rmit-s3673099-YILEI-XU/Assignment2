@@ -2,12 +2,3 @@ Alex Smith, Ben Turner, friends
 Ben Turner, Zoe Foster, couple 
 Ben Turner, Mark Turner, parent 
 Mark Turner, Zoe Foster, parent
-Homy, Andy, couple
-Emma, Homy, parent
-Andy, Emma, parent
-Rihanna, Andy, parent
-Rihanna, Jason, friends
-Rihanna, Jason, classmates
-Jason, Ben Turner, parent
-Ben Turner, Jason, parent
-Emma, Alex Smith, couple

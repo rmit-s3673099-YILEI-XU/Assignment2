@@ -1,12 +1,9 @@
 import java.io.IOException;
 
-import Controller.*;
 import Exceptions.NoParentsException;
 import GUI.MainMenuGUI;
 import javafx.application.Application;
-import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 /**
  * This class is the main method class to run the program
  * @author YILEI XU

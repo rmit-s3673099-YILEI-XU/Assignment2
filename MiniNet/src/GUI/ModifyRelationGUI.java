@@ -324,7 +324,7 @@ public class ModifyRelationGUI {
 	 * @param child the child has been selected
 	 * @throws Exception if the two parents cannot be couple
 	 */
-	public void addParentsAction(Person parent1, String name2, Person child) throws Exception {
+	private void addParentsAction(Person parent1, String name2, Person child) throws Exception {
 		Person parent2;
 		parent2 = MainMenuGUI.dc.getMemberObj(name2);
 
@@ -353,7 +353,7 @@ public class ModifyRelationGUI {
 	 * @param relation the relation of them
 	 * @return true if removed, false if cannot be removed
 	 */
-	public boolean removeRelationAction(Person selectedPerson, String name, String relation) {
+	private boolean removeRelationAction(Person selectedPerson, String name, String relation) {
 		Person relatedPerson = MainMenuGUI.dc.getMemberObj(name);
 		if (relation.equals("couple")) {
 			if (selectedPerson.getRelationship().containsKey("child")
@@ -386,7 +386,7 @@ public class ModifyRelationGUI {
 	 * This method shows the message of successful for add parents
 	 * @param isSuccess if the process is successful
 	 */
-	public void showMessageForAddParents(boolean isSuccess) {
+	private void showMessageForAddParents(boolean isSuccess) {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 		if (isSuccess) {
 			alert.setTitle("MESSAGES");
@@ -403,7 +403,7 @@ public class ModifyRelationGUI {
 	/**
 	 * This method is to show the message of show the message after add relation
 	 */
-	public void showMessageForAddRelation(boolean isSuccess) {
+	private void showMessageForAddRelation(boolean isSuccess) {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 
 		alert.setTitle("MESSAGES");
@@ -421,7 +421,7 @@ public class ModifyRelationGUI {
 	/**
 	 * This method is about show the message of empty selection
 	 */
-	public void showMessageForEmpty() {
+	private void showMessageForEmpty() {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 
 		alert.setTitle("MESSAGES");
@@ -437,7 +437,7 @@ public class ModifyRelationGUI {
 	 * @param relation the relation of the two people
 	 * @return true if click OK, false if do not choose remove
 	 */
-	public boolean showRemoveRelationMessage(String name, String relation) {
+	private boolean showRemoveRelationMessage(String name, String relation) {
 
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setTitle("MESSAGES");
@@ -457,7 +457,7 @@ public class ModifyRelationGUI {
 	 * @param name the child's name
 	 * @return true if click OK, false if cancel or close the stage
 	 */
-	public boolean showRemoveChildRelationMessage(String name) {
+	private boolean showRemoveChildRelationMessage(String name) {
 
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setTitle("MESSAGES");
@@ -476,7 +476,7 @@ public class ModifyRelationGUI {
 /**
  * This method is showing the message if the remove relation successful
  */
-	public void removeRelationSuccessfulMessage() {
+	private void removeRelationSuccessfulMessage() {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 
 		alert.setTitle("MESSAGES");
@@ -490,7 +490,7 @@ public class ModifyRelationGUI {
  * This method is showing the message if the remove relation is not working 
  * @param relation the relation going to be removed
  */
-	public void showUnsuccessWarning(String relation) {
+	private void showUnsuccessWarning(String relation) {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 
 		alert.setTitle("MESSAGES");

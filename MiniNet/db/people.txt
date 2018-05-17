@@ -3,9 +3,3 @@ Ben Turner, "BenPhoto.jpg", "manager at Coles", M, 35, VIC
 Hannah White, "Hannah.png", "student at PLC", F, 14, VIC 
 Zoe Foster, "", "Founder of ZFX", F, 28, VIC
 Mark Turner, "Mark.jpeg", "", M, 2, VIC
-Emma, "", "", M, 12, VIC
-Sherry, "", "", F, 22, VIC
-Homy, "", "", F, 22, VIC
-Andy, "", "", M, 22, VIC
-Rihanna, "", "",  F, 12, VIC
-Jason, "", "", M, 12, VIC

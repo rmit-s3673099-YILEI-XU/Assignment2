@@ -144,7 +144,7 @@ public class SelectPersonGUI {
  * @param selectedPerson the person has been selected
  * @throws FileNotFoundException if the file cannot be found
  */
-	public void displayProfileAction(Person selectedPerson) throws FileNotFoundException {
+	private void displayProfileAction(Person selectedPerson) throws FileNotFoundException {
 
 		String name = selectedPerson.getName();
 		int age = selectedPerson.getAge();
@@ -202,7 +202,7 @@ public class SelectPersonGUI {
  * @param person the selected person
  * @return GridPane
  */
-	public GridPane displayRelationsAction(Person person) {
+	private GridPane displayRelationsAction(Person person) {
 
 		GridPane GPane = MainMenuGUI.setUpPane();
 		Label label;
@@ -249,7 +249,7 @@ public class SelectPersonGUI {
  * @param selectedPerson the selected person
  * @throws NoParentsException 
  */
-	public void deletePersonAction(Person selectedPerson) throws NoParentsException {
+	private void deletePersonAction(Person selectedPerson) throws NoParentsException {
 
 		if (showDeletePersonMessage()) {
 			if (selectedPerson.getRelationship().containsKey("child") ) {
@@ -266,7 +266,7 @@ public class SelectPersonGUI {
  * This method shows the message when delete the person will also delete the relation
  * @return boolean, true if click OK, false if cancel or close the window
  */
-	public boolean showDeletePersonMessage() {
+	private boolean showDeletePersonMessage() {
 
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setTitle("MESSAGES");
@@ -287,7 +287,7 @@ public class SelectPersonGUI {
  * This method is for show the message when delete the person has a child
  * @return boolean, true if click OK, false if cancel or close the window
  */
-	public boolean showDeleteChildMessage() {
+	private boolean showDeleteChildMessage() {
 
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setTitle("MESSAGES");
@@ -305,7 +305,7 @@ public class SelectPersonGUI {
 /**
  * This method is showing the message when delete person successful
  */
-	public void showMessageForDeletePerson() {
+	private void showMessageForDeletePerson() {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 		alert.setTitle("MESSAGES");
 		alert.setHeaderText("SUCCESS!");
@@ -315,7 +315,7 @@ public class SelectPersonGUI {
 	/**
 	 * This method is show the warning when modify the young child relation
 	 */
-	public void youngChildModifyRwarning() {
+	private void youngChildModifyRwarning() {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 
 		alert.setTitle("MESSAGES");
