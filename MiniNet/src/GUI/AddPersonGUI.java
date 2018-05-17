@@ -206,13 +206,18 @@ public class AddPersonGUI {
 
 		Person currentPerson;
 		ModifyRelationGUI modifyRelationGUI = new ModifyRelationGUI();
+		int age;
 
 		if (name.equals("") || ageText.equals("") || state.equals("Select State")) {
 			throw new NotFillAllNecessInfo();
 		} else if (!(ageText.matches("\\d*") || ageText.matches("-\\d*"))) {
 			throw new NotNumberFormatException();
 		} else {
-			int age = Integer.parseInt(ageText);
+			try {
+			age = Integer.parseInt(ageText);
+			}catch(Exception e) {			
+				throw new NoSuchAgeException();		
+			}
 			if (age < 0 || age > 150)
 				throw new NoSuchAgeException();
 			else {
