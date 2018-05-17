@@ -43,10 +43,12 @@ public class ModifyProfileGUI {
 		HBox root = new HBox();
 		ToggleGroup group = new ToggleGroup();
 		RadioButton female = new RadioButton("Female");
+		female.setStyle("-fx-text-fill: #FFFFFF");
 		female.setToggleGroup(group);
 		female.setSelected(true);
 		female.setUserData("F");
 		RadioButton male = new RadioButton("Male");
+		male.setStyle("-fx-text-fill: #FFFFFF");
 		male.setToggleGroup(group);
 		male.setUserData("M");
 		root.getChildren().add(female);
@@ -69,9 +71,7 @@ public class ModifyProfileGUI {
 		pane.add(btBack, 0, 9);
 		Button btSubmit = new Button("Submit");
 		pane.add(btSubmit, 2, 9);
-		
-		setOriginalData(selectedPerson, personName, personAge, female,male, personStatus, comboBox, personPhoto); 
-				
+		setOriginalData(selectedPerson, personName, personAge, female,male, personStatus, comboBox, personPhoto); 		
 		upload.setOnAction(e -> {		
 			setUploadAction(personPhoto);
 		});		
